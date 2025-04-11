@@ -1,0 +1,117 @@
+[CGV 프로젝트 CSS 가이드]
+
+CSS 파일 구조
+--------------------
+1. style.css: 기본 레이아웃과 공통 스타일
+2. components.css: 재사용 가능한 컴포넌트 스타일
+
+1. 기본 레이아웃 (style.css)
+--------------------
+.container : 전체 콘텐츠를 감싸는 컨테이너
+- max-width: 1200px
+- 중앙 정렬
+
+.header : 헤더 영역
+.header_content : 헤더 내용
+.memberInfo_wrap : 회원 정보 메뉴
+.nav_menu : 메인 네비게이션
+.nav_menu.fixed : 스크롤 시 고정되는 네비게이션
+.footer : 푸터 영역
+.btn_gotoTop : 상단 이동 버튼
+
+2. 버튼 스타일 (style.css)
+--------------------
+.btn : 기본 버튼
+.btn-primary : 주요 버튼 (빨간색)
+.btn-secondary : 보조 버튼 (회색)
+
+사용예시:
+<button class="btn btn-primary">확인</button>
+<button class="btn btn-secondary">취소</button>
+
+3. 영화 목록 (components.css)
+--------------------
+.movie-grid : 영화 목록 그리드
+.movie-item : 개별 영화 아이템
+.movie-poster : 영화 포스터 이미지
+.movie-info : 영화 정보 영역
+.movie-title : 영화 제목
+.movie-meta : 영화 부가 정보
+
+사용예시:
+<div class="movie-grid">
+    <div class="movie-item">
+        <img class="movie-poster" src="...">
+        <div class="movie-info">
+            <h3 class="movie-title">영화제목</h3>
+            <div class="movie-meta">평점: 9.5</div>
+        </div>
+    </div>
+</div>
+
+4. 이벤트 목록 (components.css)
+--------------------
+.event-grid : 이벤트 목록 그리드
+.event-item : 개별 이벤트 아이템
+.event-image : 이벤트 이미지
+.event-info : 이벤트 정보
+.event-title : 이벤트 제목
+.event-period : 이벤트 기간
+
+5. 결과 페이지 (components.css)
+--------------------
+.result-container : 결과 페이지 컨테이너
+.result-box : 결과 내용 박스
+.result-title : 결과 제목
+.result-message : 결과 메시지
+.result-actions : 버튼 영역
+
+사용예시:
+<div class="result-container">
+    <div class="result-box">
+        <h2 class="result-title">처리 완료</h2>
+        <div class="result-message">정상적으로 처리되었습니다.</div>
+        <div class="result-actions">
+            <button class="btn btn-primary">확인</button>
+        </div>
+    </div>
+</div>
+
+6. 폼 스타일 (components.css)
+--------------------
+.form-container : 폼을 감싸는 컨테이너
+.form-group : 입력 필드 그룹
+.form-label : 라벨
+.form-input : 입력 필드
+.form-error : 에러 메시지
+
+사용예시:
+<div class="form-container">
+    <div class="form-group">
+        <label class="form-label">아이디</label>
+        <input type="text" class="form-input">
+        <div class="form-error">필수 입력 항목입니다.</div>
+    </div>
+</div>
+
+[반응형 디자인 브레이크포인트]
+--------------------
+- 모바일 (480px 이하)
+- 태블릿 (768px 이하)
+- 데스크톱 (1040px 이하)
+
+각 화면 크기에 맞게 자동으로 레이아웃이 조정됩니다.
+
+[색상 가이드]
+--------------------
+- 주요 색상: #fb4357 (CGV 레드)
+- 보조 색상: #666666 (회색)
+- 배경 색상: #f8f8f8 (연한 회색)
+- 텍스트 색상: #333333 (진한 회색)
+
+[타이포그래피]
+--------------------
+- 기본 폰트: 'Noto Sans KR', sans-serif
+- 기본 폰트 크기: 14px
+- 제목 폰트 크기: 24px (큰 제목), 18px (중간 제목), 16px (작은 제목)
+- 폰트 굵기: 400 (기본), 500 (중간), 700 (굵게)
