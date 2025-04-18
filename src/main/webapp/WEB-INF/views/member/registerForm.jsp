@@ -1,9 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGV - 회원가입</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/forms.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<div class="container">
-    <div class="form-container">
-        <h2>회원가입</h2>
+    <main>
+        <div class="container">
+            <div class="form-container">
+                <h2 class="section_title">회원가입</h2>
         <form action="register.do" method="post" id="register_form">
             <div class="form-group">
                 <label for="mem_id" class="form-label">아이디</label>
@@ -36,10 +49,13 @@
                 <button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">취소</button>
             </div>
         </form>
-    </div>
-</div>
+                </div>
+        </div>
+    </main>
 
-<script>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+    <script>
 $(document).ready(function(){
     let idChecked = false;
     
@@ -93,5 +109,5 @@ $(document).ready(function(){
     });
 });
 </script>
-
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+</body>
+</html>
