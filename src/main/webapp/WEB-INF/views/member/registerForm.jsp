@@ -21,6 +21,7 @@
             <div class="form-group">
                 <label for="mem_id" class="form-label">아이디</label>
                 <input type="text" name="mem_id" id="mem_id" class="form-input" required>
+                <button type="button" class="btn btn-secondary" id="isIdDuplicated">아이디 중복확인</button>
                 <span id="id_message"></span>
             </div>
             <div class="form-group">
@@ -48,6 +49,11 @@
                 <button type="submit" class="btn btn-primary">가입하기</button>
                 <button type="button" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">취소</button>
             </div>
+            <div>
+            	<label for="mem_gender" class="form-label">성별</label>
+            	<input type="radio" name="mem_gender" id="mem_gender" class="form-input" required="required" value="M"> 남성
+            	<input type="radio" name="mem_gender" id="mem_gender" class="form-input" required="required" value="F"> 여성
+            </div>
         </form>
                 </div>
         </div>
@@ -60,8 +66,9 @@ $(document).ready(function(){
     let idChecked = false;
     
     // 아이디 중복 체크
-    $('#mem_id').keyup(function(){
-        $.ajax({
+    $('#isIdDuplicated').click(function(){
+       
+    	$.ajax({
             url:'checkDuplicateId.do',
             type:'post',
             data:{mem_id:$('#mem_id').val()},

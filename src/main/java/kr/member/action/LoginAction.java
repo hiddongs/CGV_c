@@ -20,7 +20,7 @@ public class LoginAction implements Action {
         MemberDAO dao = MemberDAO.getInstance();
         
         try {
-            MemberVO member = dao.checkMember(mem_id, mem_pw);
+            MemberVO member = dao.login(mem_id, mem_pw);
             
             if(member != null) { // 인증 성공
                 HttpSession session = request.getSession();
@@ -32,7 +32,7 @@ public class LoginAction implements Action {
             // 인증 실패
             request.setAttribute("result_title", "로그인 실패");
             request.setAttribute("result_msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            request.setAttribute("result_url", "member/loginForm.do");
+            request.setAttribute("result_url", request.getContextPath() + "/index.jsp");
             
             return "common/result_view.jsp";
             

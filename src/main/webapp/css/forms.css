@@ -100,6 +100,16 @@
     outline: 2px solid #fb4357;
     outline-offset: 1px;
 }
+.form-links a{
+	text-decoration: none;
+	outline-style: none;
+	color: black;
+}
+.form-links a:hover{
+	text-decoration:underline;
+	color: black;
+	
+}
 
 /* 반응형 조정 */
 @media (max-width: 576px) {

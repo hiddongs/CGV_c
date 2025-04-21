@@ -3,6 +3,8 @@ package kr.member.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import kr.member.vo.MemberVO;
 import kr.util.DBUtil;
 
@@ -24,15 +26,16 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "INSERT INTO member (mem_num,mem_id,mem_pw,mem_name,mem_phone,mem_email,reg_date) "
-                + "VALUES (member_seq.nextval,?,?,?,?,?,SYSDATE)";
+            sql = "INSERT INTO member (MEMBER_ID, USER_ID, PASSWORD, NAME, REG_DATE, PHONE, EMAIL, GENDER) "
+                + "VALUES (member_seq.nextval,?,?,?,SYSDATE,?,?,?)";
             
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, member.getMem_id());
-            pstmt.setString(2, member.getMem_pw());
-            pstmt.setString(3, member.getMem_name());
-            pstmt.setString(4, member.getMem_phone());
-            pstmt.setString(5, member.getMem_email());
+            pstmt.setString(1, member.getUser_id());
+            pstmt.setString(2, member.getPassword());
+            pstmt.setString(3, member.getName());
+            pstmt.setString(4, member.getPhone());
+            pstmt.setString(5, member.getEmail());
+            pstmt.setString(6, member.getGender());
             
             pstmt.executeUpdate();
             
@@ -42,7 +45,7 @@ public class MemberDAO {
     }
     
     // 로그인 체크
-    public MemberVO checkMember(String mem_id, String mem_pw) throws Exception {
+    public MemberVO login(String mem_id, String mem_pw) throws Exception {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -51,7 +54,7 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "SELECT * FROM member WHERE mem_id=? AND mem_pw=?";
+            sql = "SELECT * FROM member WHERE USER_ID=? AND PASSWORD=?";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, mem_id);
@@ -60,12 +63,19 @@ public class MemberDAO {
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 member = new MemberVO();
-                member.setMem_num(rs.getInt("mem_num"));
-                member.setMem_id(rs.getString("mem_id"));
-                member.setMem_name(rs.getString("mem_name"));
-                member.setMem_phone(rs.getString("mem_phone"));
-                member.setMem_email(rs.getString("mem_email"));
-                member.setReg_date(rs.getDate("reg_date"));
+                member.setMember_id(rs.getInt("MEMBER_ID"));
+                member.setUser_id(rs.getString("USER_ID"));
+                member.setPassword(rs.getString("PASSWORD"));
+                member.setPoint(rs.getInt("POINT"));
+                member.setName(rs.getString("NAME"));
+                member.setPhone(rs.getString("PHONE"));
+                member.setEmail(rs.getString("EMAIL"));
+                member.setReg_date(rs.getDate("REG_DATE"));
+                member.setGender(rs.getString("GENDER"));
+                member.setGrade(rs.getString("GRADE"));
+                member.setAddress(rs.getString("ADDRESS"));
+                member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
+                
             }
             
         } finally {
@@ -76,7 +86,7 @@ public class MemberDAO {
     }
     
     // 아이디 중복 체크
-    public boolean checkDuplicateId(String mem_id) throws Exception {
+    public boolean checkDuplicateId(String mem_id){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -85,7 +95,7 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "SELECT COUNT(*) FROM member WHERE mem_id=?";
+            sql = "SELECT COUNT(*) FROM member WHERE USER_ID=?";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, mem_id);
@@ -94,8 +104,12 @@ public class MemberDAO {
             if(rs.next()) {
                 if(rs.getInt(1) > 0) result = true;
             }
-            
-        } finally {
+ 
+        } catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
@@ -120,11 +134,11 @@ public class MemberDAO {
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 member = new MemberVO();
-                member.setMem_num(rs.getInt("mem_num"));
-                member.setMem_id(rs.getString("mem_id"));
-                member.setMem_name(rs.getString("mem_name"));
-                member.setMem_phone(rs.getString("mem_phone"));
-                member.setMem_email(rs.getString("mem_email"));
+                member.setMember_id(rs.getInt("mem_num"));
+                member.setUser_id(rs.getString("mem_id"));
+                member.setName(rs.getString("mem_name"));
+                member.setPhone(rs.getString("mem_phone"));
+                member.setEmail(rs.getString("mem_email"));
                 member.setReg_date(rs.getDate("reg_date"));
             }
             
@@ -151,11 +165,11 @@ public class MemberDAO {
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 member = new MemberVO();
-                member.setMem_num(rs.getInt("mem_num"));
-                member.setMem_id(rs.getString("mem_id"));
-                member.setMem_name(rs.getString("mem_name"));
-                member.setMem_phone(rs.getString("mem_phone"));
-                member.setMem_email(rs.getString("mem_email"));
+                member.setMember_id(rs.getInt("mem_num"));
+                member.setUser_id(rs.getString("mem_id"));
+                member.setName(rs.getString("mem_name"));
+                member.setPhone(rs.getString("mem_phone"));
+                member.setEmail(rs.getString("mem_email"));
                 member.setReg_date(rs.getDate("reg_date"));
             }
             
@@ -177,10 +191,10 @@ public class MemberDAO {
             sql = "UPDATE member SET mem_name=?,mem_phone=?,mem_email=? WHERE mem_num=?";
             
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, member.getMem_name());
-            pstmt.setString(2, member.getMem_phone());
-            pstmt.setString(3, member.getMem_email());
-            pstmt.setInt(4, member.getMem_num());
+            pstmt.setString(1, member.getName());
+            pstmt.setString(2, member.getPhone());
+            pstmt.setString(3, member.getEmail());
+            pstmt.setInt(4, member.getMember_id());
             
             pstmt.executeUpdate();
             

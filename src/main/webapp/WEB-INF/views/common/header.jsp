@@ -7,7 +7,7 @@
         <ul class="memberInfo_wrap">
             <c:choose>
                 <c:when test="${empty sessionScope.member}">
-                    <li><a href="${pageContext.request.contextPath}/member/login.do">로그인</a></li>
+                    <li><a href="${pageContext.request.contextPath}/member/loginForm.do">로그인</a></li>
                     <li><a href="${pageContext.request.contextPath}/member/registerForm.do">회원가입</a></li>
                 </c:when>
                 <c:otherwise>
