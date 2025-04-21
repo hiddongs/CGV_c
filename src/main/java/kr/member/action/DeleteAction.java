@@ -44,7 +44,7 @@ public class DeleteAction implements Action {
             
             request.setAttribute("result_title", "회원 탈퇴 완료");
             request.setAttribute("result_msg", "회원 탈퇴가 완료되었습니다.");
-            request.setAttribute("result_url", "main/main.do");
+            request.setAttribute("result_url", request.getContextPath() + "/index.jsp");
             
             return "common/result_view.jsp";
             

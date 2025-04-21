@@ -1,29 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<head>
+	<meta charset="UTF-8">
+	<title>마이페이지</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+</head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
 <div class="container">
     <div class="form-container">
         <h2>마이페이지</h2>
         <div class="user-info">
             <div class="info-group">
                 <label class="info-label">아이디</label>
-                <span class="info-value">${member.mem_id}</span>
+                <span class="info-value">${member.user_id}</span>
             </div>
             <div class="info-group">
                 <label class="info-label">이름</label>
-                <span class="info-value">${member.mem_name}</span>
+                <span class="info-value">${member.name}</span>
             </div>
             <div class="info-group">
                 <label class="info-label">전화번호</label>
-                <span class="info-value">${member.mem_phone}</span>
+                <span class="info-value">${member.phone}</span>
             </div>
             <div class="info-group">
                 <label class="info-label">이메일</label>
-                <span class="info-value">${member.mem_email}</span>
+                <span class="info-value">${member.email}</span>
             </div>
             <div class="info-group">
                 <label class="info-label">가입일</label>
-                <span class="info-value">${member.mem_regdate}</span>
+                <span class="info-value">${member.reg_date}</span>
             </div>
         </div>
         <div class="button-group">
