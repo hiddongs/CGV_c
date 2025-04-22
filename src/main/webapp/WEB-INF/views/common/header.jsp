@@ -21,8 +21,15 @@
     <nav class="nav_menu">
         <div class="container">
             <ul>
-                <li><a href="${pageContext.request.contextPath}/movies">영화</a></li>
-                <li><a href="${pageContext.request.contextPath}/theaters">극장</a></li>
+                <li><a href="${pageContext.request.contextPath}/movie">영화</a>
+
+                </li>
+                <li><a href="${pageContext.request.contextPath}/theaters">극장</a>
+                    <ul>
+                      <li><a href="${pageContext.request.contextPath}/movie/specialMovie.do">특별관</a>
+                      
+                      </li>
+                    </ul>
                 <li><a href="${pageContext.request.contextPath}/ticket">예매</a></li>
                 <li><a href="${pageContext.request.contextPath}/event">이벤트</a></li>
             </ul>
