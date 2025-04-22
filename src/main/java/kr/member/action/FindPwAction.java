@@ -27,7 +27,7 @@ public class FindPwAction implements Action {
                 String temp_pw = generateTempPassword();
                 
                 // 임시 비밀번호로 변경
-                dao.updatePassword(dao.getMember(mem_id).getMem_num(), temp_pw);
+                dao.updatePassword(dao.getMember(mem_id).getMember_id(), temp_pw);
                 
                 // TODO: 이메일 발송 로직 추가
                 

@@ -27,7 +27,7 @@ public class DeleteAction implements Action {
         
         try {
             // 비밀번호 체크
-            MemberVO member = dao.checkMember(user.getMem_id(), mem_pw);
+            MemberVO member = dao.login(user.getUser_id(), mem_pw);
             
             if(member == null) {
                 request.setAttribute("result_title", "회원 탈퇴 실패");
@@ -37,14 +37,14 @@ public class DeleteAction implements Action {
             }
             
             // 회원정보 삭제
-            dao.deleteMember(user.getMem_num());
+            dao.deleteMember(user.getMember_id());
             
             // 로그아웃
             session.invalidate();
             
             request.setAttribute("result_title", "회원 탈퇴 완료");
             request.setAttribute("result_msg", "회원 탈퇴가 완료되었습니다.");
-            request.setAttribute("result_url", "main/main.do");
+            request.setAttribute("result_url", request.getContextPath() + "/index.jsp");
             
             return "common/result_view.jsp";
             

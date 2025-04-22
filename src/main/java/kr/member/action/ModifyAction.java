@@ -30,10 +30,10 @@ public class ModifyAction implements Action {
         String mem_email = request.getParameter("mem_email");
         
         MemberVO member = new MemberVO();
-        member.setMem_num(user.getMem_num());
-        member.setMem_name(mem_name);
-        member.setMem_phone(mem_phone);
-        member.setMem_email(mem_email);
+        member.setMember_id(user.getMember_id());
+        member.setName(mem_name);
+        member.setPhone(mem_phone);
+        member.setEmail(mem_email);
         
         MemberDAO dao = MemberDAO.getInstance();
         

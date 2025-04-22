@@ -1,10 +1,11 @@
 package kr.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -45,6 +46,16 @@ public class DBUtil {
 		if(pstmt!=null)try {pstmt.close();}catch(SQLException e) {}
 		if(conn!=null)try {conn.close();}catch(SQLException e) {}
 	}
+	public static java.sql.Date toSqlDate(String dateStr){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date utilDate = null;
+		try {
+			utilDate = sdf.parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        return new java.sql.Date(utilDate.getTime());
+    }
 }
 
 
