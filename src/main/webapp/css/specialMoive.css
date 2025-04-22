@@ -1,0 +1,70 @@
+/* 특별관 영화 페이지 */
+.title{
+
+    color : black;
+    text-align:center;
+    
+   
+}
+
+.text{
+color:black; 
+text-align:left;
+font-size:20px;
+}
+.subTitle{
+color : gray;
+text-align:center;
+
+}
+
+.subText{
+  color:gray;
+  font-size:13px;
+  text-align:center;
+}
+
+.vertical-line {
+    display: inline-block;   /* 반드시 블록처럼 보이게 만들어야 함 */
+    width: 1px;
+    height: 20px;
+    background-color: #aaa;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+.specialMovie{
+ 
+  border: 1px solid #333;
+  border-radius: 20px; /* 둥근 테두리 */
+  
+  transition: transform 0.3s ease; /* 부드러운 확대 효과 */
+}
+
+.specialMovie:hover {
+  transform: scale(1.05); /* 마우스 오버 시 확대 */
+  box-shadow: 0 0 10px rgba(0,0,0,0.4); /* 그림자 효과 */
+
+
+}
+
+.img-container {
+      position: relative;
+      display: inline-block;
+      
+    }
+
+    .img-container img {
+      border-radius: 10px;
+    }
+
+    .img-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-80%, 60%);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+      pointer-events: none; /* 클릭 방지 */
+    }
