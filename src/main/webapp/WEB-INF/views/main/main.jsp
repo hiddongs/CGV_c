@@ -22,7 +22,7 @@
                         <h3 class="movie-title">슈퍼 마리오 브라더스</h3>
                         <div class="movie-meta">
                             <span class="rating">예매율 32.1%</span>
-                            <a href="/booking" class="btn btn-primary btn-booking">예매</a>
+                            <a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         <h3 class="movie-title">존 윅 4</h3>
                         <div class="movie-meta">
                             <span class="rating">예매율 28.5%</span>
-                            <a href="/booking" class="btn btn-primary btn-booking">예매</a>
+                            <a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         <h3 class="movie-title">스즈메의 문단속</h3>
                         <div class="movie-meta">
                             <span class="rating">예매율 15.2%</span>
-                            <a href="/booking" class="btn btn-primary btn-booking">예매</a>
+                            <a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                         <h3 class="movie-title">리바운드</h3>
                         <div class="movie-meta">
                             <span class="rating">예매율 12.8%</span>
-                            <a href="/booking" class="btn btn-primary btn-booking">예매</a>
+                            <a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
                         </div>
                     </div>
                 </div>
