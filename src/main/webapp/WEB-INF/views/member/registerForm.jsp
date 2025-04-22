@@ -63,8 +63,8 @@
             	<input type="text" name="address" id="address" class="form-input" required="required">
             </div>
             <div class="form-group">
-            	<label for="addressDetail" class="form-label">주소</label>
-            	<input type="text" name="addressDetail" id="addressDetail" class="form-input" required="required" readonly="readonly">
+            	<label for="addressDetail" class="form-label">상세주소</label>
+            	<input type="text" name="addressDetail" id="addressDetail" class="form-input">
             </div>
             <br>
             <div class="form-group">
