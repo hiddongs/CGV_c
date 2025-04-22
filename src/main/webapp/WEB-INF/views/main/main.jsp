@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,7 +11,14 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-    <%@ include file="../common/header.jsp" %>
+	<c:choose>
+    <c:when test="${member.member_id != 1}">
+        <jsp:include page="../common/header.jsp" />
+    </c:when>
+    <c:otherwise>
+        <jsp:include page="../common/adminHeader.jsp" />
+    </c:otherwise>
+</c:choose>
 
     <main>
         <div class="container">
