@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* 이벤트 리스트 
 --------------------------------*/
-.event-contain{
+.event-container{
 	width: 800px;
 	margin: 20px;
 	margin: 20px auto;
@@ -32,5 +32,38 @@ h2{
 }
 
 .tab-list li {
-	
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
 }
+
+.tab-list .active {
+	font-weight: bold;
+	color: #e61a33;
+}
+
+.event-buttons{
+	display:flex;
+	gap:8px;
+}
+.btn {
+	padding: 6px 10px;
+	font-size: 13px;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.btn-red {
+	background-color: #e61a33;
+	color: white;
+	border: none;
+}
+.btn-red-one {
+	background-color:white;
+	color: #e61a33;
+	border: 1px solid #e61a33;
+}
+
+
+
+
