@@ -14,8 +14,15 @@ public class MovieVO {
 	private String rating;       // 등급
 	private String poster_url;   // 포스터 이미지 주소
 	private String description;  // 설명
+	private Date movie_create;	// 생성일
 	
 	
+	public Date getMovie_create() {
+		return movie_create;
+	}
+	public void setMovie_create(Date movie_create) {
+		this.movie_create = movie_create;
+	}
 	public String getDirector() {
 		return director;
 	}

@@ -38,7 +38,8 @@ body {
 }
 
 .header h1 img {
-    height: 45px;
+    height: 65px;
+    background-color: #fff;
     transition: transform 0.3s;
 }
 

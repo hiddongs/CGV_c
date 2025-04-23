@@ -3,7 +3,7 @@
 
 <header class="header">
     <div class="container header_content">
-        <h1><a href="${pageContext.request.contextPath}/"><img src="https://img.cgv.co.kr/R2014/images/common/logo/logoRed.png" alt="CGV"></a></h1>
+        <h1><a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png" alt="CGV"></a></h1>
         <ul class="memberInfo_wrap">
             <c:choose>
                 <c:when test="${empty sessionScope.member}">

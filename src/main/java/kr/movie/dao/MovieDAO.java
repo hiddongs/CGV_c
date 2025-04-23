@@ -3,6 +3,7 @@ package kr.movie.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.movie.vo.MovieVO;
@@ -66,5 +67,88 @@ public class MovieDAO {
 			DBUtil.executeClose(null, pstmt, conn);
     	}
     	return result;
+    }
+    
+    //상영중인 영화 리스트
+    public List<MovieVO> getShowingMovieList(){
+    	
+    	Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	String sql = null;
+    	ResultSet rs = null;
+    	List<MovieVO> movieList = new ArrayList<>();
+    	
+    	try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM MOVIE WHERE RELEASE_DATE <= SYSDATE";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					MovieVO movie = new MovieVO();
+					movie.setMovie_id(rs.getInt("MOVIE_ID"));
+					movie.setMv_title(rs.getString("TITLE"));
+					movie.setDirector(rs.getString("DIRECTOR"));
+					movie.setActor(rs.getString("ACTOR"));
+					movie.setGenre(rs.getString("GENRE"));
+					movie.setRuntime(rs.getInt("RUNTIME"));
+					movie.setRelease_date(rs.getDate("RELEASE_DATE"));
+					movie.setRating(rs.getString("AGE_LIMIT"));
+					movie.setPoster_url(rs.getString("POSTER_URL"));
+					movie.setDescription(rs.getString("DESCRIPTION"));
+					movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
+					movieList.add(movie);
+					
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+    	return movieList;
+    }
+    
+public List<MovieVO> getReleaseMovieList(){
+    	
+    	Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	String sql = null;
+    	ResultSet rs = null;
+    	List<MovieVO> movieList = new ArrayList<>();
+    	
+    	try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM MOVIE WHERE RELEASE_DATE > SYSDATE";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					MovieVO movie = new MovieVO();
+					movie.setMovie_id(rs.getInt("MOVIE_ID"));
+					movie.setMv_title(rs.getString("TITLE"));
+					movie.setDirector(rs.getString("DIRECTOR"));
+					movie.setActor(rs.getString("ACTOR"));
+					movie.setGenre(rs.getString("GENRE"));
+					movie.setRuntime(rs.getInt("RUNTIME"));
+					movie.setRelease_date(rs.getDate("RELEASE_DATE"));
+					movie.setRating(rs.getString("AGE_LIMIT"));
+					movie.setPoster_url(rs.getString("POSTER_URL"));
+					movie.setDescription(rs.getString("DESCRIPTION"));
+					movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
+					movieList.add(movie);
+					
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+    	return movieList;
     }
 }
