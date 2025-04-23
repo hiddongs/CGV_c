@@ -1,0 +1,36 @@
+@charset "UTF-8";
+/* 이벤트 리스트 
+--------------------------------*/
+.event-contain{
+	width: 800px;
+	margin: 20px;
+	margin: 20px auto;
+	font-family: 'Arial', sans-serif;
+}
+
+h2{
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	border-bottom: 2px solid black;
+	padding-bottom: 5px;
+}
+
+.event-menu{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 10px;
+}
+
+.tab-list{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	gap: 25px;
+}
+
+.tab-list li {
+	
+}
