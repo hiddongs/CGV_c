@@ -1,11 +1,12 @@
 package kr.movie.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class MovieVO {
 
 	private int movie_id;       // 영화 번호
 	private String mv_title;     // 제목
+	private String director;	//감독
 	private String actor;        //배우
 	private String genre;        // 장르
 	private int runtime;         // 상영시간
@@ -13,6 +14,21 @@ public class MovieVO {
 	private String rating;       // 등급
 	private String poster_url;   // 포스터 이미지 주소
 	private String description;  // 설명
+	private Date movie_create;	// 생성일
+	
+	
+	public Date getMovie_create() {
+		return movie_create;
+	}
+	public void setMovie_create(Date movie_create) {
+		this.movie_create = movie_create;
+	}
+	public String getDirector() {
+		return director;
+	}
+	public void setDirector(String director) {
+		this.director = director;
+	}
 	
 	
 	public int getMovie_id() {
@@ -48,8 +64,8 @@ public class MovieVO {
 	public Date getRelease_date() {
 		return release_date;
 	}
-	public void setRelease_date(Date release_date) {
-		this.release_date = release_date;
+	public void setRelease_date(Date date) {
+		this.release_date = date;
 	}
 	public String getRating() {
 		return rating;

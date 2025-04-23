@@ -157,20 +157,26 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "SELECT * FROM member WHERE mem_num=?";
+            sql = "SELECT * FROM member WHERE MEMBER_ID=?";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, mem_num);
             
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                member = new MemberVO();
-                member.setMember_id(rs.getInt("mem_num"));
-                member.setUser_id(rs.getString("mem_id"));
-                member.setName(rs.getString("mem_name"));
-                member.setPhone(rs.getString("mem_phone"));
-                member.setEmail(rs.getString("mem_email"));
-                member.setReg_date(rs.getDate("reg_date"));
+            	member = new MemberVO();
+                member.setMember_id(rs.getInt("MEMBER_ID"));
+                member.setUser_id(rs.getString("USER_ID"));
+                member.setPassword(rs.getString("PASSWORD"));
+                member.setPoint(rs.getInt("POINT"));
+                member.setName(rs.getString("NAME"));
+                member.setPhone(rs.getString("PHONE"));
+                member.setEmail(rs.getString("EMAIL"));
+                member.setReg_date(rs.getDate("REG_DATE"));
+                member.setGender(rs.getString("GENDER"));
+                member.setGrade(rs.getString("GRADE"));
+                member.setAddress(rs.getString("ADDRESS"));
+                member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
             }
             
         } finally {
@@ -232,7 +238,7 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "DELETE FROM member WHERE mem_num=?";
+            sql = "DELETE FROM member WHERE MEMBER_ID=?";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, mem_num);

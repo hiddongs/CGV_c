@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>폼 스타일 비교 (style.css vs forms.css)</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .compare-section { display: flex; gap: 40px; margin: 40px 0; }
+        .compare-section > div { flex: 1; background: #fafafa; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .compare-section h2 { text-align: center; font-size: 20px; margin-bottom: 18px; }
+        .compare-section hr { margin: 18px 0; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center; margin-top:30px;">폼 스타일 비교<br><small>style.css vs forms.css</small></h1>
+    <div class="compare-section">
+        <div>
+            <h2>style.css만 적용</h2>
+            <form class="form-container" autocomplete="off">
+                <div class="form-title">회원가입</div>
+                <div class="form-group">
+                    <label class="form-label" for="s1-username">아이디</label>
+                    <input class="form-input" id="s1-username" type="text" placeholder="아이디">
+                    <span class="form-error">필수 입력 항목입니다.</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="s1-password">비밀번호</label>
+                    <input class="form-input is-invalid" id="s1-password" type="password" placeholder="비밀번호">
+                    <span class="form-error">비밀번호가 너무 짧습니다.</span>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">가입</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <h2>style.css + forms.css 적용</h2>
+            <link rel="stylesheet" href="forms.css">
+            <form class="form-container" autocomplete="off">
+                <div class="form-title">회원가입</div>
+                <div class="form-group">
+                    <label class="form-label" for="s2-username">아이디</label>
+                    <input class="form-input is-valid" id="s2-username" type="text" value="ok" placeholder="아이디">
+                    <span class="form-error">필수 입력 항목입니다.</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="s2-password">비밀번호</label>
+                    <input class="form-input is-invalid" id="s2-password" type="password" value="123" placeholder="비밀번호">
+                    <span class="form-error">비밀번호가 너무 짧습니다.</span>
+                </div>
+                <div class="form-group form-check">
+                    <input class="form-check-input" type="checkbox" id="s2-agree">
+                    <label class="form-check-label" for="s2-agree">이용약관 동의</label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">가입</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <p style="text-align:center; color:#888; margin-top:32px;">좌측: style.css만 적용 / 우측: style.css + forms.css 동시 적용</p>
+</body>
+</html>

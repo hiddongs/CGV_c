@@ -10,6 +10,10 @@ public class MemberVO {
     private String phone;   // 전화번호
     private String email;   // 이메일
     private Date reg_date;      // 가입일
+
+    private String auth;        // 권한
+    private String mem_grade;
+
     private int point;         // 포인트
     private String gender;
     private String grade;
@@ -61,8 +65,15 @@ public class MemberVO {
     
     public Date getReg_date() { return reg_date; }
     public void setReg_date(Date reg_date) { this.reg_date = reg_date; }
+
     
+    public String getMem_grade() {return mem_grade;}
+	public void setMem_grade(String mem_grade) { this.mem_grade = mem_grade;}
     
+    public String getAuth() { return auth; }
+    public void setAuth(String auth) { this.auth = auth; }
+
     public int getPoint() { return point; }
     public void setPoint(int point) { this.point = point; }
-}
+	
+    }

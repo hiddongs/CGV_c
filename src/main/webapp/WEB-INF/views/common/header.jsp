@@ -3,7 +3,7 @@
 
 <header class="header">
     <div class="container header_content">
-        <h1><a href="${pageContext.request.contextPath}/"><img src="https://img.cgv.co.kr/R2014/images/common/logo/logoRed.png" alt="CGV"></a></h1>
+        <h1><a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png" alt="CGV"></a></h1>
         <ul class="memberInfo_wrap">
             <c:choose>
                 <c:when test="${empty sessionScope.member}">
@@ -21,8 +21,15 @@
     <nav class="nav_menu">
         <div class="container">
             <ul>
-                <li><a href="${pageContext.request.contextPath}/movies">영화</a></li>
-                <li><a href="${pageContext.request.contextPath}/theaters">극장</a></li>
+                <li><a href="${pageContext.request.contextPath}/movie">영화</a>
+
+                </li>
+                <li><a href="${pageContext.request.contextPath}/theaters">극장</a>
+                    <ul>
+                      <li><a href="${pageContext.request.contextPath}/movie/specialMovie.do">특별관</a>
+                      
+                      </li>
+                    </ul>
                 <li><a href="${pageContext.request.contextPath}/ticket">예매</a></li>
                 <li><a href="${pageContext.request.contextPath}/event">이벤트</a></li>
             </ul>

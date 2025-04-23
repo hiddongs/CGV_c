@@ -21,12 +21,13 @@ public class LoginAction implements Action {
         
         try {
             MemberVO member = dao.login(mem_id, mem_pw);
-            
-            if(member != null) { // 인증 성공
-                HttpSession session = request.getSession();
-                session.setAttribute("member", member);
-                
+            System.out.println(member.getMember_id());
+            HttpSession session = request.getSession();
+            session.setAttribute("member", member);
+            if(member != null && member.getMember_id() != 1) { // 인증 성공 일반유저
                 return "redirect:/main/main.do";
+            }else if(member != null && member.getMember_id() == 1) { // 인증 성공 어드민
+                return "redirect:/member/adminLogin.do";
             }
             
             // 인증 실패

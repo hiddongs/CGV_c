@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,55 +9,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
 </head>
 <body>
-    <%@ include file="../common/header.jsp" %>
+	<c:choose>
+    <c:when test="${member.member_id != 1}">
+        <jsp:include page="../common/header.jsp" />
+    </c:when>
+    <c:otherwise>
+        <jsp:include page="../common/adminHeader.jsp" />
+    </c:otherwise>
+</c:choose>
 
     <main>
         <div class="container">
+        		 <!-- 상영중인 영화 리스트 시작 -->
             <h2 class="section_title">현재 상영작</h2>
             <div class="movie-grid">
-                <div class="movie-item">
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86815/86815_320.jpg" alt="영화 포스터" class="movie-poster">
-                    <div class="movie-info">
-                        <h3 class="movie-title">슈퍼 마리오 브라더스</h3>
-                        <div class="movie-meta">
-                            <span class="rating">예매율 32.1%</span>
-                            <a href="/booking" class="btn btn-primary btn-booking">예매</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="movie-item">
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86796/86796_320.jpg" alt="영화 포스터" class="movie-poster">
-                    <div class="movie-info">
-                        <h3 class="movie-title">존 윅 4</h3>
-                        <div class="movie-meta">
-                            <span class="rating">예매율 28.5%</span>
-                            <a href="/booking" class="btn btn-primary btn-booking">예매</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="movie-item">
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86829/86829_320.jpg" alt="영화 포스터" class="movie-poster">
-                    <div class="movie-info">
-                        <h3 class="movie-title">스즈메의 문단속</h3>
-                        <div class="movie-meta">
-                            <span class="rating">예매율 15.2%</span>
-                            <a href="/booking" class="btn btn-primary btn-booking">예매</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="movie-item">
-                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86828/86828_320.jpg" alt="영화 포스터" class="movie-poster">
-                    <div class="movie-info">
-                        <h3 class="movie-title">리바운드</h3>
-                        <div class="movie-meta">
-                            <span class="rating">예매율 12.8%</span>
-                            <a href="/booking" class="btn btn-primary btn-booking">예매</a>
-                        </div>
-                    </div>
-                </div>
+               <c:choose>
+             		<c:when test="${empty list}">
+               			<div class="movie-item">
+               				<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
+               				<div class="movie-info">
+               					<h3 class="movie-title">상영중인 영화가 없습니다.</h3>
+               					<div class="movie-meta">
+               						<span class="rating">상영중인 영화가 없습니다.</span>
+               					</div>
+               				</div>
+               			</div>
+            		</c:when>
+            		<c:otherwise>
+               			<c:forEach var="movie" items="${list}">
+			               	<div class="movie-item">
+			               		<img src="${pageContext.request.contextPath}/upload/${movie.poster_url}" alt="영화 포스터" class="movie-poster">
+			               		<div class="movie-info">
+			               			<h3 class="movie-title">${movie.mv_title}</h3>
+			               			<div class="movie-meta">
+			               				<span class="rating">예매율 @@%</span>
+			               				<a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
+			               			</div>
+			               		</div>
+			               	</div>
+               			</c:forEach>
+               		</c:otherwise>
+             </c:choose>	
+              	 <!-- 상영중인 영화 리스트 끝 -->
             </div>
+              	 <!-- 개봉예정영화 시작 -->
+              	 <h2 class="section_title">개봉 예정 영화</h2>
+              	 <div class="movie-grid">
+              	 	<c:choose>
+              	 		<c:when test="${empty releaseList }">
+	              	 		<div class="movie-item">
+	               				<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
+	               				<div class="movie-info">
+	               					<h3 class="movie-title">개봉예정인 영화가 없습니다.</h3>
+	               					<div class="movie-meta">
+	               						<span class="rating">개봉예정인 영화가 없습니다.</span>
+	               					</div>
+	               				</div>
+	               			</div>
+              	 		</c:when>
+              	 		<c:otherwise>
+              	 			<c:forEach var="movie" items="${list}">
+			               	<div class="movie-item">
+			               		<img src="${pageContext.request}/upload/${movie.poster_url}" alt="영화 포스터" class="movie-poster">
+			               		<div class="movie-info">
+			               			<h3 class="movie-title">${movie.mv_title}</h3>
+			               			<div class="movie-meta">
+			               				<span class="rating">장르 : @@</span>
+			               				<a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
+			               			</div>
+			               		</div>
+			               	</div>
+               			</c:forEach>
+              	 		</c:otherwise>
+              	 	</c:choose>
+              	 </div>
+              	 <!-- 개봉예정영화 끝 -->
+                <!-- 영화 리스트 끝 -->
 
             <h2 class="section_title">이벤트</h2>
             <div class="event-grid">
