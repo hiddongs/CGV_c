@@ -23,7 +23,7 @@ public class MyPageAction implements Action {
         
         try {
             MemberDAO dao = MemberDAO.getInstance();
-            MemberVO member = dao.getMember(user.getMem_num());
+            MemberVO member = dao.getMember(user.getMember_id());
             
             request.setAttribute("member", member);
             

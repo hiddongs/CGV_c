@@ -8,10 +8,10 @@
     <Resource name="jdbc/xe"
               auth="Container"
               type="javax.sql.DataSource"
-              username="user01"
-              password="1234"
+              username="steam01"
+              password="s1234"
               driverClassName="oracle.jdbc.OracleDriver"
-              url="jdbc:oracle:thin:@localhost:1521:xe"
+              url="jdbc:oracle:thin:@211.238.142.200:1521:xe"
               maxTotal="20"
               maxIdle="10" />
 </Context>

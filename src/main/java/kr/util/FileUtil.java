@@ -19,21 +19,19 @@ public class FileUtil {
 			            throws IOException,ServletException{
 		//컨텍스트 경로상의 업로드 절대 경로
 		String upload = request.getServletContext()
-				               .getRealPath(UPLOAD_PATH);
+			               .getRealPath(UPLOAD_PATH);
 		Part part = request.getPart(param);
 		String filename = part.getSubmittedFileName();
 		if(!filename.isEmpty()) {
-			//파일명이 중복되지 않도록 파일명 변경
-			UUID uuid = UUID.randomUUID();
+			//파일명이 중복되지 않도록 파일명 변경 (8자리)
+			String uniqueId = UUID.randomUUID().toString().substring(0, 8);
 			//원래 파일명을 보존하지 않을 경우
-			filename = uuid.toString() + 
-				filename.substring(filename.lastIndexOf("."));
-			//_ 이후에 원래 파일명을 보존할 경우
-			//filename = uuid.toString() + "_" + filename;
+			filename = uniqueId + filename.substring(filename.lastIndexOf("."));
 			part.write(upload+"/"+filename);//지정된 경로에 파일 저장
 		}
 		return filename;
 	}
+	
 	
 	//파일 삭제
 	public static void removeFile(HttpServletRequest request,

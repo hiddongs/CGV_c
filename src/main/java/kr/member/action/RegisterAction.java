@@ -22,13 +22,15 @@ public class RegisterAction implements Action {
         String mem_name = request.getParameter("mem_name");
         String mem_phone = request.getParameter("mem_phone");
         String mem_email = request.getParameter("mem_email");
+        String mem_gender = request.getParameter("mem_gender");
         
         MemberVO member = new MemberVO();
-        member.setMem_id(mem_id);
-        member.setMem_pw(mem_pw);
-        member.setMem_name(mem_name);
-        member.setMem_phone(mem_phone);
-        member.setMem_email(mem_email);
+        member.setUser_id(mem_id);
+        member.setPassword(mem_pw);
+        member.setName(mem_name);
+        member.setPhone(mem_phone);
+        member.setEmail(mem_email);
+        member.setGender(mem_gender);
         
         MemberDAO dao = MemberDAO.getInstance();
         
@@ -46,7 +48,7 @@ public class RegisterAction implements Action {
             
             request.setAttribute("result_title", "회원가입 완료");
             request.setAttribute("result_msg", "회원가입이 완료되었습니다.");
-            request.setAttribute("result_url", "member/loginForm.do");
+            request.setAttribute("result_url", request.getContextPath() + "/index.jsp");
             
             return "common/result_view.jsp";
             

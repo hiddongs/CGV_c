@@ -1,55 +1,118 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CGV</title>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
 </head>
 <body>
-	<div id="cgvwrap">
-		<!-- 헤더 영역 -->
-		<%@ include file="../common/header.jsp" %>
+	<c:choose>
+    <c:when test="${member.member_id != 1}">
+        <jsp:include page="../common/header.jsp" />
+    </c:when>
+    <c:otherwise>
+        <jsp:include page="../common/adminHeader.jsp" />
+    </c:otherwise>
+</c:choose>
 
-		<!-- 메인 컨텐츠 영역 -->
-		<div id="container">
-			<!-- 현재 상영작 -->
-			<section class="movie_current">
-				<h2>현재 상영작</h2>
-				<div class="movie_list">
-					<!-- 영화 목록이 들어갈 자리 -->
-				</div>
-			</section>
+    <main>
+        <div class="container">
+        		 <!-- 상영중인 영화 리스트 시작 -->
+            <h2 class="section_title">현재 상영작</h2>
+            <div class="movie-grid">
+               <c:choose>
+             		<c:when test="${empty list}">
+               			<div class="movie-item">
+               				<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
+               				<div class="movie-info">
+               					<h3 class="movie-title">상영중인 영화가 없습니다.</h3>
+               					<div class="movie-meta">
+               						<span class="rating">상영중인 영화가 없습니다.</span>
+               					</div>
+               				</div>
+               			</div>
+            		</c:when>
+            		<c:otherwise>
+               			<c:forEach var="movie" items="${list}">
+			               	<div class="movie-item">
+			               		<img src="${pageContext.request.contextPath}/upload/${movie.poster_url}" alt="영화 포스터" class="movie-poster">
+			               		<div class="movie-info">
+			               			<h3 class="movie-title">${movie.mv_title}</h3>
+			               			<div class="movie-meta">
+			               				<span class="rating">예매율 @@%</span>
+			               				<a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
+			               			</div>
+			               		</div>
+			               	</div>
+               			</c:forEach>
+               		</c:otherwise>
+             </c:choose>	
+              	 <!-- 상영중인 영화 리스트 끝 -->
+            </div>
+              	 <!-- 개봉예정영화 시작 -->
+              	 <h2 class="section_title">개봉 예정 영화</h2>
+              	 <div class="movie-grid">
+              	 	<c:choose>
+              	 		<c:when test="${empty releaseList }">
+	              	 		<div class="movie-item">
+	               				<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
+	               				<div class="movie-info">
+	               					<h3 class="movie-title">개봉예정인 영화가 없습니다.</h3>
+	               					<div class="movie-meta">
+	               						<span class="rating">개봉예정인 영화가 없습니다.</span>
+	               					</div>
+	               				</div>
+	               			</div>
+              	 		</c:when>
+              	 		<c:otherwise>
+              	 			<c:forEach var="movie" items="${list}">
+			               	<div class="movie-item">
+			               		<img src="${pageContext.request}/upload/${movie.poster_url}" alt="영화 포스터" class="movie-poster">
+			               		<div class="movie-info">
+			               			<h3 class="movie-title">${movie.mv_title}</h3>
+			               			<div class="movie-meta">
+			               				<span class="rating">장르 : @@</span>
+			               				<a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
+			               			</div>
+			               		</div>
+			               	</div>
+               			</c:forEach>
+              	 		</c:otherwise>
+              	 	</c:choose>
+              	 </div>
+              	 <!-- 개봉예정영화 끝 -->
+                <!-- 영화 리스트 끝 -->
 
-			<!-- 개봉 예정작 -->
-			<section class="movie_upcoming">
-				<h2>개봉 예정작</h2>
-				<div class="movie_list">
-					<!-- 영화 목록이 들어갈 자리 -->
-				</div>
-			</section>
+            <h2 class="section_title">이벤트</h2>
+            <div class="event-grid">
+                <div class="event-item">
+                    <img src="https://img.cgv.co.kr/WebApp/contents/eventV4/35237/16815760867380.jpg" alt="이벤트 이미지" class="event-image">
+                    <div class="event-info">
+                        <h3 class="event-title">[슈퍼 마리오 브라더스] CGV 필름마크</h3>
+                        <p class="event-period">2023.04.15 ~ 2023.04.30</p>
+                    </div>
+                </div>
+                <div class="event-item">
+                    <img src="https://img.cgv.co.kr/WebApp/contents/eventV4/35236/16815760494330.jpg" alt="이벤트 이미지" class="event-image">
+                    <div class="event-info">
+                        <h3 class="event-title">[존 윅 4] 스페셜 포스터</h3>
+                        <p class="event-period">2023.04.15 ~ 2023.04.30</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-			<!-- 이벤트 섹션 -->
-			<section class="event_section">
-				<h2>이벤트</h2>
-				<div class="event_list">
-					<!-- 이벤트 목록이 들어갈 자리 -->
-				</div>
-			</section>
-		</div>
+    <%@ include file="../common/footer.jsp" %>
+    <a href="#" class="btn_gotoTop show">↑</a>
 
-		<!-- 푸터 영역 -->
-	<%@ include file="../common/footer.jsp" %>
-	</div>
-
-
-		
-	<script>
+    <script>
         $(document).ready(function() {
             // 스크롤 이벤트 처리
             $(window).scroll(function() {
