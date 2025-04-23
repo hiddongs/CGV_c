@@ -13,9 +13,12 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<jsp:include page="../common/adminHeader.jsp" />
 	<div class="container">
 		<div class="form-container">
 			<a href="${pageContext.request.contextPath}/member/adminInsertMovieForm.do"><h3>영화등록</h3></a>
+			<a href="${pageContext.request.contextPath}/member/adminMovieManagement.do"><h3>영화관리</h3></a>
+				
 		</div>
 	</div>
 </body>

@@ -111,7 +111,49 @@ public class MovieDAO {
     	return movieList;
     }
     
-public List<MovieVO> getReleaseMovieList(){
+	public List<MovieVO> getReleaseMovieList(){ // 개봉예정 영화 리스트
+	    	
+	    	Connection conn = null;
+	    	PreparedStatement pstmt = null;
+	    	String sql = null;
+	    	ResultSet rs = null;
+	    	List<MovieVO> movieList = new ArrayList<>();
+	    	
+	    	try {
+				conn = DBUtil.getConnection();
+				sql = "SELECT * FROM MOVIE WHERE RELEASE_DATE > SYSDATE";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						MovieVO movie = new MovieVO();
+						movie.setMovie_id(rs.getInt("MOVIE_ID"));
+						movie.setMv_title(rs.getString("TITLE"));
+						movie.setDirector(rs.getString("DIRECTOR"));
+						movie.setActor(rs.getString("ACTOR"));
+						movie.setGenre(rs.getString("GENRE"));
+						movie.setRuntime(rs.getInt("RUNTIME"));
+						movie.setRelease_date(rs.getDate("RELEASE_DATE"));
+						movie.setRating(rs.getString("AGE_LIMIT"));
+						movie.setPoster_url(rs.getString("POSTER_URL"));
+						movie.setDescription(rs.getString("DESCRIPTION"));
+						movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
+						movieList.add(movie);
+						
+					}while(rs.next());
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+	    	return movieList;
+	    }
+
+	//모든 영화 리스트
+public List<MovieVO> getEveryMovieList(){ // 개봉예정 영화 리스트
     	
     	Connection conn = null;
     	PreparedStatement pstmt = null;
@@ -121,7 +163,7 @@ public List<MovieVO> getReleaseMovieList(){
     	
     	try {
 			conn = DBUtil.getConnection();
-			sql = "SELECT * FROM MOVIE WHERE RELEASE_DATE > SYSDATE";
+			sql = "SELECT * FROM MOVIE";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -152,3 +194,4 @@ public List<MovieVO> getReleaseMovieList(){
     	return movieList;
     }
 }
+

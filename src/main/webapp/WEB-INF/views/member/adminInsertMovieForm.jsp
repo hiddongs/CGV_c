@@ -51,8 +51,59 @@ function previewImage(event) {
 			<input type="text" class="form-input" id="actor" name="actor">	
 		</div>
 		<div class="form-group">
-			<label class="form-label" id="genre">장르</label>	
-			<input type="text" class="form-input" id="genre" name="genre">	
+			<label class="form-check-label" id="genre">장르</label>	
+			<div class="form-check">
+				<input type="checkbox" id="genre-action" name="genre" value="액션" class="form-check-input">
+				<label for="genre-action" class="form-check-label">액션</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-crime" name="genre" value="범죄" class="form-check-input">
+				<label for="genre-crime" class="form-check-label">범죄</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-SF" name="genre" value="SF" class="form-check-input">
+				<label for="genre-SF" class="form-check-label">SF</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-comedy" name="genre" value="코미디" class="form-check-input">
+				<label for="genre-comedy" class="form-check-label">코미디</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-romance" name="genre" value="로맨스" class="form-check-input">
+				<label for="genre-romance" class="form-check-label">로맨스</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-thriller" name="genre" value="스릴러" class="form-check-input">
+				<label for="genre-thriller" class="form-check-label">스릴러</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-horror" name="genre" value="공포" class="form-check-input">
+				<label for="genre-horror" class="form-check-label">공포</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-war" name="genre" value="전쟁" class="form-check-input">
+				<label for="genre-war" class="form-check-label">전쟁</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-sport" name="genre" value="스포츠" class="form-check-input">
+				<label for="genre-sport" class="form-check-label">스포츠</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-fantasy" name="genre" value="판타지" class="form-check-input">
+				<label for="genre-fantasy" class="form-check-label">판타지</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-music" name="genre" value="음악" class="form-check-input">
+				<label for="genre-music" class="form-check-label">음악</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-musical" name="genre" value="뮤지컬" class="form-check-input">
+				<label for="genre-musical" class="form-check-label">뮤지컬</label>
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-melo" name="genre" value="멜로" class="form-check-input">
+				<label for="genre-melo" class="form-check-label">멜로</label>
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="form-label" id="runtime">상영시간</label>	
@@ -64,7 +115,7 @@ function previewImage(event) {
 		</div>
 		<div>
 			<label class="form-label" id="description">줄거리</label>
-			<input type="text" class="form-input" id="description" name="description">
+			<textarea rows="10" cols="70" id="description" name="description" class="form-input"></textarea>
 		</div>
 		<div class="button_group">
 			<button type="submit" class="btn btn-primary">영화등록</button>
