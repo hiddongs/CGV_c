@@ -25,6 +25,10 @@ function previewImage(event) {
         reader.readAsDataURL(file);
     }
 }
+function syncCheckbox(checkbox) {
+    const hiddenInput = checkbox.parentElement.querySelector('input[type="hidden"]');
+    hiddenInput.value = checkbox.checked ? 'Y' : 'N';
+  }
 </script>
 <title>관리자 영화 등록 페이지</title>
 </head>
@@ -105,6 +109,37 @@ function previewImage(event) {
 				<label for="genre-melo" class="form-check-label">멜로</label>
 			</div>
 		</div>
+		<!-- 
+		관리텝에서 관리하는걸로
+		<div class="form-group">
+			<label class="form-label" id="movieType">상영가능관 타입</label>
+			<div class="form-check">
+				<input type="checkbox" id="2D" value="2D" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
+				<label for="2D" class="form-check-label">2D</label>
+				 <input type="hidden" name="movieType-2D" value="N">
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="3D" value="3D" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
+				<label for="3D" class="form-check-label">3D</label>
+				 <input type="hidden" name="movieType-3D" value="N">
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="4DX" value="4DX" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
+				<label for="4DX" class="form-check-label">4DX</label>
+				<input type="hidden" name="movieType-4DX" value="N">
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="IMAX" value="IMAX" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
+				<label for="IMAX" class="form-check-label">IMAX</label>
+				 <input type="hidden" name="movieType-IMAX" value="N">
+			</div>
+			<div class="form-check">
+				<input type="checkbox" id="SCREENX" value="SCREENX" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
+				<label for="IMAX" class="form-check-label">SCREENX</label>
+				 <input type="hidden" name="movieType-SCREENX" value="N">
+			</div>
+		</div>
+		-->
 		<div class="form-group">
 			<label class="form-label" id="runtime">상영시간</label>	
 			<input type="text" class="form-input" id="runtime" name="runtime">	

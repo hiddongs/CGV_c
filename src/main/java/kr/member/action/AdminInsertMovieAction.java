@@ -11,7 +11,7 @@ import kr.movie.vo.MovieVO;
 import kr.util.DBUtil;
 import kr.util.FileUtil;
 
-public class AdminMovieInsertAction implements Action{
+public class AdminInsertMovieAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,6 +26,10 @@ public class AdminMovieInsertAction implements Action{
 		System.out.println("업로드된 포스터 파일명: " + posterFileName);
 		movieVO.setPoster_url(posterFileName);
 		movieVO.setGenre(req.getParameter("genre"));
+		String genreStr = null;
+		String[] genres = req.getParameterValues("genre");
+		genreStr = String.join(",", genres);
+		movieVO.setGenre(genreStr);
 		movieVO.setRuntime(Integer.parseInt(req.getParameter("runtime")));
 		movieVO.setRelease_date(DBUtil.toSqlDate(req.getParameter("release_date")));
 		movieVO.setDescription(req.getParameter("description"));

@@ -15,8 +15,15 @@ public class MovieVO {
 	private String poster_url;   // 포스터 이미지 주소
 	private String description;  // 설명
 	private Date movie_create;	// 생성일
+	private String movieType; // 영화타입
 	
 	
+	public String getMovieType() {
+		return movieType;
+	}
+	public void setMovieType(String movieType) {
+		this.movieType = movieType;
+	}
 	public Date getMovie_create() {
 		return movie_create;
 	}
