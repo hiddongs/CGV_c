@@ -3,25 +3,36 @@
 
     color : black;
     text-align:center;
-    
+    font-size:40px;
    
+}
+.center-box{
+      max-width: 1000px;
+      max-height:1800px;
+    margin: 0 auto; /* 수평 가운데 정렬 */
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .text{
 color:black; 
 text-align:left;
-font-size:20px;
+font-size:18px;
 }
 .subTitle{
 color : gray;
 text-align:center;
-font-size:
+font-size:40px;
 
 }
 
 .subText{
   color:gray;
-  font-size:13px;
+  font-size:15px;
   text-align:center;
 }
 
@@ -31,7 +42,7 @@ font-size:
     height: 20px;
     background-color: #aaa;
     margin: 0 10px;
-    vertical-align: middle;
+    vertical-align: center;
 }
 .specialMovie{
  
