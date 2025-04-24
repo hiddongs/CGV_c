@@ -17,9 +17,9 @@ public class FileUtil {
 			                    HttpServletRequest request,
 			                        String param)
 			            throws IOException,ServletException{
-		//컨텍스트 경로상의 업로드 절대 경로
-		String upload = request.getServletContext()
-			               .getRealPath(UPLOAD_PATH);
+		//webapp 경로상의 upload 폴더 경로
+		String webappPath = request.getServletContext().getRealPath("");
+		String upload = webappPath + UPLOAD_PATH;
 		Part part = request.getPart(param);
 		String filename = part.getSubmittedFileName();
 		if(!filename.isEmpty()) {

@@ -59,7 +59,7 @@
               	 <h2 class="section_title">개봉 예정 영화</h2>
               	 <div class="movie-grid">
               	 	<c:choose>
-              	 		<c:when test="${empty releaseList }">
+              	 		<c:when test="${empty releaseList}">
 	              	 		<div class="movie-item">
 	               				<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
 	               				<div class="movie-info">
@@ -71,9 +71,9 @@
 	               			</div>
               	 		</c:when>
               	 		<c:otherwise>
-              	 			<c:forEach var="movie" items="${list}">
+              	 			<c:forEach var="movie" items="${releaseList}">
 			               	<div class="movie-item">
-			               		<img src="${pageContext.request}/upload/${movie.poster_url}" alt="영화 포스터" class="movie-poster">
+			               		<img src="${pageContext.request.contextPath}/upload/${movie.poster_url}" alt="영화 포스터" class="movie-poster">
 			               		<div class="movie-info">
 			               			<h3 class="movie-title">${movie.mv_title}</h3>
 			               			<div class="movie-meta">
