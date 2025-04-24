@@ -30,7 +30,7 @@
                       
                       </li>
                     </ul>
-                <li><a href="${pageContext.request.contextPath}/ticket">예매</a></li>
+                <li><a href="${pageContext.request.contextPath}/movie/reservationMVform.do">예매</a></li>
                 <li><a href="${pageContext.request.contextPath}/event">이벤트</a>
                 	<ul> <!-- ul태그 안에 li태그, li안에 하위 ul 넣기 -->
                 		<li><a href="${pageContext.request.contextPath}/event/eventList.do">이벤트</a></li>

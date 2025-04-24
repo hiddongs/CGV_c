@@ -22,6 +22,7 @@ public class MovieDAO {
 		PreparedStatement pstmt = null;
 		String sql = null;
 		ResultSet rs = null;
+		List<MovieVO> list = new ArrayList<>(); 
 		
 		try {
 			
@@ -29,14 +30,32 @@ public class MovieDAO {
 			
 		    conn.prepareStatement(sql);
 		    
-		    sql = "SELECT * FROM movie ORDER BY booking_rate DESC";
+		    sql = "SELECT * FROM movie ORDER BY title ASC";
+		    
+		    rs = pstmt.executeQuery();
+		    
+		    while(rs.next()) {
+		    	MovieVO movie = new MovieVO();
+				movie.setMovie_id(rs.getInt("MOVIE_ID"));
+				movie.setMv_title(rs.getString("TITLE"));
+				movie.setDirector(rs.getString("DIRECTOR"));
+				movie.setActor(rs.getString("ACTOR"));
+				movie.setGenre(rs.getString("GENRE"));
+				movie.setRuntime(rs.getInt("RUNTIME"));
+				movie.setRelease_date(rs.getDate("RELEASE_DATE"));
+				movie.setRating(rs.getString("AGE_LIMIT"));
+				movie.setPoster_url(rs.getString("POSTER_URL"));
+				movie.setDescription(rs.getString("DESCRIPTION"));
+				movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
+				list.add(movie);
+		    }
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new Exception(e);
 		} finally {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
-    	return null;
+    	return list;
     }
     
     //영화등록

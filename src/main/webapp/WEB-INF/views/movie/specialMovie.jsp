@@ -9,13 +9,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/specialMovie.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-<<<<<<< HEAD
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/forms.css">
-</head>
-=======
 
         </head>
->>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 
 <body>
 

@@ -85,6 +85,7 @@ public class MovieVO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 
 
 }
