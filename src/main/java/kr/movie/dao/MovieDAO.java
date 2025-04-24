@@ -193,5 +193,45 @@ public List<MovieVO> getEveryMovieList(){ // 개봉예정 영화 리스트
 		}
     	return movieList;
     }
+
+	public MovieVO getMovie(int movie_id) {
+
+		Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	String sql = null;
+    	ResultSet rs = null;
+    	MovieVO result = null;
+    	try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM MOVIE WHERE MOVIE_ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, movie_id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					result = new MovieVO();
+					result.setMovie_id(rs.getInt("MOVIE_ID"));
+					result.setMv_title(rs.getString("TITLE"));
+					result.setDirector(rs.getString("DIRECTOR"));
+					result.setActor(rs.getString("ACTOR"));
+					result.setGenre(rs.getString("GENRE"));
+					result.setRuntime(rs.getInt("RUNTIME"));
+					result.setRelease_date(rs.getDate("RELEASE_DATE"));
+					result.setRating(rs.getString("AGE_LIMIT"));
+					result.setPoster_url(rs.getString("POSTER_URL"));
+					result.setDescription(rs.getString("DESCRIPTION"));
+					result.setMovie_create(rs.getDate("MOVIE_CREATE"));
+					
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return result;
+	}
 }
 
