@@ -2,6 +2,7 @@ package kr.member.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -30,8 +31,6 @@ public class AdminMovieManagementAction implements Action{
 		req.setAttribute("showingMovieList", json);
 		json = mapper.writeValueAsString(releaseMovieList);
 		req.setAttribute("releaseMovieList", json);
-		
-		
 		
 		return "member/adminMovieManagement.jsp";
 	}
