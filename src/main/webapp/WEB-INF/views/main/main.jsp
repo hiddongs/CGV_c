@@ -88,24 +88,33 @@
               	 </div>
               	 <!-- 개봉예정영화 끝 -->
                 <!-- 영화 리스트 끝 -->
-
-            <h2 class="section_title">이벤트</h2>
-            <div class="event-grid">
-                <div class="event-item">
-                    <img src="https://img.cgv.co.kr/WebApp/contents/eventV4/35237/16815760867380.jpg" alt="이벤트 이미지" class="event-image">
-                    <div class="event-info">
-                        <h3 class="event-title">[슈퍼 마리오 브라더스] CGV 필름마크</h3>
-                        <p class="event-period">2023.04.15 ~ 2023.04.30</p>
-                    </div>
-                </div>
-                <div class="event-item">
-                    <img src="https://img.cgv.co.kr/WebApp/contents/eventV4/35236/16815760494330.jpg" alt="이벤트 이미지" class="event-image">
-                    <div class="event-info">
-                        <h3 class="event-title">[존 윅 4] 스페셜 포스터</h3>
-                        <p class="event-period">2023.04.15 ~ 2023.04.30</p>
-                    </div>
-                </div>
-            </div>
+			<!-- 이벤트 리스트 시작 -->
+			
+			<h2 class="section_title">진행중인 이벤트</h2>
+			<div class="event-grid">
+				<c:choose>
+					<c:when test="${empty ongoingEventList}">
+						<div class="event-item">
+							<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
+	               			<div class="event-info">
+	               				<h3 class="event-title"> 진행중인 이벤트가 없습니다.</h3>
+	               			</div>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="event" items="${ongoingEventList}">
+							<div class=	"event-item">
+								<img src="${pageContext.request.contextPath}/upload/${event.poster_url}" alt="이벤트 이미지" class="event-image">
+				        		<div class="event-info">
+				        			<h3 class="event-title">${event.title}</h3>
+				        			<p class="event-period">${event.start_date}~${event.end_date}</p>
+				        		</div>       	
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</div>
+           <!-- 이벤트 리스트 끝  -->
         </div>
     </main>
 
