@@ -22,6 +22,7 @@ public class EventDAO {
 		return instance;
 	}
 	
+	//이벤트 모두 가져오는거
 	public List<EventVO> getEveryEvent() {
 		
 		Connection conn = null;
@@ -106,7 +107,7 @@ public class EventDAO {
 			pstmt.setString(++cnt, event.getTitle());
 			pstmt.setString(++cnt, event.getContent());
 			pstmt.setDate(++cnt, (Date) event.getStart_date());
-			pstmt.setDate(++cnt, (Date) event.getStart_date());
+			pstmt.setDate(++cnt, (Date) event.getEnd_date());
 			pstmt.setString(++cnt, event.getType());
 			pstmt.setString(++cnt, event.getPoster_url());
 			result = pstmt.executeUpdate();

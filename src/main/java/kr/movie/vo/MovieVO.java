@@ -16,8 +16,15 @@ public class MovieVO {
 	private String description;  // 설명
 	private Date movie_create;	// 생성일
 	private String movieType; // 영화타입
+	private String age_limit; // 연령제한
 	
 	
+	public String getAge_limit() {
+		return age_limit;
+	}
+	public void setAge_limit(String age_limit) {
+		this.age_limit = age_limit;
+	}
 	public String getMovieType() {
 		return movieType;
 	}
