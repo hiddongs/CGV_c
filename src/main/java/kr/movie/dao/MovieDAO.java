@@ -173,7 +173,7 @@ public class MovieDAO {
 	    }
 
 	//모든 영화 리스트
-public List<MovieVO> getEveryMovieList(){ // 개봉예정 영화 리스트
+    public List<MovieVO> getEveryMovieList(){ // 개봉예정 영화 리스트
     	
     	Connection conn = null;
     	PreparedStatement pstmt = null;
