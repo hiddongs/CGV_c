@@ -34,7 +34,7 @@
 			<c:otherwise>
 				<c:forEach var="event" items="${eventList}">
 					<div class="event-item">
-						<img alt="이벤트 사진" src="${pageContext.request.contextPath}/upload/${event.poster_url}">
+						<img class="event-image" alt="이벤트 사진" src="${pageContext.request.contextPath}/upload/${event.poster_url}">
 						<div class="event-info">
 							<h3 class="event-title">${event.title}</h3>
 							<p class="event-period">${event.start_date} ~ ${event.end_date}</p>

@@ -23,7 +23,7 @@ public class AdminUpdateMovieFormAction implements Action{
 			MovieDAO dao = MovieDAO.getInstance();
 			MovieVO movie = dao.getMovie(Integer.parseInt(req.getParameter("movie_id")));
 			req.setAttribute("movie", movie);
-			return "member/updateMovieForm.jsp";
+			return "member/adminUpdateMovieForm.jsp";
 		}else {
 			return "redirect:/main/main.do";
 		}
