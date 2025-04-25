@@ -1,4 +1,4 @@
-package kr.member.action;
+package kr.member.action.admin;
 
 import java.io.IOException;
 

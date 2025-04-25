@@ -1,4 +1,4 @@
-package kr.member.action;
+package kr.member.action.admin;
 
 import java.io.IOException;
 
@@ -23,7 +23,6 @@ public class AdminInsertMovieAction implements Action{
 		movieVO.setDirector(req.getParameter("director"));
 		// 포스터 업로드 처리
 		String posterFileName = FileUtil.uploadFile(req, "poster_url");
-		System.out.println("업로드된 포스터 파일명: " + posterFileName);
 		movieVO.setPoster_url(posterFileName);
 		movieVO.setGenre(req.getParameter("genre"));
 		String genreStr = null;

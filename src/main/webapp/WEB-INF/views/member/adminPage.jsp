@@ -18,7 +18,7 @@
 		<div class="form-container">
 			<a href="${pageContext.request.contextPath}/member/adminInsertMovieForm.do"><h3>영화등록</h3></a>
 			<a href="${pageContext.request.contextPath}/member/adminMovieManagement.do"><h3>영화관리</h3></a>
-				
+			<a href="${pageContext.request.contextPath}/member/adminEventManagement.do"><h3>이벤트관리</h3></a>
 		</div>
 	</div>
 </body>
