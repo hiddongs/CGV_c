@@ -1,68 +1,93 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>영화 예매 대문 페이지</title>
- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reservationMenu.css">
- <link rel="stylesheet" href="/css/bootstrap.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-<script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+      <meta charset="UTF-8">
+      <title>영화 예매 대문 페이지</title>
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reservationMenu.css">
+      <link rel="stylesheet" href="/css/bootstrap.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hiddong.css">
+      <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
 
- 
-</head>
-<body>
-  <div class ="center-box">
-  <div>
-  </div>
-  <div class="inner-box">
-   <h3>영화</h3>
-    <label for ="title">정렬</label>
-  <select name ="align" id="title">
-    <option value ="1">가나다순</option>
-   <option value ="2" seleceted>인기순</option>
-   
-  </select>
-  <form action="reservationSubmit.do" method="post" class="container mt-4">
-  <div class="mb-3">
-    <label for="movie" class="form-label">영화 선택</label>
-    <select name="movieId" id="movie" class="form-select">
-      <option value="">-- 영화를 선택하세요 --</option>
-      <c:forEach var="movie" items="${list}">
-        <option value="${movie.movie_id}">${movie.mv_title}</option>
-      </c:forEach>
-    </select>
-  </div>
-  <button type="submit" class="btn btn-primary">예매하기</button>
-</form>
-  
-   
-   <input type="submit" value="전송">
-  </form>
-  </div>
-   <div class="inner-box">
-   <h3>극장</h3>
-    </div>
-    <div class="inner-box">
-   <h3>시간</h3>
-    </div>
-  </div>
+
+    </head>
+
+    <body>
+      <div class="center-box">
+        <div>
+        </div>
+        <div class="inner-box">
+          <h3>영화</h3>
+          <label for="title">정렬</label>
+          <select name="align" id="title">
+            <option value="1">가나다순</option>
+            <option value="2" seleceted>인기순</option>
+
+          </select>
+          <form action="reservationSubmit.do" method="post" class="container mt-4">
+            <div class="mb-3">
+              <label for="movie" class="form-label">영화 선택</label>
+              <select name="movieId" id="movie" class="form-select">
+                <option value="">-- 영화를 선택하세요 --</option>
+                <c:forEach var="movie" items="${movieList}">
+                  <option value="${movie.movie_id}">${movie.mv_title}</option>
+                </c:forEach>
+              </select>
+            </div>
+
+          </form>
+
+          <input type="submit" value="전송">
+
+        </div>
+        <div class="inner-box">
+          <h3>지역</h3>
+          <div class="input-container">
+            <input required="region" placeholder="극장 지역을 검색하세요" type="region">
+            <button class="invite-btn" type="button">
+              검색
+            </button>
+          </div>
+          <form action="reserve.do" method="post" class="container mt-4">
+            <div class="mb-3">
+              <div class="inner-box">
+                <ul style="list-style: none; padding-left:0;text-align: left;">
+                  <c:forEach var="theater" items="${theaterList}">
+                    <input type="submit" value="${theater.region}">
+
+                  </c:forEach>
+                </ul>
+              </div>
+            </div>
+          </form>
 
 
-  
-    
-  
 
-  
+        </div>
+      </div>
 
-</body>
 
-</html>
+      <div class="inner-box">
+        <h3>시간</h3>
+      </div>
 
-<!-- 
+
+
+
+
+
+
+
+
+    </body>
+
+    </html>
+
+    <!-- 
 
 <style>
     body { font-family: 'Noto Sans KR', sans-serif; padding: 20px; }
