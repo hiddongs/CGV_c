@@ -296,5 +296,42 @@ public class MovieDAO {
     	return result;
 		
 	}
+	
+	// 현재 상영중인 특정 영화
+	public MovieVO getShowingMovie(int movie_id) {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    String sql = null;
+	    ResultSet rs = null;
+	    MovieVO movie = null;
+	    try {
+	        conn = DBUtil.getConnection();
+	        sql = "SELECT * FROM MOVIE WHERE RELEASE_DATE <= SYSDATE AND MOVIE_ID = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, movie_id);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            movie = new MovieVO();
+	            movie.setMovie_id(rs.getInt("MOVIE_ID"));
+	            movie.setMv_title(rs.getString("TITLE"));
+	            movie.setDirector(rs.getString("DIRECTOR"));
+	            movie.setActor(rs.getString("ACTOR"));
+	            movie.setGenre(rs.getString("GENRE"));
+	            movie.setRuntime(rs.getInt("RUNTIME"));
+	            movie.setRelease_date(rs.getDate("RELEASE_DATE"));
+	            movie.setRating(rs.getString("AGE_LIMIT"));
+	            movie.setPoster_url(rs.getString("POSTER_URL"));
+	            movie.setDescription(rs.getString("DESCRIPTION"));
+	            movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.executeClose(rs, pstmt, conn);
+	    }
+	    return movie;
+	}
+
 }
 

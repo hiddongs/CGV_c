@@ -30,7 +30,7 @@ public class RealMVreservationAction implements Action {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-        return "movie/realMVreservation.jsp";
+        return "movie/reservationMV.jsp";
 	}
 
 }

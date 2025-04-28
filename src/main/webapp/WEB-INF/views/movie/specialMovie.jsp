@@ -6,11 +6,10 @@
 <head>
     <meta charset="UTF-8">
     <title>특별관 소개 페이지</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/specialMovie.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hiddongs.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/forms.css">
 
         </head>
 
