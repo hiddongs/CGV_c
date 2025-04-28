@@ -296,6 +296,7 @@ public class MovieDAO {
     	return result;
 		
 	}
+
 	
 	// 현재 상영중인 특정 영화
 	public MovieVO getShowingMovie(int movie_id) {
@@ -331,6 +332,64 @@ public class MovieDAO {
 	        DBUtil.executeClose(rs, pstmt, conn);
 	    }
 	    return movie;
+	}
+
+
+	//영화 삭제 메서드
+	public int deleteMovie(int movie_id) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int result = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM MOVIE WHERE MOVIE_ID = ?"; // ON CASCADE 설정돼있음
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, movie_id);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		return result;
+	}
+
+	//영화 상영타입 업데이트
+	public int updateMovieType(int movie_id, String movieType) {
+		Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	String sql = null;
+    	int cnt = 0 ;
+    	int result = 0;
+    	try {
+    		conn = DBUtil.getConnection();
+    		sql = "UPDATE MOVIE_TYPE SET "
+    				+ "\"2D\" = ? ,"
+    				+ "\"3D\" = ? ,"
+    				+ "\"4DX\" = ? ,"
+    				+ "SCREENX = ?, "
+    				+ "IMAX = ? "
+    				+ "WHERE MOVIE_ID = ?";
+    		pstmt = conn.prepareStatement(sql);
+    		pstmt.setString(++cnt, movieType.contains("2d")?"Y" :"N");
+    		pstmt.setString(++cnt, movieType.contains("3d")?"Y" :"N");
+    		pstmt.setString(++cnt, movieType.contains("4dx")?"Y" :"N");
+    		pstmt.setString(++cnt, movieType.contains("screenx")?"Y" :"N");
+    		pstmt.setString(++cnt, movieType.contains("imax")?"Y" :"N");
+    		pstmt.setInt(++cnt, movie_id);
+    		result = pstmt.executeUpdate();
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		
+		return result;
 	}
 
 }

@@ -64,11 +64,19 @@
             deleteBtn.textContent = '삭제';
             deleteBtn.dataset.movieId = movie.movie_id;
             deleteBtn.onclick = deleteMovieForm;
-
+            
+            const movieTypeBtn = document.createElement('button')
+            movieTypeBtn.type = 'button'
+            movieTypeBtn.className = 'btn btn-warning'
+            movieTypeBtn.textContent = '상영타입'	
+           	movieTypeBtn.dataset.movieId = movie.movie_id
+           	movieTypeBtn.onclick = updateMovieTypeForm;
+            
             actionCell.appendChild(updateBtn);
             actionCell.appendChild(document.createTextNode(' '));
             actionCell.appendChild(deleteBtn);
-
+            actionCell.appendChild(document.createTextNode(' '))
+			actionCell.appendChild(movieTypeBtn)
             row.appendChild(actionCell);
             container.appendChild(row);
         });
@@ -91,6 +99,10 @@
         if(confirm('정말 삭제하시겠습니까?')) {
             window.location.href = 'deleteMovieForm.do?movie_id=' + encodeURIComponent(movieId);
         }
+    }
+    function updateMovieTypeForm(event){
+		const movieId = event.target.dataset.movieId;
+		window.location.href = 'updateMovieTypeForm.do?movie_id='+ encodeURIComponent(movieId)
     }
 </script>
 
