@@ -15,7 +15,9 @@ import kr.movie.vo.MovieVO;
 public class AdminMovieListAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("application/json;charset=utf-8");
+        
+    	
+    	response.setContentType("application/json;charset=utf-8");
         response.setCharacterEncoding("utf-8");
         
         String order = request.getParameter("order");

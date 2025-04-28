@@ -5,10 +5,12 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import kr.controller.Action;
 import kr.event.dao.EventDAO;
 import kr.event.vo.EventVO;
+import kr.member.vo.MemberVO;
 import kr.util.DBUtil;
 import kr.util.FileUtil;
 
@@ -20,7 +22,12 @@ public class AdminEventUpdateAction implements Action{
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 1. 인코딩
+       
+    	HttpSession session = req.getSession();
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		if(member.getMember_id() != 1)	return "redirect:/main/main.do";
+    	
+    	// 1. 인코딩
         req.setCharacterEncoding("UTF-8");
 
         // 2. 파라미터 및 VO 세팅
