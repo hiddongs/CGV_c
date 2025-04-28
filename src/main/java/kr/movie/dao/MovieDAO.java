@@ -319,5 +319,39 @@ public class MovieDAO {
 		}
 		return result;
 	}
+
+	//영화 상영타입 업데이트
+	public int updateMovieType(int movie_id, String movieType) {
+		Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	String sql = null;
+    	int cnt = 0 ;
+    	int result = 0;
+    	try {
+    		conn = DBUtil.getConnection();
+    		sql = "UPDATE MOVIE_TYPE SET "
+    				+ "\"2D\" = ? ,"
+    				+ "\"3D\" = ? ,"
+    				+ "\"4DX\" = ? ,"
+    				+ "SCREENX = ?, "
+    				+ "IMAX = ? "
+    				+ "WHERE MOVIE_ID = ?";
+    		pstmt = conn.prepareStatement(sql);
+    		pstmt.setString(++cnt, movieType.contains("2d")?"Y" :"N");
+    		pstmt.setString(++cnt, movieType.contains("3d")?"Y" :"N");
+    		pstmt.setString(++cnt, movieType.contains("4dx")?"Y" :"N");
+    		pstmt.setString(++cnt, movieType.contains("screenx")?"Y" :"N");
+    		pstmt.setString(++cnt, movieType.contains("imax")?"Y" :"N");
+    		pstmt.setInt(++cnt, movie_id);
+    		result = pstmt.executeUpdate();
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		
+		return result;
+	}
 }
 
