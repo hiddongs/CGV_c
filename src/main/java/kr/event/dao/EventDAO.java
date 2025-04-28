@@ -119,4 +119,99 @@ public class EventDAO {
 		}
 		return result;
 	}
+
+	
+	//이벤트 id로 이벤트 검색후 반환
+	public EventVO getEvent(int event_id) {
+		
+		Connection conn = null;
+		String sql = null;
+		PreparedStatement pstmt = null;
+		EventVO result = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM EVENT WHERE EVENT_ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, event_id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				EventVO event = new EventVO();
+				event.setEvent_id(rs.getLong("EVENT_ID"));
+				event.setTitle(rs.getString("TITLE"));
+				event.setContent(rs.getString("CONTENT"));
+				event.setStart_date(rs.getDate("START_DATE"));
+				event.setEnd_date(rs.getDate("END_DATE"));
+				event.setType(rs.getString("TYPE"));
+				event.setPoster_url(rs.getString("POSTER_URL"));
+				result = event;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return result;
+	}
+
+	//이벤트 수정
+	public int updateEvent(EventVO event) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int result = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "UPDATE EVENT SET TITLE = ? "
+					+ ", CONTENT = ? "
+					+ " , START_DATE = ? "
+					+ ", END_DATE = ? "
+					+ ", TYPE = ? "
+					+ ", POSTER_URL = ?"
+					+ " WHERE EVENT_ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			int cnt = 0;
+			pstmt.setString(++cnt, event.getTitle());
+			pstmt.setString(++cnt, event.getContent());
+			pstmt.setDate(++cnt, (Date) event.getStart_date());
+			pstmt.setDate(++cnt, (Date) event.getEnd_date());
+			pstmt.setString(++cnt, event.getType());
+			pstmt.setString(++cnt, event.getPoster_url());
+			pstmt.setLong(++cnt, event.getEvent_id());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		return result;
+	}
+
+	//이벤트 삭제
+	public int deleteEvent(Long event_id) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int result = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM EVENT WHERE EVENT_ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, event_id);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		return result;
+	}
 }

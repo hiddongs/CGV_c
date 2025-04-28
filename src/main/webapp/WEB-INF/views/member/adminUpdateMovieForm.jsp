@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css">
 <script type="text/javascript">
 	function onchange(event){
-		var fileInput = documnet.getElementById('poster_url')
+		var fileInput = document.getElementById('poster_url')
 		
 		if(fileInput.files.length > 0){
 			var oldPosterUrl = document.getElementById('oldPosterUrl')
@@ -25,7 +25,7 @@
 		<input type="hidden" id="movie_id" value="${movie.movie_id}" name="movie_id">
 		<div class="form-group"></div> 
 			<div class="form-group">
-			<label class="form-label" id="title">영화제목</label>
+			<label class="form-label" id="title" for="title">영화제목</label>
 			<input class="form-input" type="text" id="title" name="title" value="${movie.mv_title }">
 		</div>
 		<div class="form-group">
@@ -37,15 +37,15 @@
        		<img id="preview" class="movie-poster" src="${pageContext.request.contextPath}/upload/${movie.poster_url}" alt="포스터 미리보기" style="max-width: 200px; margin-top: 10px;">
    		</div>
 		<div class="form-group">
-			<label class="form-label" id="director">감독</label>
+			<label class="form-label" id="director" for="director">감독</label>
 			<input type="text" class="form-input" name="director" id="director" value="${movie.director }">
 		</div>
 		<div class="form-group">
-			<label class="form-label" id="actor">배우</label>	
+			<label class="form-label" id="actor" for="actor">배우</label>	
 			<input type="text" class="form-input" id="actor" name="actor" value="${movie.actor }">	
 		</div>
 		<div class="form-group">
-			<label class="form-check-label" id="genre">장르</label>	
+			<label class="form-check-label" id="genre" for="genre">장르</label>	
 			<div class="form-check">
 				<input type="checkbox" id="genre-action" name="genre" value="액션" class="form-check-input">
 				<label for="genre-action" class="form-check-label">액션</label>
@@ -98,12 +98,12 @@
 				<input type="checkbox" id="genre-melo" name="genre" value="멜로" class="form-check-input">
 				<label for="genre-melo" class="form-check-label">멜로</label>
 			</div>
-			<div class="form-group">
-			<label class="form-label" id="runtime">상영시간</label>	
+		<div class="form-group">
+			<label class="form-label" id="runtime" for="runtime">상영시간</label>	
 			<input type="text" class="form-input" id="runtime" name="runtime" value="${movie.runtime }">	
 		</div>
 		<div class="form-group">
-			<label class="form-title" id="age_limit">연령제한</label>
+			<label class="form-title" id="age_limit" for="age_limit">연령제한</label>
 			<div class="form-check">
 				<input type="radio" class="age_limit" value="ALL" id="ALL" name="age_limit">
 				<label for="ALL" class="form-check-label">전체이용가</label>
@@ -122,11 +122,11 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="form-label" id="release_date">개봉일(상영시작일)</label>	
+			<label class="form-label" id="release_date" for="release_date">개봉일(상영시작일)</label>	
 			<input type="date" class="form-input" id="release_date" name="release_date" value="${movie.release_date }">	
 		</div>
 		<div>
-			<label class="form-label" id="description">줄거리</label>
+			<label class="form-label" id="description" for="description">줄거리</label>
 			<textarea rows="10" cols="70" id="description" name="description" class="form-input" >${movie.description }</textarea>
 		</div>
 		</div>
