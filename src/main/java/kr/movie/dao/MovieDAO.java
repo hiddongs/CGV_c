@@ -296,5 +296,28 @@ public List<MovieVO> getEveryMovieList(){ // 개봉예정 영화 리스트
     	return result;
 		
 	}
+
+	//영화 삭제 메서드
+	public int deleteMovie(int movie_id) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int result = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM MOVIE WHERE MOVIE_ID = ?"; // ON CASCADE 설정돼있음
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, movie_id);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		return result;
+	}
 }
 
