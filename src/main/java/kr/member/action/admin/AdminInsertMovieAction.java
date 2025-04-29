@@ -39,6 +39,7 @@ public class AdminInsertMovieAction implements Action{
 		movieVO.setRuntime(Integer.parseInt(req.getParameter("runtime")));
 		movieVO.setRelease_date(DBUtil.toSqlDate(req.getParameter("release_date")));
 		movieVO.setDescription(req.getParameter("description"));
+		movieVO.setActor(req.getParameter("age_limit"));
 		
 		MovieDAO movieDAO = MovieDAO.getInstance();
 		
