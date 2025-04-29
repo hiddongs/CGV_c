@@ -15,7 +15,6 @@ public class MemberDAO {
     public static MemberDAO getInstance() {
         return instance;
     }
-    
     private MemberDAO() {}
     
     // 회원가입
