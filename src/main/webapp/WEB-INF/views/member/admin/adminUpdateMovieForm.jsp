@@ -19,7 +19,7 @@
 </script>
 </head>
 <body>
-<jsp:include page="../common/adminHeader.jsp" />
+<jsp:include page="../../common/adminHeader.jsp" />
 	<form action="updateMovie.do" class="form-container" method="post" enctype="multipart/form-data">
 		<h3 class="form-title">관리자 영화수정 페이지</h3>
 		<input type="hidden" id="movie_id" value="${movie.movie_id}" name="movie_id">

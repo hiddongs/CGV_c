@@ -14,7 +14,7 @@
 </script>
 </head>
 <body>
- <%@ include file="../common/adminHeader.jsp" %>
+ <%@ include file="../../common/adminHeader.jsp" %>
 <div class="container">
 	<div class="button-group">
             <button class="btn btn-primary" onclick="renderList('showing')">진행중인 이벤트 목록</button>

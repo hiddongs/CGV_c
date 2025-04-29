@@ -9,15 +9,16 @@ import jakarta.servlet.http.HttpSession;
 import kr.controller.Action;
 import kr.member.vo.MemberVO;
 import kr.movie.dao.MovieDAO;
+import kr.util.CodeUtil;
 
 public class AdminUpdateMovieTypeAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		HttpSession session = req.getSession();
-		MemberVO member = (MemberVO)session.getAttribute("member");
-		if(member.getMember_id() != 1)	return "redirect:/main/main.do";
+		if(!CodeUtil.isAdmin(req)) {
+			return "redirect:/main/main.do";
+		}
 		
 		String[] typeArr = req.getParameterValues("movie_type");
 		String movieType = String.join(",", typeArr);
