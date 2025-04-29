@@ -68,8 +68,8 @@ public class MovieDAO {
     	int result = 0;
     	try {
     		conn = DBUtil.getConnection();
-    		sql = "INSERT INTO MOVIE (MOVIE_ID, TITLE, DIRECTOR, ACTOR, GENRE, RUNTIME, RELEASE_DATE, POSTER_URL, MOVIE_CREATE, DESCRIPTION) VALUES("
-    				+ "MOVIE_SEQ.NEXTVAL, ?,?,?,?,?,?,?,SYSDATE,?)";
+    		sql = "INSERT INTO MOVIE (MOVIE_ID, TITLE, DIRECTOR, ACTOR, GENRE, RUNTIME, RELEASE_DATE, POSTER_URL, MOVIE_CREATE, DESCRIPTION, AGE_LIMIT) VALUES("
+    				+ "MOVIE_SEQ.NEXTVAL, ?,?,?,?,?,?,?,SYSDATE,?,?)";
     		pstmt = conn.prepareStatement(sql);
     		pstmt.setString(++cnt, movieVO.getMv_title());
     		pstmt.setString(++cnt, movieVO.getDirector());
@@ -79,6 +79,7 @@ public class MovieDAO {
     		pstmt.setDate(++cnt, new java.sql.Date(movieVO.getRelease_date().getTime()));
     		pstmt.setString(++cnt, movieVO.getPoster_url());
     		pstmt.setString(++cnt, movieVO.getDescription());
+    		pstmt.setString(++cnt, movieVO.getAge_limit());
 
     		result = pstmt.executeUpdate();
     	} catch (Exception e) {
