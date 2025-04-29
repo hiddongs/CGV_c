@@ -43,7 +43,7 @@
 </script>
 </head>
 <body>
-    <%@ include file="../common/adminHeader.jsp" %>
+    <%@ include file="../../common/adminHeader.jsp" %>
     <form action="" method="post" class="form-container" id="eventManagement" enctype="multipart/form-data">
         <input type="hidden" id="event_id" name="event_id" value="${event.event_id}">
         <div class="form-group">

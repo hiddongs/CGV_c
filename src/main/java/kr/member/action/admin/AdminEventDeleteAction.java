@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.controller.Action;
 import kr.event.dao.EventDAO;
 import kr.member.vo.MemberVO;
+import kr.util.CodeUtil;
 import kr.util.FileUtil;
 
 public class AdminEventDeleteAction implements Action{
@@ -16,9 +17,9 @@ public class AdminEventDeleteAction implements Action{
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		HttpSession session = req.getSession();
-		MemberVO member = (MemberVO)session.getAttribute("member");
-		if(member.getMember_id() != 1)	return "redirect:/main/main.do";
+		if(!CodeUtil.isAdmin(req)) {
+			return "redirect:/main/main.do";
+		}
 		
 		Long event_id = Long.parseLong(req.getParameter("event_id"));
 		String poster_url = req.getParameter("poster_url");

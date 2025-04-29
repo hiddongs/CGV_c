@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-	<%@ include file="../common/adminHeader.jsp" %>
+	<%@ include file="../../common/adminHeader.jsp" %>
 	<div>
 		<form class="form-container" action="insertEvent.do" method="post"  enctype="multipart/form-data">
 			<div class="form-group">

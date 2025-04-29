@@ -11,20 +11,21 @@ import kr.controller.Action;
 import kr.event.dao.EventDAO;
 import kr.event.vo.EventVO;
 import kr.member.vo.MemberVO;
+import kr.util.CodeUtil;
 
 public class AdminEventManagementAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		HttpSession session = req.getSession();
-		MemberVO member = (MemberVO)session.getAttribute("member");
-		if(member.getMember_id() != 1)	return "redirect:/main/main.do";
+		if(!CodeUtil.isAdmin(req)) {
+			return "redirect:/main/main.do";
+		}
 		
 		EventDAO dao = EventDAO.getInstance();
 		List<EventVO> everyList = dao.getEveryEvent();
 		req.setAttribute("eventList", everyList);
-		return "member/adminEventManagement.jsp";
+		return "member/admin/adminEventManagement.jsp";
 	}
 
 }

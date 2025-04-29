@@ -108,7 +108,7 @@
 
 </head>
 <body>
-    <%@ include file="../common/adminHeader.jsp" %>
+   <%@ include file="../../common/adminHeader.jsp" %>
     <div class="container">
         <div class="button-group">
             <button class="btn btn-primary" onclick="renderList('showing')">상영중인 영화 목록</button>

@@ -33,7 +33,7 @@ function syncCheckbox(checkbox) {
 <title>관리자 영화 등록 페이지</title>
 </head>
 <body>
-<%@ include file="../common/adminHeader.jsp" %>
+<%@ include file="../../common/adminHeader.jsp" %>
 <div class="container">
 	<form class="form-container" action="${pageContext.request.contextPath}/member/movieInsert.do" method="post" enctype="multipart/form-data">
 		<div class="form-group">
