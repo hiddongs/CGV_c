@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.movie.vo.MovieVO;
+import kr.schedule.vo.ScheduleVO;
 import kr.theater.vo.TheaterVO;
 import kr.util.DBUtil;
 
@@ -18,7 +18,8 @@ public class TheaterDAO {
 		return instance;
 	}
 	
-	// 극장 지역 반환 
+	
+	// 극장 정보 반환 
 	public List<TheaterVO> getTheaterList() throws Exception{
 		
 		Connection conn = null;
@@ -54,23 +55,20 @@ public class TheaterDAO {
 		
 		return list;
 	}
-	public List<TheaterVO> getAllRegionList() throws Exception {
+	public List<String> getAllRegionList() {
 	    Connection conn = null;
 	    PreparedStatement pstmt = null;
-	    String sql = null;
 	    ResultSet rs = null;
-	    List<TheaterVO> allRegionList = new ArrayList<>();
-	    
+	    List<String> allRegionList = new ArrayList<>();
+
 	    try {
 	        conn = DBUtil.getConnection();
-	        sql = "SELECT DISTINCT region FROM theater";
+	        String sql = "SELECT DISTINCT region FROM theater"; // region 중복 없이!
 	        pstmt = conn.prepareStatement(sql);
 	        rs = pstmt.executeQuery();
-	        
-	        while (rs.next()) { // rs.next() 안에서 do~while 말고 그냥 while
-	            TheaterVO theaterVO = new TheaterVO();
-	            theaterVO.setRegion(rs.getString("region"));
-	            allRegionList.add(theaterVO);
+
+	        while (rs.next()) {
+	            allRegionList.add(rs.getString("region"));
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -80,8 +78,9 @@ public class TheaterDAO {
 	    return allRegionList;
 	}
 
+
 	// 특정 지역만 보여주기
-    public List<TheaterVO> getRegionList(int num) throws Exception{
+    public List<TheaterVO> getRegionList(int num) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -113,5 +112,122 @@ public class TheaterDAO {
 		
 		
 		return list;
+	}
+    
+    // 지역에 따라 영화관 보여주기
+    public List<TheaterVO> selectTheaterList(String region) {
+    	
+    	Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		List<TheaterVO> theaterList = new ArrayList<>();
+		
+		try {
+			
+			conn = DBUtil.getConnection();
+
+			sql="SELECT name FROM theater WHERE region=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, region);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				TheaterVO theater = new TheaterVO();
+				theater.setName(rs.getString("name"));
+				theaterList.add(theater);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+    	
+		return theaterList;
+    	
+    }
+    
+    public List<ScheduleVO> getScreenTimesTheater(int theaterID, int movieID){
+    	
+    	Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		List<ScheduleVO> screenTimeList = new ArrayList<>();
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			sql = "SELECT schedule_id, theater_id, movie_id, screening_time, price, is_morning, is_night, is_available"
+					+ " FROM schedule"
+					+ " WHERE theater_id = ?" 
+					+ " AND movie_id = ?"
+					+ " ORDER BY screening_time";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, theaterID);
+			pstmt.setInt(2, movieID);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ScheduleVO schedule = new ScheduleVO();
+				
+				schedule.setSheduleID(rs.getInt("schedule_id"));
+				schedule.setTheaterID(rs.getInt("theater_id"));
+				schedule.setScreeningTime(rs.getDate("screening_time"));
+				schedule.setPrice(rs.getInt("price"));
+				schedule.setAvailable(rs.getBoolean("is_morning"));
+				schedule.setAvailable(rs.getBoolean("is_night"));
+				schedule.setAvailable(rs.getBoolean("is_available"));
+				
+				screenTimeList.add(schedule);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return screenTimeList;
+ 
+    }
+
+
+	public TheaterVO getTheater(int theaterID) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		ResultSet rs = null;
+		TheaterVO theater = new TheaterVO();
+		try {
+			conn = DBUtil.getConnection();
+			sql ="SELECT * FROM theater WHERE theater_id = ?";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, theaterID);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				theater.setTheaterId(rs.getInt("theater_id"));
+				theater.setName(rs.getString("name"));
+				theater.setRegion(rs.getString("region"));
+				theater.setDescription(rs.getString("description"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+	
+
+		return theater;
 	}
 }

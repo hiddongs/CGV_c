@@ -2,7 +2,7 @@ package kr.schedule.vo;
 
 import java.sql.Date;
 
-public class Schedule {
+public class ScheduleVO {
 
 	private int sheduleID;
 	private int theaterID;

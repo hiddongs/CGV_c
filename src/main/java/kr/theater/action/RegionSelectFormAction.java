@@ -1,24 +1,28 @@
 package kr.theater.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
+import kr.theater.dao.TheaterDAO;
+import kr.theater.vo.TheaterVO;
 
 public class RegionSelectFormAction implements Action {
 
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		 // 사용자가 선택한 극장 ID 받아오기
-        String theaterId = req.getParameter("theaterId");
-
-        // 넘어온 극장 ID를 다음 JSP에서 사용할 수 있게 저장
-        req.setAttribute("theaterId", theaterId);
-
-		return "theater/selectRegion.jsp";
-	}
-
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        TheaterDAO dao = TheaterDAO.getInstance();
+        List<String> regionList = null;
+        try {
+            regionList = dao.getAllRegionList();  // String 리스트!
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        req.setAttribute("regionList", regionList);
+        return "theater/selectRegion.jsp";
+    }
 }
