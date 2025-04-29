@@ -1,11 +1,16 @@
 package kr.member.action.admin;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
+import kr.coupon.dao.CouponDAO;
+import kr.coupon.vo.CouponVO;
+import kr.cp_possess.dao.CpPossessDAO;
+import kr.cp_possess.vo.CpPossessVO;
 import kr.util.CodeUtil;
 
 public class AdminCouponDeleteFormAction implements Action{
@@ -15,10 +20,11 @@ public class AdminCouponDeleteFormAction implements Action{
 		if(!CodeUtil.isAdmin(req)) {
 			return "redirect:/main/main.do";
 		}
-		
-		// TODO: 쿠폰 삭제 로직 구현
-		
-		return "member/admin/adminCouponManagement.jsp";
+		List<CouponVO> couponList = CouponDAO.getInstance().getCouponList();
+		req.setAttribute("couponList", couponList);
+		List<CpPossessVO> cpPossessList = CpPossessDAO.getInstance().getCpPossessList();
+		req.setAttribute("cpPossessList", cpPossessList);
+		return "member/admin/adminCouponDeleteForm.jsp";
 	}
 
 }

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import kr.member.vo.MemberVO;
 import kr.util.DBUtil;
@@ -113,6 +115,48 @@ public class MemberDAO {
         }
         
         return result;
+    }
+    
+    public List<MemberVO> getMemberList(){
+    	 Connection conn = null;
+         PreparedStatement pstmt = null;
+         ResultSet rs = null;
+         MemberVO member = null;
+         String sql = null;
+         List<MemberVO> result = new ArrayList<>();
+         
+         try {
+        	 
+        	conn = DBUtil.getConnection();
+        	sql = "SELECT * FROM MEMBER";
+        	pstmt = conn.prepareStatement(sql);
+        	rs = pstmt.executeQuery();
+        	
+        	if(rs.next()) {
+        		do {
+        			 member = new MemberVO();
+                     member.setMember_id(rs.getInt("MEMBER_ID"));
+                     member.setUser_id(rs.getString("USER_ID"));
+                     member.setPassword(rs.getString("PASSWORD"));
+                     member.setPoint(rs.getInt("POINT"));
+                     member.setName(rs.getString("NAME"));
+                     member.setPhone(rs.getString("PHONE"));
+                     member.setEmail(rs.getString("EMAIL"));
+                     member.setReg_date(rs.getDate("REG_DATE"));
+                     member.setGender(rs.getString("GENDER"));
+                     member.setGrade(rs.getString("GRADE"));
+                     member.setAddress(rs.getString("ADDRESS"));
+                     member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
+                     result.add(member);
+        		}while(rs.next());
+        	}
+        	 
+         }catch (Exception e) {
+        	 e.printStackTrace();
+         }finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+         return result;
     }
     
     // 회원정보 가져오기
@@ -304,4 +348,28 @@ public class MemberDAO {
         
         return result;
     }
+	public List<MemberVO> getMemberCPPossessList() {
+		
+		 Connection conn = null;
+         PreparedStatement pstmt = null;
+         ResultSet rs = null;
+         MemberVO member = null;
+         String sql = null;
+         List<MemberVO> result = new ArrayList<>();
+         
+         try {
+			
+        	 conn = DBUtil.getConnection();
+        	 sql = "";
+        	 pstmt = conn.prepareStatement(sql);
+        	 
+        	 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return null;
+	}
 }
