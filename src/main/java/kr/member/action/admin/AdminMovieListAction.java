@@ -36,17 +36,16 @@ public class AdminMovieListAction implements Action {
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(response.getWriter(), movieList);
             
-            return "common/ajax_view.jsp";
+            return null; // Return null to prevent forwarding
             
         } catch (Exception e) {
             e.printStackTrace();
             try {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-            return "common/ajax_view.jsp";
+            return null; // Return null to prevent forwarding
         }
     }
 }
