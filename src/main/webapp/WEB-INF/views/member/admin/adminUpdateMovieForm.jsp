@@ -54,6 +54,10 @@
 		            $(this).prop('checked', true);  // 해당하는 라디오 버튼을 체크
 		        }
 		    });
+		    
+		  $('#backButton').click(function(){
+				window.history.back()
+		  })
 	})
 </script>
 </head>
@@ -175,7 +179,7 @@
 		</div>
 		<div class="button_group">
 			<button type="submit" class="btn btn-primary">영화수정</button>
-			<button type="button" class="btn btn-secondary" onclick="location.href='/member/adminMain.do'">메인으로</button>
+			<button type="button" id="backButton" class="btn btn-secondary">뒤로가기</button>
 		</div>
 	</form>
 </body>

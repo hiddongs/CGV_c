@@ -6,6 +6,15 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css">
 <title>영화 상영관 선택</title>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script type="text/javascript">
+ 	$(document).ready(function(){
+		
+ 		$('#backButton').click(function(){
+			window.history.back()
+ 		})
+ 	})
+ </script>
 </head>
 <body>
 	<form action="updateMovieType.do" class="form-container">
@@ -36,7 +45,7 @@
 		</div>
 		<div class="button-group">
 			<button type="submit" class="btn btn-primary">수정</button>
-			<button type="button" class="btn btn-secondary" onclick="location.href='adminMain.do'">메인으로</button>
+			<button type="button" id="backButton" class="btn btn-secondary">뒤로가기</button>
 		</div>
 	</form>
 </body>
