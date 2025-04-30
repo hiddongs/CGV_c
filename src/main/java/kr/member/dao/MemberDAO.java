@@ -27,8 +27,8 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "INSERT INTO member (MEMBER_ID, USER_ID, PASSWORD, NAME, REG_DATE, PHONE, EMAIL, GENDER) "
-                + "VALUES (member_seq.nextval,?,?,?,SYSDATE,?,?,?)";
+            sql = "INSERT INTO member (MEMBER_ID, USER_ID, PASSWORD, NAME, REG_DATE, PHONE, EMAIL, GENDER, ADDRESS, ADDRESS_DETAIL) "
+                + "VALUES (member_seq.nextval,?,?,?,SYSDATE,?,?,?,?,?)";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, member.getUser_id());
@@ -37,6 +37,8 @@ public class MemberDAO {
             pstmt.setString(4, member.getPhone());
             pstmt.setString(5, member.getEmail());
             pstmt.setString(6, member.getGender());
+            pstmt.setString(7, member.getAddress());
+            pstmt.setString(8, member.getAddressDetail());
             
             pstmt.executeUpdate();
             
