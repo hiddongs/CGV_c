@@ -17,6 +17,23 @@
 			document.getElementById('delete_URL').value = oldPosterUrl;
 		}
 	}
+	function previewImage(event) {
+	      const file = event.target.files[0];
+	      if (file) {
+	        if (!file.type.startsWith('image/')) {
+	          alert('이미지 파일만 업로드 가능합니다.');
+	          event.target.value = '';
+	          return;
+	        }
+	        const reader = new FileReader();
+	        reader.onload = function () {
+	          const output = document.getElementById('preview');
+	          output.src = reader.result;
+	          output.style.display = 'block';
+	        };
+	        reader.readAsDataURL(file);
+	      }
+	    }
 	$(function(){
 		 const genres = "${movie.genre}"; 
 		    console.log("Genres from server:", genres);
@@ -30,9 +47,10 @@
 	        });
 		    
 		    const age_limit = "${movie.age_limit}"; 
+		    console.log("age_limit : ", age_limit)
 
 		    $('input[name="age_limit"]').each(function() {
-		        if ($(this).val() === ageLimit) {
+		        if ($(this).val() === age_limit) {
 		            $(this).prop('checked', true);  // 해당하는 라디오 버튼을 체크
 		        }
 		    });

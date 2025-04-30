@@ -57,7 +57,6 @@
       }
     });
 
-    // 전역 함수로 접근 가능하게 만들기 (이 부분도 보완)
     window.previewImage = previewImage;
     window.syncCheckbox = syncCheckbox;
   });
