@@ -9,6 +9,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
   $(function() {
+	$('#backButton').click(function(){
+		window.history.back()
+	})
     function previewImage(event) {
       const file = event.target.files[0];
       if (file) {
@@ -178,7 +181,7 @@
 		</div>
 		<div class="button_group">
 			<button type="submit" class="btn btn-primary">영화등록</button>
-			<button type="button" class="btn btn-secondary" onclick="location.href='/member/adminMain.do'">메인으로</button>
+			<button type="button" id="backButton" class="btn btn-secondary">뒤로가기</button>
 		</div>
 	</form>
 </div>

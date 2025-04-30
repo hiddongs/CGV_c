@@ -7,11 +7,46 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#myForm').on('submit', function(e){
+		let isValid = true
+		$(this).find('input').each(function(){
+			if($.trim($(this).val()) === ''){
+				alert('모든 항목을 입력해주세요')
+				$(this).focus()
+				isValid = false
+				e.preventDefault()
+				return false
+			}
+			if(!isValid) return false
+		})
+	})
+})
+function previewImage(event){
+		const file = event.target.files[0]
+		if(file){
+			if(!file.type.startsWith('image/')){
+				alert('이미지 파일만 업로드 가능합니다.')
+				event.target.value = ''
+				return
+			}
+			const reader = new FileReader()
+			reader.onload = function(){
+				const output = document.getElementById('preview')
+				output.src = reader.result
+				output.style.display = 'block'
+			}
+			reader.readAsDataURL(file)
+		}
+	}
+</script>
 </head>
 <body>
 	<%@ include file="../../common/adminHeader.jsp" %>
 	<div>
-		<form class="form-container" action="insertEvent.do" method="post"  enctype="multipart/form-data">
+		<form id="myForm" name="myForm" class="form-container" action="insertEvent.do" method="post"  enctype="multipart/form-data">
 			<div class="form-group">
 				<label class="form-label" id="title">이벤트 제목</label>
 				<input class="form-input" type="text" id="title" name="title">
@@ -40,7 +75,7 @@
 			</div>
 			<div class="button_group">
 				<button type="submit" class="btn btn-primary">이벤트 등록</button>
-				<button type="button" class="btn btn-secondary" onclick="location.href='/adminMain.do'">메인으로</button>
+				 <button type="button" id="backbutton" onclick="location.href='adminEventManagement.do'" class="btn btn-warning">이벤트관리로</button>
 			</div>
 		</form>
 	</div>

@@ -8,6 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>관리자 쿠폰 발행 폼</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     /* 모달 스타일 */
     .item-list {
@@ -151,30 +154,48 @@ function filterList(type) {
         item.style.display = item.textContent.toLowerCase().includes(input) ? "" : "none";
     });
 }
+
+$(document).ready(function(){
+	$('#myForm').on('submit', function(e){
+        let isValid = true
+        $(this).find('input[type = "hidden"]').each(function(){
+            if($.trim($(this).val()) === ''){
+                alert('모든 항목을 입력해주세요')
+                $(this).focus()
+                isValid = false
+                e.preventDefault()
+                return false
+            }
+        })
+        if(!isValid) return false
+    })
+})
 </script>
 </head>
 <body>
 	<%@ include file="../../common/adminHeader.jsp" %>
 	
-	<div class="container">
-		<h2 class="page-title">쿠폰 발행</h2>
+	<div class="admin-container">
+		<h1 class="admin-title"><i class="fas fa-share-square"></i> 쿠폰 발행</h1>
 		
-		<form action="couponIssue.do" class="form-container">
-			<div class="form-group">
-				<label for="coupon" class="form-label">발행쿠폰</label>
-				<input type="text" class="form-input" id="coupon" readonly onclick="openModal('coupon')" placeholder="클릭하여 쿠폰 선택">
-				<input type="hidden" name="couponId" id="couponId">
-			</div>
-			<div class="form-group">
-				<label for="member" class="form-label">발행대상</label>
-				<input type="text" class="form-input" id="member" readonly onclick="openModal('member')" placeholder="클릭하여 회원 선택">
-				<input type="hidden" name="memberId" id="memberId">
-			</div>
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">쿠폰 발행</button>
-				<button type="button" onclick="location.href='adminCouponManagement.do'" class="btn btn-secondary">쿠폰 관리로</button>
-			</div>
-		</form>
+		<div class="admin-form-container">
+			<form action="couponIssue.do" name="myForm" id="myForm">
+				<div class="form-group">
+					<label for="coupon" class="form-label"><i class="fas fa-ticket-alt"></i> 발행쿠폰</label>
+					<input type="text" class="form-input" id="coupon" readonly onclick="openModal('coupon')" placeholder="클릭하여 쿠폰 선택">
+					<input type="hidden" name="couponId" id="couponId">
+				</div>
+				<div class="form-group">
+					<label for="member" class="form-label"><i class="fas fa-user"></i> 발행대상</label>
+					<input type="text" class="form-input" id="member" readonly onclick="openModal('member')" placeholder="클릭하여 회원 선택">
+					<input type="hidden" name="memberId" id="memberId">
+				</div>
+				<div class="admin-button-group">
+					<button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> 쿠폰 발행</button>
+					<button type="button" onclick="location.href='adminCouponManagement.do'" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 쿠폰 관리로</button>
+				</div>
+			</form>
+		</div>
 	</div>
 
 	<!-- 쿠폰 선택 모달 -->

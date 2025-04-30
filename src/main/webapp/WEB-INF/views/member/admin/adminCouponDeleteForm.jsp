@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>쿠폰 관리 - 삭제</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     .coupon-item {
         display: flex;
@@ -176,16 +178,16 @@
 <body>
     <%@ include file="../../common/adminHeader.jsp" %>
     
-    <div class="container">
-        <h2 class="page-title">쿠폰 관리</h2>
+    <div class="admin-container">
+        <h1 class="admin-title"><i class="fas fa-ticket-alt"></i> 쿠폰 삭제</h1>
         
-        <div class="board-container">
+        <div class="admin-card">
             <c:choose>
                 <c:when test="${empty couponList}">
                     <div class="empty-state">
-                        <div class="empty-state-icon">📋</div>
+                        <div class="empty-state-icon"><i class="fas fa-ticket-alt"></i></div>
                         <p>등록된 쿠폰이 없습니다.</p>
-                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponCreateForm.do'">쿠폰 등록하기</button>
+                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponCreateForm.do'"><i class="fas fa-plus-circle"></i> 쿠폰 등록하기</button>
                     </div>
                 </c:when>
                 <c:otherwise>
@@ -239,11 +241,11 @@
                         </c:forEach>
                     </div>
                     
-                    <div class="board-actions">
-                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponCreateForm.do'">쿠폰 등록</button>
-                        <button class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponIssueForm.do'">쿠폰 발행</button>
-                        <button class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/member/adminMain.do'">메인으로</button>
-                    </div>
+                    <div class="admin-button-group">
+                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponCreateForm.do'"><i class="fas fa-plus-circle"></i> 쿠폰 등록</button>
+                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponIssueForm.do'"><i class="fas fa-share-square"></i> 쿠폰 발행</button>
+                        <button type="button" onclick="location.href='adminCouponManagement.do'" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 쿠폰 관리로</button>
+				   </div>
                 </c:otherwise>
             </c:choose>
         </div>

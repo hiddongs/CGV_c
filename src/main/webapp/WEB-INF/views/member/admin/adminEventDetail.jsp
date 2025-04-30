@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>어드민 이벤트 상세</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('eventUpdate').addEventListener('click', function() {
@@ -18,13 +19,28 @@
             form.action = 'eventDelete.do';
             form.submit();
         });
-        document.getElementById('backbutton').addEventListener('click', function() {
-            window.history.back();
-        });
         const fileInput = document.getElementById('poster_url');
         // 클릭 시 값을 초기화해서 같은 파일도 변경 감지
         fileInput.addEventListener('click', function(e) { e.target.value = ''; });
         fileInput.addEventListener('change', previewImage);
+
+        $('#myForm').on('submit', function(event){
+            let isValid = true
+            
+            $(this).find('input').each(function(){
+                
+                if($(this).attr('id') === 'poster_url') return true
+                
+                if($.trim($(this).val === '')){
+                    alert('모든 항목을 입력해주세요')
+                    $(this).focus()
+                    isValid = false
+                    event.preventDefault()
+                    return false
+                }
+            })
+            if(!isValid) return false
+        })
     });
 
     function previewImage(event) {
@@ -44,7 +60,7 @@
 </head>
 <body>
     <%@ include file="../../common/adminHeader.jsp" %>
-    <form action="" method="post" class="form-container" id="eventManagement" enctype="multipart/form-data">
+    <form name="myForm" action="" method="post" class="form-container" id="eventManagement" enctype="multipart/form-data">
         <input type="hidden" id="event_id" name="event_id" value="${event.event_id}">
         <div class="form-group">
             <label for="title" class="form-label">제목</label>
@@ -76,7 +92,7 @@
         <div class="button-group">
             <button type="button" id="eventUpdate" class="btn btn-secondary">이벤트수정</button>
             <button type="button" id="eventDelete" class="btn btn-primary"> 이벤트삭제</button>
-            <button type="button" id="backbutton" class="btn btn-warning">뒤로가기</button>
+            <button type="button" id="backbutton" onclick="location.href='adminEventManagement.do'" class="btn btn-warning">이벤트관리로</button>
         </div>
     </form>
 </body>
