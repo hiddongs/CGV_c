@@ -30,7 +30,7 @@ public class FindIdAction implements Action {
                 request.setAttribute("result_title", "아이디 찾기 실패");
                 request.setAttribute("result_msg", "일치하는 회원정보가 없습니다.");
             }
-            request.setAttribute("result_url", "member/loginForm.do");
+            request.setAttribute("result_url", "loginForm.do");
             
             return "common/result_view.jsp";
             
