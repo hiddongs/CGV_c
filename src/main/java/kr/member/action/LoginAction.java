@@ -32,9 +32,9 @@ public class LoginAction implements Action {
             session.setAttribute("member", member);
             
             if(member.getMember_id() != 1) { // 인증 성공 일반유저
-                return "redirect:/member/adminLogin.do";
-            }else{ // 인증 성공 어드민
             	return "redirect:/main/main.do";
+            }else{ // 인증 성공 어드민
+            	return "redirect:/member/adminLogin.do";
             }
             
             

@@ -85,6 +85,12 @@ $(document).ready(function(){
     // 아이디 중복 체크
     $('#isIdDuplicated').click(function(){
        
+    	if($('#mem_id').val() === ''){
+			alert('아이디를 입력해주세요')
+			$('#mem_id').focus()
+			return false;
+    	}
+    	
     	$.ajax({
             url:'checkDuplicateId.do',
             type:'post',
