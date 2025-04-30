@@ -20,7 +20,7 @@ public class MemberDAO {
     private MemberDAO() {}
     
     // 회원가입
-    public void insertMember(MemberVO member) throws Exception {
+    public void insertMember(MemberVO member) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         String sql = null;
@@ -42,13 +42,15 @@ public class MemberDAO {
             
             pstmt.executeUpdate();
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(null, pstmt, conn);
         }
     }
     
     // 로그인 체크
-    public MemberVO login(String mem_id, String mem_pw) throws Exception {
+    public MemberVO login(String mem_id, String mem_pw){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -81,7 +83,9 @@ public class MemberDAO {
                 
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
@@ -162,7 +166,7 @@ public class MemberDAO {
     }
     
     // 회원정보 가져오기
-    public MemberVO getMember(String user_id) throws Exception {
+    public MemberVO getMember(String user_id){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -193,13 +197,15 @@ public class MemberDAO {
                  member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
         return member;
     }
-    public MemberVO getMember(int mem_num) throws Exception {
+    public MemberVO getMember(int mem_num){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -230,7 +236,9 @@ public class MemberDAO {
                  member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
@@ -238,7 +246,7 @@ public class MemberDAO {
     }
     
     // 회원정보 수정
-    public void updateMember(MemberVO member) throws Exception {
+    public void updateMember(MemberVO member){
         Connection conn = null;
         PreparedStatement pstmt = null;
         String sql = null;
@@ -255,7 +263,9 @@ public class MemberDAO {
             
             pstmt.executeUpdate();
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(null, pstmt, conn);
         }
     }
@@ -282,7 +292,7 @@ public class MemberDAO {
     }
     
     // 회원 탈퇴
-    public void deleteMember(int mem_num) throws Exception {
+    public void deleteMember(int mem_num){
         Connection conn = null;
         PreparedStatement pstmt = null;
         String sql = null;
@@ -296,13 +306,15 @@ public class MemberDAO {
             
             pstmt.executeUpdate();
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(null, pstmt, conn);
         }
     }
     
     // 아이디 찾기
-    public String findId(String mem_name, String mem_email) throws Exception {
+    public String findId(String mem_name, String mem_email){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -322,7 +334,9 @@ public class MemberDAO {
                 mem_id = rs.getString(1);
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
@@ -330,7 +344,7 @@ public class MemberDAO {
     }
     
     // 비밀번호 찾기를 위한 회원 확인
-    public boolean checkMemberForPw(String mem_id, String mem_email) throws Exception {
+    public boolean checkMemberForPw(String mem_id, String mem_email){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -350,7 +364,9 @@ public class MemberDAO {
                 if(rs.getInt(1) > 0) result = true;
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
