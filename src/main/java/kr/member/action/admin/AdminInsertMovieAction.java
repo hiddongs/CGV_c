@@ -10,6 +10,7 @@ import kr.controller.Action;
 import kr.member.vo.MemberVO;
 import kr.movie.dao.MovieDAO;
 import kr.movie.vo.MovieVO;
+import kr.util.CodeUtil;
 import kr.util.DBUtil;
 import kr.util.FileUtil;
 
@@ -18,9 +19,9 @@ public class AdminInsertMovieAction implements Action{
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		HttpSession session = req.getSession();
-		MemberVO member = (MemberVO)session.getAttribute("member");
-		if(member.getMember_id() != 1)	return "redirect:/main/main.do";
+		if(!CodeUtil.isAdmin(req)) {
+			return "redirect:/main/main.do";
+		}
 		
 		MovieVO movieVO = new MovieVO();
 		
@@ -38,6 +39,7 @@ public class AdminInsertMovieAction implements Action{
 		movieVO.setRuntime(Integer.parseInt(req.getParameter("runtime")));
 		movieVO.setRelease_date(DBUtil.toSqlDate(req.getParameter("release_date")));
 		movieVO.setDescription(req.getParameter("description"));
+		movieVO.setActor(req.getParameter("age_limit"));
 		
 		MovieDAO movieDAO = MovieDAO.getInstance();
 		

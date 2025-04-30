@@ -8,34 +8,67 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-function previewImage(event) {
-    const file = event.target.files[0];
-    if (file) {
+  $(function() {
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
         if (!file.type.startsWith('image/')) {
-            alert('이미지 파일만 업로드 가능합니다.');
-            event.target.value = '';
-            return;
+          alert('이미지 파일만 업로드 가능합니다.');
+          event.target.value = '';
+          return;
         }
         const reader = new FileReader();
         reader.onload = function () {
-            const output = document.getElementById('preview');
-            output.src = reader.result;
-            output.style.display = 'block';
+          const output = document.getElementById('preview');
+          output.src = reader.result;
+          output.style.display = 'block';
         };
         reader.readAsDataURL(file);
+      }
     }
-}
-function syncCheckbox(checkbox) {
-    const hiddenInput = checkbox.parentElement.querySelector('input[type="hidden"]');
-    hiddenInput.value = checkbox.checked ? 'Y' : 'N';
-  }
+
+    // 체크박스 상태 동기화
+    function syncCheckbox(checkbox) {
+      const hiddenInput = checkbox.parentElement.querySelector('input[type="hidden"]');
+      hiddenInput.value = checkbox.checked ? 'Y' : 'N';
+    }
+
+    // 폼 유효성 검사
+    $('#myForm').on('submit', function(e) {
+      let isValid = true;
+
+      // 텍스트/textarea/select 필드 비어있는지 확인
+      $(this).find('input[type="text"], textarea, select').each(function() {
+        if ($.trim($(this).val()) === '') {
+          alert('모든 항목을 입력해 주세요.');
+          $(this).focus();
+          isValid = false;
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      if (!isValid) return;
+
+      // 장르 체크박스 하나 이상 체크 여부
+      if ($('input[name="genre"]:checked').length === 0) {
+        alert('하나 이상의 장르를 선택해 주세요.');
+        e.preventDefault();
+      }
+    });
+
+    // 전역 함수로 접근 가능하게 만들기 (이 부분도 보완)
+    window.previewImage = previewImage;
+    window.syncCheckbox = syncCheckbox;
+  });
 </script>
+
 <title>관리자 영화 등록 페이지</title>
 </head>
 <body>
-<%@ include file="../common/adminHeader.jsp" %>
+<%@ include file="../../common/adminHeader.jsp" %>
 <div class="container">
-	<form class="form-container" action="${pageContext.request.contextPath}/member/movieInsert.do" method="post" enctype="multipart/form-data">
+	<form id="myForm" class="form-container" action="${pageContext.request.contextPath}/member/movieInsert.do" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label class="form-label" id="title">영화제목</label>
 			<input class="form-input" type="text" id="title" name="title">
@@ -108,38 +141,30 @@ function syncCheckbox(checkbox) {
 				<input type="checkbox" id="genre-melo" name="genre" value="멜로" class="form-check-input">
 				<label for="genre-melo" class="form-check-label">멜로</label>
 			</div>
+			<div class="form-check">
+				<input type="checkbox" id="genre-animation" name="genre" value="애니메이션" class="form-check-input">
+				<label for="genre-animation" class="form-check-label">애니메이션</label>
+			</div>
 		</div>
-		<!-- 
-		관리텝에서 관리하는걸로
 		<div class="form-group">
-			<label class="form-label" id="movieType">상영가능관 타입</label>
+			<label class="form-title" id="age_limit" for="age_limit">연령제한</label>
 			<div class="form-check">
-				<input type="checkbox" id="2D" value="2D" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
-				<label for="2D" class="form-check-label">2D</label>
-				 <input type="hidden" name="movieType-2D" value="N">
+				<input type="radio" class="age_limit" value="ALL" id="ALL" name="age_limit">
+				<label for="ALL" class="form-check-label">전체이용가</label>
 			</div>
 			<div class="form-check">
-				<input type="checkbox" id="3D" value="3D" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
-				<label for="3D" class="form-check-label">3D</label>
-				 <input type="hidden" name="movieType-3D" value="N">
+				<input type="radio" class="age_limit" value="12" id="12" name="age_limit">
+				<label for="12" class="form-check-label">12세 이용가</label>
 			</div>
 			<div class="form-check">
-				<input type="checkbox" id="4DX" value="4DX" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
-				<label for="4DX" class="form-check-label">4DX</label>
-				<input type="hidden" name="movieType-4DX" value="N">
+				<input type="radio" class="age_limit" value="15" id="15" name="age_limit">
+				<label for="15" class="form-check-label">15세 이용가</label>
 			</div>
 			<div class="form-check">
-				<input type="checkbox" id="IMAX" value="IMAX" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
-				<label for="IMAX" class="form-check-label">IMAX</label>
-				 <input type="hidden" name="movieType-IMAX" value="N">
-			</div>
-			<div class="form-check">
-				<input type="checkbox" id="SCREENX" value="SCREENX" name="movieType" class="form-check-input" onchange="syncCheckbox(this)">
-				<label for="IMAX" class="form-check-label">SCREENX</label>
-				 <input type="hidden" name="movieType-SCREENX" value="N">
+				<input type="radio" class="age_limit" value="18" id="18" name="age_limit">
+				<label for="18" class="form-check-label">18세 이용가</label>
 			</div>
 		</div>
-		-->
 		<div class="form-group">
 			<label class="form-label" id="runtime">상영시간</label>	
 			<input type="text" class="form-input" id="runtime" name="runtime">	

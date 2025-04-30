@@ -5,12 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CGV - 마이페이지</title>
+<title>나의 예매내역</title>
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
 <style>
 .container {
@@ -109,12 +108,13 @@
 	float: left;
 }
 
-#main_nav h2 {
-	background-color: #ef4b64;
-	color: white;
+#main_nav h2 a {
+	background-color: #f8f8f8;
+	color : #222;
 	font-size: 16px;
 	padding: 12px;
 	margin-bottom: 15px;
+	display: block; /* <-- 추가 */
 }
 
 .menu-list {
@@ -123,7 +123,14 @@
 	margin: 0;
 }
 
-.menu-list li {
+.menu-list li.section-reservation a {
+	background-color: #ef4b64;
+	color: #fff;
+	padding: 10px;
+	border-radius: 3px;
+}
+
+.menu-list li.menu-reservation {
 	margin: 6px 0;
 }
 
@@ -141,22 +148,29 @@
 	font-size: 14px;
 }
 
-.menu-list li a:hover {
+/* 배경이 빨간색이 아닌 항목만 hover 시 색상 변경 */
+.menu-list li:not(.section-reservation) a:hover,
+#main_nav h2 a:hover {
 	color: #ef4b64;
 }
+
+ 
 </style>
-
-</head>
 <body>
-	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 
-	<!-- 사이드바 부분 -->
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+ 
+<!-- 사이드바 부분 -->
 	<nav id="main_nav">
 		<div id="main_aside">
-			<h2>My CGV HOME</h2>
+		  <h2>
+		  <a href="${pageContext.request.contextPath}/member/myPage.do" style="text-decoration: none;">
+			My CGV HOME
+			</a>
+			</h2>
 			<ul class="menu-list">
-				<li class="section-title"><strong><a href="${pageContext.request.contextPath}/member/movieReservation.do">
-				나의 예매내역</a></strong></li>
+				<li class="section-reservation"><strong><a href="${pageContext.request.contextPath}/member/movieReservation.do">나의
+							예매내역</a></strong></li>
 				<li class="section-title"><strong><a href="#">관람권/할인쿠폰
 							관리</a></strong></li>
 				<li><a href="#">-CGV할인쿠폰</a></li>
@@ -172,59 +186,16 @@
 			</ul>
 		</div>
 	</nav>
-  
-	<div class="container">
-		<div class="mypage-container">
-			<div class="mypage-header">
-				<h2>${member.name}님 <span class="vip-tag">${member.grade} 등급</span>
-				</h2>
-				<button type="button" class="confirm-button"
-					onclick="location.href='${pageContext.request.contextPath}/member/modifyForm.do'">회원정보수정</button>
-			</div>
-			
-			<div class="mypage-section">
-				<div class="mypage-item">
-					<div class="mypage-label">
-					<a href ="${pageContext.request.contextPath}/member/movieReservation.do" style="text-decoration: none; color: inherit;">> 나의 예매내역</a>
-					</div>
-					<div class="mypage-content">예시1</div>
-					<div class="mypage-date">2023.04.16 (화) | 20:30 | COD 2인 |
-						2만원</div>
-					<div class="mypage-content">예시2</div>
-					<div class="mypage-date">2023.04.16 (화) | 14:20 | 예매 12건</div>
-				</div>
-
-				<div class="mypage-item">
-					<div class="mypage-label">> 관람권/할인쿠폰 관리</div>
-					<div class="mypage-content mypage-coupon">${coupon.couponid}
-						쿠폰</div>
-				</div>
-
-				<div class="mypage-item">
-					<div class="mypage-label">> 문의내역</div>
-					<div class="mypage-content">블랙팬서입니다</div>
-					<div class="mypage-date">2023.04.16 (화) | 10:30 | 등록완료</div>
-					<div class="mypage-content">집가고싶다</div>
-					<div class="mypage-date">2023.04.16 (화) | 10:30 | 등록완료</div>
-				</div>
-
-				<div class="mypage-item">
-					<div class="mypage-label">> 나의 포인트</div>
-					<div class="mypage-content mypage-point">${member.point}
-						point</div>
-					<div class="mypage-date">다음 적립예정 2,500P 적립예정</div>
-				</div>
-			</div>
-
-			<div class="button-group">
-				<button type="button" class="btn btn-danger"
-					onclick="location.href='${pageContext.request.contextPath}/member/deleteForm.do'">회원탈퇴</button>
-				<button type="button" class="btn btn-secondary"
-					onclick="location.href='${pageContext.request.contextPath}/main/main.do'">홈으로</button>
-			</div>
-		</div>
+	
+	<div class="res-container">
+        <div class="title">나의 예매내역</div>
+        <div class="info">지난 <span>1개월</span>까지의 예매내역을 확인하실 수 있습니다.</div>
 	</div>
+	
+	<input type = "button" value ="내가 본 영화" onclick="location.href='${pageContext.request.contextPath}/member/myMovielist.do'">
+	
+	
 
-	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>

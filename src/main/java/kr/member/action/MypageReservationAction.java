@@ -1,25 +1,18 @@
-package kr.member.action.admin;
+package kr.member.action;
 
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import kr.controller.Action;
-import kr.member.vo.MemberVO;
-import kr.util.CodeUtil;
 
-public class AdminInsertMovieFormAction implements Action {
+public class MypageReservationAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		if(!CodeUtil.isAdmin(req)) {
-			return "redirect:/main/main.do";
-		}
-		
-		return "member/admin/adminInsertMovieForm.jsp";
+		//나의 예매내역으로 이동
+		return "member/movieReservation.jsp";
 	}
 
 }

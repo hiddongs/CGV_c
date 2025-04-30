@@ -13,7 +13,7 @@ public class AdminLoginAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		return "member/adminPage.jsp";
+		return "member/admin/adminPage.jsp";
 	}
 
 }
