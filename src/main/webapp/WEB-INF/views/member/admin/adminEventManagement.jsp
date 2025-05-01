@@ -9,9 +9,102 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+	
+	var eventList = []
+	var today = new Date().toISOString().split('T')[0]
+
+	$(function(){
+		$.ajax({
+			type:'POST',
+			url:'adminEventList.do',
+			dataType:'JSON',
+			success:function(response){
+				eventList = response
+				renderList('all')
+			},
+			error:function(){
+				alert('에러가 발생했습니다')
+			}
+		})
+	})
+	
+
 	function renderList(order){
+		const container = document.querySelector('#event-grid')
+		container.innerHTML = ''
+
+		let filtered = []
 		
+		if(order === 'all'){
+			filtered = [...eventList]
+		}else if(order === 'showing'){
+			filtered = eventList.filter(e => e.start_date <= today && e.end_date >= today)
+		}else if(order === 'release'){
+			filtered = eventList.filter(e => e.start_date > today)
+		}
+
+		if(filtered.length == 0){
+			container.innerHTML = '<h3>표시할 이벤트가 없습니다</h3>'
+		}else{
+			filtered.forEach( event => {
+					const cell = createCell(event)
+					container.appendChild(cell)
+					})
+			}
+	}
+	
+	const createCell = (value) => {
+
+		console.log("value.event_id :" + value.event_id)
+		console.log("value.start_date :" + value.start_date)
+		console.log("value.end_date :" + value.end_date)
+		console.log("value.poster_url :" +value.poster_url)
+
+		
+
+		const row = document.createElement('div');
+		row.className = 'admin-event-item';
+
+		const a = document.createElement('a');
+		a.href = 'adminEventDetail.do?event_id=' + value.event_id;
+
+		const div1 = document.createElement('div');
+		div1.className = 'event-image-container';
+
+		const img = document.createElement('img');
+		img.className = 'event-image';
+		img.alt = '이벤트 사진';
+		console.log('url:', value.poster_url);  // 이 값을 확인하세요.
+		img.src = `${pageContext.request.contextPath}/upload/${"${value.poster_url}"}`;
+
+		div1.appendChild(img);
+
+		const div2 = document.createElement('div');
+		div2.className = 'event-info';
+
+		const event_title = document.createElement('h3');
+		event_title.className = 'event-title';
+		event_title.innerText = value.title;
+
+		const event_period = document.createElement('p');
+		event_period.className = 'event-period';
+
+		const icon = document.createElement('i');
+		icon.className = 'fas fa-calendar-day';
+
+		event_period.appendChild(icon);
+		event_period.insertAdjacentText('beforeend', ` ${"${value.start_date}"} ~ ${"${value.end_date}"}`);
+
+		div2.appendChild(event_title);
+		div2.appendChild(event_period);
+
+		a.appendChild(div1);
+		a.appendChild(div2);
+		row.appendChild(a);
+
+		return row;
 	}
 </script>
 </head>
@@ -26,31 +119,7 @@
     </div>
 	
 	<div class="admin-card">
-		<div class="event-grid">
-			<c:choose>
-				<c:when test="${empty eventList}">
-					<div class="empty-state">
-						<div class="empty-state-icon"><i class="fas fa-calendar-times"></i></div>
-						<p>등록된 이벤트가 없습니다.</p>
-						<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/insertEventForm.do'"><i class="fas fa-plus-circle"></i> 이벤트 등록하기</button>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="event" items="${eventList}">
-						<div class="admin-event-item">
-							<a href="adminEventDetail.do?event_id=${event.event_id}">
-							<div class="event-image-container">
-								<img class="event-image" alt="이벤트 사진" src="${pageContext.request.contextPath}/upload/${event.poster_url}">
-							</div>
-							<div class="event-info">
-								<h3 class="event-title">${event.title}</h3>
-								<p class="event-period"><i class="fas fa-calendar-day"></i> ${event.start_date} ~ ${event.end_date}</p>
-							</div>
-							</a>
-						</div>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
+		<div class="event-grid" id="event-grid">
 		</div>
 	</div>
 	<div class="admin-button-group">
