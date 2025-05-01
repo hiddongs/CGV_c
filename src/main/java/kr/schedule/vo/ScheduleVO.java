@@ -4,21 +4,21 @@ import java.sql.Date;
 
 public class ScheduleVO {
 
-	private int sheduleID;
+	private int scheduleID;
 	private int theaterID;
 	private int movieID;
-	private Date screeningTime;
-	private int price;
+	private String screeningTime;
+	
 	private boolean isMorning;
 	private boolean isNight;
 	private boolean isAvailable;
 	
 	
-	public int getSheduleID() {
-		return sheduleID;
+	public int getScheduleID() {
+		return scheduleID;
 	}
-	public void setSheduleID(int sheduleID) {
-		this.sheduleID = sheduleID;
+	public void setScheduleID(int scheduleID) {
+		this.scheduleID = scheduleID;
 	}
 	public int getTheaterID() {
 		return theaterID;
@@ -32,18 +32,13 @@ public class ScheduleVO {
 	public void setMovieID(int movieID) {
 		this.movieID = movieID;
 	}
-	public Date getScreeningTime() {
+	public String getScreeningTime() {
 		return screeningTime;
 	}
-	public void setScreeningTime(Date screeningTime) {
+	public void setScreeningTime(String screeningTime) {
 		this.screeningTime = screeningTime;
 	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
-	}
+
 	public boolean isMorning() {
 		return isMorning;
 	}

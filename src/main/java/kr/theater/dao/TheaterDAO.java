@@ -127,13 +127,14 @@ public class TheaterDAO {
 			
 			conn = DBUtil.getConnection();
 
-			sql="SELECT name FROM theater WHERE region=?";
+			sql="SELECT theater_id, name FROM theater WHERE region = ?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, region);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				TheaterVO theater = new TheaterVO();
+				theater.setTheaterId(rs.getInt("theater_id"));
 				theater.setName(rs.getString("name"));
 				theaterList.add(theater);
 			}
@@ -149,52 +150,54 @@ public class TheaterDAO {
     	
     }
     
-    public List<ScheduleVO> getScreenTimesTheater(int theaterID, int movieID){
-    	
-    	Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		ResultSet rs = null;
-		List<ScheduleVO> screenTimeList = new ArrayList<>();
-		
-		try {
-			conn = DBUtil.getConnection();
-			
-			sql = "SELECT schedule_id, theater_id, movie_id, screening_time, price, is_morning, is_night, is_available"
-					+ " FROM schedule"
-					+ " WHERE theater_id = ?" 
-					+ " AND movie_id = ?"
-					+ " ORDER BY screening_time";
-			
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, theaterID);
-			pstmt.setInt(2, movieID);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				ScheduleVO schedule = new ScheduleVO();
-				
-				schedule.setSheduleID(rs.getInt("schedule_id"));
-				schedule.setTheaterID(rs.getInt("theater_id"));
-				schedule.setScreeningTime(rs.getDate("screening_time"));
-				schedule.setPrice(rs.getInt("price"));
-				schedule.setAvailable(rs.getBoolean("is_morning"));
-				schedule.setAvailable(rs.getBoolean("is_night"));
-				schedule.setAvailable(rs.getBoolean("is_available"));
-				
-				screenTimeList.add(schedule);
-			}
-			
+ // 상영 가능 시간표 가져오기
+ 	public List<ScheduleVO> getScheduleList(int movieID, int theaterID) {
+ 		
+ 		
+ 		Connection conn = null;
+     	PreparedStatement pstmt = null;
+     	String sql = null;
+     	ResultSet rs = null;
+     	List<ScheduleVO> scheduleList = new ArrayList<>();
+     	
+     	try {
+     		conn = DBUtil.getConnection();
+     		sql =  "SELECT * FROM SCHEDULE " +
+                    "WHERE MOVIE_ID = ? AND THEATER_ID = ? " +
+                    "AND IS_AVAILABLE = 1 " +
+                    "ORDER BY SCREENING_TIME ASC";
+     		pstmt = conn.prepareStatement(sql);
+     		
+     		pstmt.setInt(1, movieID);
+     		pstmt.setInt(2, theaterID);
+     		
+     		rs = pstmt.executeQuery();
+     		
+     		while(rs.next()) {
+     			ScheduleVO schedule = new ScheduleVO();
+     			schedule.setScheduleID(rs.getInt("SCHEDULE_ID"));
+     			schedule.setMovieID(rs.getInt("MOVIE_ID"));
+     			schedule.setTheaterID(rs.getInt("THEATER_ID"));
+     			schedule.setScreeningTime(rs.getString("SCREEN_TIME"));
+     			
+     			schedule.setMorning(rs.getInt("IS_MORNING") == 1);
+     			schedule.setNight(rs.getInt("IS_NIGHT") == 1);
+     			schedule.setAvailable(rs.getInt("IS_AVAILABLE") == 1);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.executeClose(rs, pstmt, conn);
-		}
-		return screenTimeList;
- 
-    }
+     			
+     			scheduleList.add(schedule);
+     		}
+     		
+     	} catch (Exception e) {
+ 			// TODO: handle exception
+     		e.printStackTrace();
+ 		} finally {
+ 			DBUtil.executeClose(rs, pstmt, conn);
+ 		}
+     	
+ 		
+ 		return scheduleList;
+ 	}
 
 
 	public TheaterVO getTheater(int theaterID) {

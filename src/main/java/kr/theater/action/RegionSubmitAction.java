@@ -17,15 +17,20 @@ public class RegionSubmitAction implements Action {
 		// TODO Auto-generated method stub
 	
 	        	String region = req.getParameter("region");
+	        	String movieID = req.getParameter("movieID"); // 추가
 	        	TheaterDAO dao = TheaterDAO.getInstance();
 	            List<TheaterVO> theaterList = null;
 				try {
 					theaterList = dao.selectTheaterList(region);
+					
+				
+
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	            
+				System.out.println("movieID: " + movieID);
+				req.setAttribute("movieID", movieID); // 이렇게!
 	            req.setAttribute("theaterList",theaterList);
 	        
 		return "theater/selectTheater.jsp";

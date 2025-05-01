@@ -95,16 +95,22 @@ public class MovieDAO {
     	
     	Connection conn = null;
     	PreparedStatement pstmt = null;
+    	
     	String sql = null;
+    	
     	ResultSet rs = null;
     	List<MovieVO> movieList = new ArrayList<>();
     	
     	try {
 			conn = DBUtil.getConnection();
+			
 			sql = "SELECT * FROM MOVIE WHERE RELEASE_DATE <= SYSDATE";
+			
+		
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
+	
+	
 			if(rs.next()) {
 				do {
 					MovieVO movie = new MovieVO();
@@ -392,6 +398,61 @@ public class MovieDAO {
 		
 		return result;
 	}
+
+	public List<MovieVO> getShowingMovieAlignList(String align) {
+		Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	
+    	String sql = null;
+    	
+    	ResultSet rs = null;
+    	List<MovieVO> movieList = new ArrayList<>();
+    	
+    	try {
+			conn = DBUtil.getConnection();
+			
+			if("2".equals(align)) {
+			    sql = "SELECT * FROM MOVIE WHERE RELEASE_DATE <= SYSDATE ORDER BY title DESC";
+			}
+			else{
+				sql = "SELECT * FROM movie WHERE RELEASE_DATE <= SYSDATE ORDER BY title ASC";
+			}
+			System.out.println("정렬 기준: " + align);
+			System.out.println("SQL: " + sql);
+
+			
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+	
+	
+			if(rs.next()) {
+				do {
+					MovieVO movie = new MovieVO();
+					movie.setMovie_id(rs.getInt("MOVIE_ID"));
+					movie.setMv_title(rs.getString("TITLE"));
+					movie.setDirector(rs.getString("DIRECTOR"));
+					movie.setActor(rs.getString("ACTOR"));
+					movie.setGenre(rs.getString("GENRE"));
+					movie.setRuntime(rs.getInt("RUNTIME"));
+					movie.setRelease_date(rs.getDate("RELEASE_DATE"));
+					movie.setRating(rs.getString("AGE_LIMIT"));
+					movie.setPoster_url(rs.getString("POSTER_URL"));
+					movie.setDescription(rs.getString("DESCRIPTION"));
+					movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
+					movieList.add(movie);
+					
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+    	return movieList;
+	}
+
+	
 
 }
 

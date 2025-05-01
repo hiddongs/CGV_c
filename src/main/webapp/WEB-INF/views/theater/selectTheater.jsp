@@ -12,23 +12,28 @@
 <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 </head>
 <body>
-    <div class="center-box">
-        <div class="inner-box">
-            <h3>극장 선택</h3>
+    <!-- <div class="center-box"> -->
+        <div class="inner-box fade-in">
+            <div class="theater-hero">
+  <div class="hero-text">영화관을 선택해주세요</div>
+</div>
             <form action="theaterSubmit.do" method="post" class="container mt-4">
-                <div class="mb-3">
-                    <label for="theater" class="form-label-right">극장 선택</label> 
-                  <select name="theater" id="theater" class="form-select-right">
-                  <option value="">-- 극장을 선택하세요 --</option>
-                  <c:forEach var="theater" items="${theaterList}">
-                        <option value="${theater.name}">${theater.name}</option>
-                  </c:forEach>
-                  </select>                  
-                </div>
-                <input type="submit" value="전송" class="btn btn-primary">
-            </form>
-        </div>
+    <input type="hidden" name="movieID" value="${movieID}">
+    
+    <div class="mb-3">
+        <label for="theater" class="form-label-right">극장 선택</label> 
+        <select name="theaterID" id="theater" class="form-select-right">
+            <option value="">-- 극장을 선택하세요 --</option>
+            <c:forEach var="theater" items="${theaterList}">
+                <option value="${theater.theaterId}">${theater.name}</option>
+            </c:forEach>
+        </select>
     </div>
+
+    <input type="submit" value="🎟️ 전송" class="btn btn-primary">
+</form>
+        </div>
+   <!--  </div> -->
 </body>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

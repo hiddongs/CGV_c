@@ -12,12 +12,13 @@
 <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 </head>
 <body>
-    <div class="center-box">
-        <div class="inner-box">
+    <!--  <div class="center-box">-->
+        <div class="inner-box fade-in">
             <h3>극장 선택</h3>
             <form action="regionSubmit.do" method="post" class="container mt-4">
                 <div class="mb-3">
-                    <label for="region" class="form-label-left">지역 선택</label> 
+                <input type="hidden" name="movieID" value="${movieID}">
+                    <label for="region" class="form-label-left">📍 지역 선택</label> 
                   <select name="region" id="region" class="form-select-left">
                   <option value="">-- 범위를 선택하세요 --</option>
                   <c:forEach var="region" items="${regionList}">
@@ -25,10 +26,10 @@
                   </c:forEach>
                   </select>
                 </div>
-                <input type="submit" value="전송" class="btn btn-primary">
+                <input type="submit" value="🎟️ 전송" class="btn btn-primary">
             </form>
         </div>
-    </div>
+   <!--  </div> -->
 </body>
 
 </html>

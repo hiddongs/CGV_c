@@ -19,6 +19,8 @@ public class RegionSelectFormAction implements Action {
         List<String> regionList = null;
         try {
             regionList = dao.getAllRegionList();  // String 리스트!
+            req.setAttribute("movieID", req.getParameter("movieID"));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

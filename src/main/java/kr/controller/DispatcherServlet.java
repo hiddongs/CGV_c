@@ -102,7 +102,12 @@ public class DispatcherServlet extends HttpServlet{
 		}catch(Exception e){
 			throw new ServletException(e);
 		}
-		
+		if (view == null) {
+		    return;
+		} else if (view.startsWith("ajax:")) {
+		    // 응답 이미 처리했으니 아무것도 안 하고 종료
+		    return;
+		}
 		if(view.startsWith("redirect:")){//리다이렉트
 			view = view.substring("redirect:".length());
 			response.sendRedirect(request.getContextPath()+view);

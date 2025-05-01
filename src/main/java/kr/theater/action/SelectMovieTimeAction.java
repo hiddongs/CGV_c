@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
 import kr.movie.dao.MovieDAO;
 import kr.movie.vo.MovieVO;
+import kr.schedule.dao.ScheduleDAO;
 import kr.schedule.vo.ScheduleVO;
 import kr.theater.dao.TheaterDAO;
 import kr.theater.vo.TheaterVO;
@@ -21,11 +22,20 @@ public class SelectMovieTimeAction implements Action{
 		
 		int theaterID = Integer.parseInt(req.getParameter("theaterID"));
 		int movieID = Integer.parseInt(req.getParameter("movieID"));
+	
+		ScheduleDAO scheduleDAO = ScheduleDAO.getInstance();
+	
 		
+
+		
+		
+		
+
     	TheaterDAO dao = TheaterDAO.getInstance();
-        List<ScheduleVO> screenTimeList = null;
+        List<ScheduleVO> scheduleList = null;
 		try {
-			screenTimeList = dao.getScreenTimesTheater(theaterID, movieID);
+			scheduleList = dao.getScheduleList(theaterID, movieID);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,10 +49,10 @@ public class SelectMovieTimeAction implements Action{
         req.setAttribute("movieID", movieID);
         req.setAttribute("theaterID", theaterID);
 
-        req.setAttribute("screenTimeList",screenTimeList);
+       
         req.setAttribute("selectedMovie", selectedMovie);
         req.setAttribute("selectedTheater", selectedTheater);
-        
+        req.setAttribute("scheduleList", scheduleList);
         return "theater/selectTime.jsp";
 		
 	}

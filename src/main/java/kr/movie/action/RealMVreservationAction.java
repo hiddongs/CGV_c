@@ -21,10 +21,13 @@ public class RealMVreservationAction implements Action {
 		MovieDAO movieDAO = new MovieDAO();
 		TheaterDAO theaterDAO = new TheaterDAO();
 		try {
-			List<MovieVO> movieList = movieDAO.getShowingMovieList();
+			String align = req.getParameter("align");
+			if (align == null) align = "1"; // 기본 정렬: 가나다순
+			List<MovieVO> movieList = movieDAO.getShowingMovieAlignList(align);
 			req.setAttribute("movieList", movieList);
 			List<TheaterVO> theaterList = theaterDAO.getTheaterList();
 			req.setAttribute("theaterList", theaterList);
+			req.setAttribute("movieID", req.getParameter("movieID"));
 
 		} catch (Exception e) {
 			// TODO: handle exception
