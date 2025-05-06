@@ -18,6 +18,31 @@ public class MovieDAO {
         return instance;
     }
     
+    public List<MovieVO> getAvailableMovies() {
+        List<MovieVO> list = new ArrayList<>();
+        String sql = "SELECT * FROM movie WHERE release_date <= SYSDATE";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                MovieVO vo = new MovieVO();
+                vo.setMovie_id(rs.getInt("movie_id"));
+                vo.setMv_title(rs.getString("mv_title"));
+                vo.setPoster_url(rs.getString("poster_url"));
+                list.add(vo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+   
+
+
+    
     public List<MovieVO> getMovieList() throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;

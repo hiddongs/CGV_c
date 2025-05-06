@@ -1,19 +1,25 @@
 package kr.schedule.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ScheduleVO {
+    private int scheduleID;
+    private int theaterID;
+    private int movieID;
+   
+    private boolean isMorning;
+    private boolean isNight;
+    private boolean isAvailable;
+    
+    private Timestamp screeningTime;  // 변경
 
-	private int scheduleID;
-	private int theaterID;
-	private int movieID;
-	private String screeningTime;
-	
-	private boolean isMorning;
-	private boolean isNight;
-	private boolean isAvailable;
-	
-	
+    public Timestamp getScreeningTime() {
+        return screeningTime;
+    }
+    public void setScreeningTime(Timestamp screeningTime) {
+        this.screeningTime = screeningTime;
+    }
+
 	public int getScheduleID() {
 		return scheduleID;
 	}
@@ -32,13 +38,7 @@ public class ScheduleVO {
 	public void setMovieID(int movieID) {
 		this.movieID = movieID;
 	}
-	public String getScreeningTime() {
-		return screeningTime;
-	}
-	public void setScreeningTime(String screeningTime) {
-		this.screeningTime = screeningTime;
-	}
-
+	
 	public boolean isMorning() {
 		return isMorning;
 	}
@@ -57,6 +57,7 @@ public class ScheduleVO {
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
-	
-	
+
+    // Getter, Setter 생략 없이 전체 작성
+    
 }

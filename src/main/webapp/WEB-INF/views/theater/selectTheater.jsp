@@ -17,21 +17,17 @@
             <div class="theater-hero">
   <div class="hero-text">영화관을 선택해주세요</div>
 </div>
-            <form action="theaterSubmit.do" method="post" class="container mt-4">
+<form action="selectTime.do" method="post">
     <input type="hidden" name="movieID" value="${movieID}">
-    
-    <div class="mb-3">
-        <label for="theater" class="form-label-right">극장 선택</label> 
-        <select name="theaterID" id="theater" class="form-select-right">
-            <option value="">-- 극장을 선택하세요 --</option>
-            <c:forEach var="theater" items="${theaterList}">
-                <option value="${theater.theaterId}">${theater.name}</option>
-            </c:forEach>
-        </select>
-    </div>
-
-    <input type="submit" value="🎟️ 전송" class="btn btn-primary">
+    <select name="theaterID">
+        <c:forEach var="theater" items="${theaterList}">
+            <option value="${theater.theaterId}">${theater.name}</option>
+        </c:forEach>
+    </select>
+    <button type="submit">상영 시간 보기</button>
 </form>
+
+           
         </div>
    <!--  </div> -->
 </body>

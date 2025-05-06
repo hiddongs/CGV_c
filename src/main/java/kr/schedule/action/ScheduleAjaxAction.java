@@ -1,56 +1,36 @@
 package kr.schedule.action;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
 import kr.schedule.dao.ScheduleDAO;
 import kr.schedule.vo.ScheduleVO;
+import com.google.gson.Gson;
 
-public class ScheduleAjaxAction implements Action{
+import java.io.PrintWriter;
+import java.util.List;
+import java.io.IOException; // ← 이걸 꼭 import하세요!
 
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		int movieID = Integer.parseInt(req.getParameter("movieID"));
-		int theaterID = Integer.parseInt(req.getParameter("theaterID"));
-	
-		ScheduleDAO dao = new ScheduleDAO();
-		try {
-			List<ScheduleVO> list= dao.getScheduleList(movieID, theaterID);
-			
-			JSONArray array = new JSONArray();
-			System.out.println(">>> movieID: " + movieID);
-			System.out.println(">>> theaterID: " + theaterID);
-			
-			System.out.println(">>> 결과 개수: " + list.size());
-			for(ScheduleVO s : list) {
-				JSONObject obj = new JSONObject();
-				System.out.println(">>> schedule json: " + obj.toJSONString());
+public class ScheduleAjaxAction implements Action {
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            int movieID = Integer.parseInt(req.getParameter("movieID"));
+            int theaterID = Integer.parseInt(req.getParameter("theaterID"));
+            String date = req.getParameter("screenDate");
 
-				obj.put("scheduleID", s.getScheduleID());
-				obj.put("screeningTime", s.getScreeningTime());
-				array.add(obj);
-				
-			}
-			
-			resp.setContentType("application/json;charset=UTF-8");
-			PrintWriter out = resp.getWriter();
-			out.print(array.toString());
-			out.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "ajax:";
-	}
+            ScheduleDAO dao = ScheduleDAO.getInstance();
+            List<ScheduleVO> list = dao.getScheduleListByDate(movieID, theaterID, date);
 
+            resp.setContentType("application/json;charset=UTF-8");
+            PrintWriter out = resp.getWriter();
+            Gson gson = new Gson();
+            out.print(gson.toJson(list));
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();  // 개발 중에는 로깅 필수
+        }
+
+        return null; // AJAX 응답이므로 뷰 이동 안 함
+    }
 }

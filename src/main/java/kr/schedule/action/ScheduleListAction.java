@@ -10,22 +10,22 @@ import kr.controller.Action;
 import kr.schedule.dao.ScheduleDAO;
 import kr.schedule.vo.ScheduleVO;
 
-public class ScheduleListAction implements Action{
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import kr.controller.Action;
+import kr.schedule.dao.ScheduleDAO;
+import kr.schedule.vo.ScheduleVO;
+import java.util.List;
 
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		ScheduleDAO scheduleDAO = ScheduleDAO.getInstance();
-		int movieID = Integer.parseInt(req.getParameter("movieID"));
-		int theaterID=Integer.parseInt(req.getParameter("theaterID"));
-		
-		List<ScheduleVO> scheduleList = scheduleDAO.getScheduleList(movieID,theaterID);
-		
-		req.setAttribute("scheduleList", scheduleList);
-		req.setAttribute("movieID", movieID);
-		req.setAttribute("theaterID", theaterID);
-		return "theater/selectTime.jsp";  // redirect 말고 forward
-
-	}
-
+public class ScheduleListAction implements Action {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        int movieID = Integer.parseInt(req.getParameter("movieID"));
+        int theaterID = Integer.parseInt(req.getParameter("theaterID"));
+        ScheduleDAO dao = ScheduleDAO.getInstance();
+        List<ScheduleVO> list = dao.getSchedules(movieID, theaterID);
+        req.setAttribute("movieID", movieID);
+        req.setAttribute("theaterID", theaterID);
+        req.setAttribute("scheduleList", list);
+        return "schedule/scheduleList.jsp";
+    }
 }

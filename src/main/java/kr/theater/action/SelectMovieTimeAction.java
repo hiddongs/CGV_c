@@ -1,60 +1,37 @@
 package kr.theater.action;
 
-import java.io.IOException;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import kr.controller.Action;
-import kr.movie.dao.MovieDAO;
-import kr.movie.vo.MovieVO;
 import kr.schedule.dao.ScheduleDAO;
 import kr.schedule.vo.ScheduleVO;
-import kr.theater.dao.TheaterDAO;
-import kr.theater.vo.TheaterVO;
 
-public class SelectMovieTimeAction implements Action{
+public class SelectMovieTimeAction implements Action {
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        int movieID = Integer.parseInt(req.getParameter("movieID"));
+        int theaterID = Integer.parseInt(req.getParameter("theaterID"));
+        String screenDate = req.getParameter("screenDate");
 
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		int theaterID = Integer.parseInt(req.getParameter("theaterID"));
-		int movieID = Integer.parseInt(req.getParameter("movieID"));
-	
-		ScheduleDAO scheduleDAO = ScheduleDAO.getInstance();
-	
-		
+        if (screenDate == null || screenDate.isEmpty()) {
+            screenDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        }
 
-		
-		
-		
+        ScheduleDAO dao = ScheduleDAO.getInstance();
+        List<ScheduleVO> scheduleList = dao.getScheduleListByDate(movieID, theaterID, screenDate);
 
-    	TheaterDAO dao = TheaterDAO.getInstance();
-        List<ScheduleVO> scheduleList = null;
-		try {
-			scheduleList = dao.getScheduleList(theaterID, movieID);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		MovieDAO movieDAO = MovieDAO.getInstance();
-		
-		MovieVO selectedMovie = movieDAO.getMovie(movieID);
-        TheaterVO selectedTheater = dao.getTheater(theaterID);
-        
+        System.out.println("받은 날짜: " + screenDate);
+        System.out.println("조회된 스케줄 수: " + scheduleList.size());
+
         req.setAttribute("movieID", movieID);
         req.setAttribute("theaterID", theaterID);
-
-       
-        req.setAttribute("selectedMovie", selectedMovie);
-        req.setAttribute("selectedTheater", selectedTheater);
+        req.setAttribute("screenDate", screenDate);
         req.setAttribute("scheduleList", scheduleList);
-        return "theater/selectTime.jsp";
-		
-	}
 
+        return "theater/selectTime.jsp";
+    }
 }

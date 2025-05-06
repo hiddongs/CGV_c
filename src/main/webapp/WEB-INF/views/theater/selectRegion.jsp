@@ -15,19 +15,18 @@
     <!--  <div class="center-box">-->
         <div class="inner-box fade-in">
             <h3>극장 선택</h3>
-            <form action="regionSubmit.do" method="post" class="container mt-4">
-                <div class="mb-3">
-                <input type="hidden" name="movieID" value="${movieID}">
-                    <label for="region" class="form-label-left">📍 지역 선택</label> 
-                  <select name="region" id="region" class="form-select-left">
-                  <option value="">-- 범위를 선택하세요 --</option>
-                  <c:forEach var="region" items="${regionList}">
-                        <option value="${region}">${region}</option>
-                  </c:forEach>
-                  </select>
-                </div>
-                <input type="submit" value="🎟️ 전송" class="btn btn-primary">
-            </form>
+           <form action="selectTheater.do" method="post">
+  <input type="hidden" name="movieID" value="${movieID}">
+  <label>지역을 선택하세요</label>
+  <select name="region" required>
+    <option value="">-- 선택 --</option>
+    <c:forEach var="region" items="${regionList}">
+      <option value="${region}">${region}</option>
+    </c:forEach>
+  </select>
+  <button type="submit">다음</button>
+</form>
+           
         </div>
    <!--  </div> -->
 </body>
