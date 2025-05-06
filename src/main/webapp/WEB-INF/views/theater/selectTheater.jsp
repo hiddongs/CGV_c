@@ -17,6 +17,7 @@
             <div class="theater-hero">
   <div class="hero-text">영화관을 선택해주세요</div>
 </div>
+
 <form action="selectTime.do" method="post">
     <input type="hidden" name="movieID" value="${movieID}">
     <select name="theaterID">

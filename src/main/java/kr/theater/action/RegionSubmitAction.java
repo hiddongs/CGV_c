@@ -30,7 +30,7 @@ public class RegionSubmitAction implements Action {
 					e.printStackTrace();
 				}
 				System.out.println("movieID: " + movieID);
-				req.setAttribute("movieID", movieID); // 이렇게!
+				req.setAttribute("movieID", movieID); 
 	            req.setAttribute("theaterList",theaterList);
 	        
 		return "theater/selectTheater.jsp";

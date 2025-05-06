@@ -12,6 +12,15 @@ public class ScheduleVO {
     private boolean isAvailable;
     
     private Timestamp screeningTime;  // 변경
+    private String auditoriumType;
+    private int auditoriumID;
+
+    // Getter & Setter
+    public String getAuditoriumType() { return auditoriumType; }
+    public void setAuditoriumType(String auditoriumType) { this.auditoriumType = auditoriumType; }
+
+    public int getAuditoriumID() { return auditoriumID; }
+    public void setAuditoriumID(int auditoriumID) { this.auditoriumID = auditoriumID; }
 
     public Timestamp getScreeningTime() {
         return screeningTime;
