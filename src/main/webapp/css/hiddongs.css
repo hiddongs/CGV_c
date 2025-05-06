@@ -504,3 +504,79 @@ input[type="date"]:focus {
   outline: none;
   box-shadow: 0 0 4px rgba(229, 9, 20, 0.3);
 }
+
+
+/* 전체 박스 */
+.special-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* 제목 + 설명 */
+.special-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
+}
+
+.special-desc {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+
+/* 카드 그리드 */
+.special-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* 카드 공통 */
+.special-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    height: 280px; /* 동일한 높이 */
+}
+
+.special-card:hover {
+    transform: translateY(-6px);
+}
+
+/* 카드별 너비 조정 */
+.card-wide img {
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-narrow img {
+    height: 180px;
+    object-fit: cover;
+}
+
+/* 내부 텍스트 */
+.special-text {
+    padding: 15px;
+    text-align: left;
+}
+
+.special-text h3 {
+    font-size: 20px;
+    margin: 0 0 5px;
+    color: #000;
+}
+
+.special-text p {
+    font-size: 14px;
+    color: #555;
+}
+
+
