@@ -165,6 +165,8 @@ public class TheaterDAO {
 
         return theater;
     }
+  
+
     public List<TheaterVO> getTheatersByMovie(int movieID) {
         List<TheaterVO> list = new ArrayList<>();
         String sql = "SELECT DISTINCT t.* FROM theater t " +
@@ -184,6 +186,13 @@ public class TheaterDAO {
                 vo.setRegion(rs.getString("region"));
                 list.add(vo);
             }
+            
+            System.out.println("영화 ID: " + movieID);
+            System.out.println("조회된 극장 수: " + list.size());
+            for (TheaterVO vo : list) {
+                System.out.println("극장 ID: " + vo.getTheaterId() + ", 이름: " + vo.getName() + ", 지역: " + vo.getRegion());
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -192,6 +201,36 @@ public class TheaterDAO {
     }
   
    
+ // 🔧 지역 + 영화ID로 가능한 극장 조회
+    public List<TheaterVO> getTheatersByMovieAndRegion(int movieID, String region) {
+        List<TheaterVO> list = new ArrayList<>();
+        String sql = "SELECT DISTINCT t.* FROM theater t " +
+                     "JOIN schedule s ON t.theater_id = s.theater_id " +
+                     "WHERE s.movie_id = ? AND t.region = ? AND s.is_available = 1";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, movieID);
+            pstmt.setString(2, region);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                TheaterVO vo = new TheaterVO();
+                vo.setTheaterId(rs.getInt("theater_id"));
+                vo.setName(rs.getString("name"));
+                vo.setRegion(rs.getString("region"));
+                list.add(vo);
+            }
+            System.out.println("[DEBUG] 전달된 지역값: [" + region + "]");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
 
 

@@ -14,26 +14,23 @@ public class RegionSubmitAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	
-	        	String region = req.getParameter("region");
-	        	String movieID = req.getParameter("movieID"); // 추가
-	        	TheaterDAO dao = TheaterDAO.getInstance();
-	            List<TheaterVO> theaterList = null;
-				try {
-					theaterList = dao.selectTheaterList(region);
-					
-				
+	    String region = req.getParameter("region");
+	    int movieID = Integer.parseInt(req.getParameter("movieID")); // int로 변환
 
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println("movieID: " + movieID);
-				req.setAttribute("movieID", movieID); 
-	            req.setAttribute("theaterList",theaterList);
-	        
-		return "theater/selectTheater.jsp";
+	    TheaterDAO dao = TheaterDAO.getInstance();
+	    List<TheaterVO> theaterList = dao.getTheatersByMovieAndRegion(movieID, region);
+
+	    
+	    System.out.println("movieID: " + movieID);
+	    System.out.println("선택된 지역: " + region);
+	    System.out.println("조회된 극장 수: " + theaterList.size());
+
+	    req.setAttribute("movieID", movieID);
+	    req.setAttribute("region", region);
+	    req.setAttribute("theaterList", theaterList);
+
+	    return "theater/selectTheater.jsp";
 	}
+
 
 }

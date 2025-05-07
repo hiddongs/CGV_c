@@ -15,6 +15,7 @@ public class SelectMovieTimeAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         int movieID = Integer.parseInt(req.getParameter("movieID"));
         int theaterID = Integer.parseInt(req.getParameter("theaterID"));
+        int auditoriumID = Integer.parseInt(req.getParameter("auditoriumID"));
         String screenDate = req.getParameter("screenDate");
 
         if (screenDate == null || screenDate.isEmpty()) {
@@ -22,7 +23,7 @@ public class SelectMovieTimeAction implements Action {
         }
 
         ScheduleDAO dao = ScheduleDAO.getInstance();
-        List<ScheduleVO> scheduleList = dao.getScheduleListByDate(movieID, theaterID, screenDate);
+        List<ScheduleVO> scheduleList = dao.getScheduleListByDate(movieID, theaterID,auditoriumID, screenDate);
 
         System.out.println("받은 날짜: " + screenDate);
         System.out.println("조회된 스케줄 수: " + scheduleList.size());

@@ -15,7 +15,7 @@
     <!--  <div class="center-box">-->
         <div class="inner-box fade-in">
             <h3>극장 선택</h3>
-           <form action="selectTheater.do" method="post">
+        <form action="regionSubmit.do" method="post">
   <input type="hidden" name="movieID" value="${movieID}">
   <label>지역을 선택하세요</label>
   <select name="region" required>
@@ -26,6 +26,7 @@
   </select>
   <button type="submit">다음</button>
 </form>
+        
            
         </div>
    <!--  </div> -->

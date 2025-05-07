@@ -17,10 +17,11 @@ public class ScheduleAjaxAction implements Action {
         try {
             int movieID = Integer.parseInt(req.getParameter("movieID"));
             int theaterID = Integer.parseInt(req.getParameter("theaterID"));
+            int auditoriumID = Integer.parseInt(req.getParameter("auditoriumID"));
             String date = req.getParameter("screenDate");
 
             ScheduleDAO dao = ScheduleDAO.getInstance();
-            List<ScheduleVO> list = dao.getScheduleListByDate(movieID, theaterID, date);
+            List<ScheduleVO> list = dao.getScheduleListByDate(movieID, theaterID,auditoriumID, date);
 
             resp.setContentType("application/json;charset=UTF-8");
             PrintWriter out = resp.getWriter();

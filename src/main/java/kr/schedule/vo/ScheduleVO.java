@@ -1,5 +1,6 @@
 package kr.schedule.vo;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class ScheduleVO {
@@ -7,28 +8,10 @@ public class ScheduleVO {
     private int theaterID;
     private int movieID;
    
-    private boolean isMorning;
-    private boolean isNight;
-    private boolean isAvailable;
-    
-    private Timestamp screeningTime;  // 변경
-    private String auditoriumType;
     private int auditoriumID;
-
-    // Getter & Setter
-    public String getAuditoriumType() { return auditoriumType; }
-    public void setAuditoriumType(String auditoriumType) { this.auditoriumType = auditoriumType; }
-
-    public int getAuditoriumID() { return auditoriumID; }
-    public void setAuditoriumID(int auditoriumID) { this.auditoriumID = auditoriumID; }
-
-    public Timestamp getScreeningTime() {
-        return screeningTime;
-    }
-    public void setScreeningTime(Timestamp screeningTime) {
-        this.screeningTime = screeningTime;
-    }
-
+    private int slotID;
+    private Date screeningDate;
+    private boolean isAvailable;
 	public int getScheduleID() {
 		return scheduleID;
 	}
@@ -47,18 +30,23 @@ public class ScheduleVO {
 	public void setMovieID(int movieID) {
 		this.movieID = movieID;
 	}
-	
-	public boolean isMorning() {
-		return isMorning;
+	public int getAuditoriumID() {
+		return auditoriumID;
 	}
-	public void setMorning(boolean isMorning) {
-		this.isMorning = isMorning;
+	public void setAuditoriumID(int auditoriumID) {
+		this.auditoriumID = auditoriumID;
 	}
-	public boolean isNight() {
-		return isNight;
+	public int getSlotID() {
+		return slotID;
 	}
-	public void setNight(boolean isNight) {
-		this.isNight = isNight;
+	public void setSlotID(int slotID) {
+		this.slotID = slotID;
+	}
+	public Date getScreeningDate() {
+		return screeningDate;
+	}
+	public void setScreeningDate(Date screeningDate) {
+		this.screeningDate = screeningDate;
 	}
 	public boolean isAvailable() {
 		return isAvailable;
@@ -66,7 +54,6 @@ public class ScheduleVO {
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
-
-    // Getter, Setter 생략 없이 전체 작성
+    
     
 }

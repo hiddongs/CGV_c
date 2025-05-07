@@ -34,9 +34,9 @@ public class ScheduleDAO {
 
         return list;
     }
-    public List<ScheduleVO> getScheduleListByDate(int movieID, int theaterID, String date) {
+    public List<ScheduleVO> getScheduleListByDate(int movieID, int theaterID,int auditoriumID, String date) {
         List<ScheduleVO> list = new ArrayList<>();
-        String sql = "SELECT * FROM schedule WHERE movie_id = ? AND theater_id = ? " +
+        String sql = "SELECT * FROM schedule WHERE movie_id = ? AND theater_id = ?  AND auditorium_id=? " +
                      "AND is_available = 1 AND TRUNC(screening_time) = TO_DATE(?, 'YYYY-MM-DD') " +
                      "ORDER BY screening_time";
 
@@ -44,7 +44,8 @@ public class ScheduleDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, movieID);
             pstmt.setInt(2, theaterID);
-            pstmt.setString(3, date);
+            pstmt.setInt(3, auditoriumID);
+            pstmt.setString(4, date);
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -52,11 +53,9 @@ public class ScheduleDAO {
                 vo.setScheduleID(rs.getInt("schedule_id"));
                 vo.setTheaterID(rs.getInt("theater_id"));
                 vo.setMovieID(rs.getInt("movie_id"));
-                vo.setScreeningTime(rs.getTimestamp("screening_time"));
-                vo.setMorning(rs.getInt("is_morning") == 1);
-                vo.setNight(rs.getInt("is_night") == 1);
+                vo.setScreeningDate((rs.getDate("screening_time")));
                 vo.setAvailable(rs.getInt("is_available") == 1);
-                vo.setAuditoriumType(rs.getString("auditorium_type")); // ✅ 추가
+                vo.setAuditoriumID(rs.getInt("auditorium_id"));
                 list.add(vo);
             }
         } catch (Exception e) {
@@ -72,11 +71,8 @@ public class ScheduleDAO {
         vo.setScheduleID(rs.getInt("schedule_id"));
         vo.setTheaterID(rs.getInt("theater_id"));
         vo.setMovieID(rs.getInt("movie_id"));
-        vo.setScreeningTime(rs.getTimestamp("screening_time"));
-        vo.setMorning(rs.getInt("is_morning") == 1);
-        vo.setNight(rs.getInt("is_night") == 1);
+        vo.setScreeningDate((rs.getDate("screening_time")));
         vo.setAvailable(rs.getInt("is_available") == 1);
-        vo.setAuditoriumType(rs.getString("auditorium_type"));  // ✅ 추가
         vo.setAuditoriumID(rs.getInt("auditorium_id"));         // ✅ 추가
         return vo;
     }
