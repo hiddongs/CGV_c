@@ -47,7 +47,7 @@
         <div class="card-body">
             <h5 class="card-title">영화관 선택</h5>
 
-            <form action="selectTheater.do" method="post">
+            <form action="selectTime.do" method="post">
                 <input type="hidden" name="movieID" value="${movieID}">
                 
                 <p>극장 수: <span class="badge bg-secondary">${fn:length(theaterList)}</span></p>

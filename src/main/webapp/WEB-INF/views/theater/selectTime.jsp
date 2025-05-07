@@ -26,7 +26,7 @@
       
       <p><strong>상영시간 선택:</strong></p>
       <c:forEach var="schedule" items="${scheduleList}">
-        <c:set var="time" value="${fn:substring(schedule.screeningTime, 11, 16)}"/>
+        <c:set var="time" value="${fn:substring(schedule.screeningDate, 11, 16)}"/>
         <input type="radio" name="scheduleID" value="${schedule.scheduleID}" id="s${schedule.scheduleID}" required />
         <label for="s${schedule.scheduleID}">
           ${time} (${schedule.auditoriumID})  <!-- ✅ 특별관 표기 -->
