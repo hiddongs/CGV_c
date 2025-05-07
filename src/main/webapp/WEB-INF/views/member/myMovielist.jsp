@@ -11,6 +11,9 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/layout.css">
+	
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>

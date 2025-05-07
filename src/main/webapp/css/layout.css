@@ -73,4 +73,119 @@ body{
 }
 
 
+/* 사이드바 스타일 
+--------------------------------*/
+#main_nav {
+	width: 240px;
+	background-color: #f8f8f8;
+	font-family: sans-serif;
+	border-right: 1px solid #ccc;
+	height: 850px;
+	padding: 20px;
+	float: left;
+}
+
+#main_nav h2 a {
+	background-color: #f8f8f8;
+	color: #222;
+	font-size: 16px;
+	padding: 12px;
+	margin-bottom: 15px;
+	display: block; 
+}
+
+.menu-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.menu-list li.section-reservation a {
+	background-color: #ef4b64;
+	color: #fff;
+	padding: 10px;
+	border-radius: 3px;
+}
+
+.menu-list li.menu-reservation {
+	margin: 6px 0;
+}
+
+.menu-list li.section-title {
+	font-weight: bold;
+	margin-top: 15px;
+	color: #222;
+}
+
+.menu-list li a {
+	color: #444;
+	text-decoration: none;
+	padding-left: 10px;
+	display: block;
+	font-size: 14px;
+}
+
+/* 나의 예매내역 
+--------------------------------*/
+.res-container {
+	width: 100%;
+	background-color: #fff;
+	padding: 40px;
+	box-sizing: border-box;
+	font-family: 'Noto Sans KR', sans-serif;
+	color: #333;
+	
+}
+
+.section {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.title-wrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+	width: 100%;
+	
+}
+
+.text-wrap {
+	display: flex;
+	flex-direction: column;
+}
+
+.title {
+	font-weight: 700;
+	font-size: 15px;
+	color: #000;
+}
+
+.line {
+	border: none;
+	height: 2px;
+	background: #ccc; /*줄 색상*/
+	margin-top: 10px;
+	/*margin: 10px 0;*/
+	width: 800px;
+}
+
+.info {
+	font-size: 13px;
+	color: #333;
+	line-height: 1.5;
+	margin-top: 4px;
+}
+
+.movie-btn {
+	background-color: #444;
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 13px;
+	cursor: pointer;
+	white-space: nowrap;
+}
 

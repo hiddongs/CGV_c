@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,6 +14,8 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/layout.css">
 
 <style>
 .container {
@@ -99,125 +103,6 @@
 	cursor: pointer;
 }
 
-/* 사이드바 스타일 */
-#main_nav {
-	width: 240px;
-	background-color: #f8f8f8;
-	font-family: sans-serif;
-	border-right: 1px solid #ccc;
-	height: 850px;
-	padding: 20px;
-	float: left;
-}
-
-#main_nav h2 a {
-	background-color: #f8f8f8;
-	color: #222;
-	font-size: 16px;
-	padding: 12px;
-	margin-bottom: 15px;
-	display: block; /* <-- 추가 */
-}
-
-.menu-list {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.menu-list li.section-reservation a {
-	background-color: #ef4b64;
-	color: #fff;
-	padding: 10px;
-	border-radius: 3px;
-}
-
-.menu-list li.menu-reservation {
-	margin: 6px 0;
-}
-
-.menu-list li.section-title {
-	font-weight: bold;
-	margin-top: 15px;
-	color: #222;
-}
-
-.menu-list li a {
-	color: #444;
-	text-decoration: none;
-	padding-left: 10px;
-	display: block;
-	font-size: 14px;
-}
-
-/*버튼과 예매내역 위치*/
-.res-container {
-	width: 100%;
-	background-color: #fff;
-	padding: 20px;
-	box-sizing: border-box;
-	font-family: 'Noto Sans KR', sans-serif;
-	color: #333;
-	
-}
-
-.section {
-	max-width: 800px;
-	margin: 0 auto;
-}
-
-.title-wrap {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 10px;
-	width: 50%;
-	
-}
-
-
-.text-wrap {
-	display: flex;
-	flex-direction: column;
-	/*position:absolute;*/
-}
-
-.title {
-	font-weight: 700;
-	font-size: 15px;
-	color: #000;
-}
-
-.line {
-	border: none;
-	height: 1px;
-	background: #ccc; /*줄 색상*/
-	margin-top: 10px;
-	/*margin: 10px 0;*/
-	width: 500px;
-}
-
-.info {
-	font-size: 13px;
-	color: #333;
-	line-height: 1.5;
-	margin-top: 4px;
-}
-
-.movie-btn {
-	background-color: #444;
-	color: white;
-	border: none;
-	padding: 8px 12px;
-	border-radius: 4px;
-	font-size: 13px;
-	cursor: pointer;
-	white-space: nowrap;
-}
-
-.movie-btn:hover {
-	background-color: #333;
-}
 </style>
 <body>
 
@@ -249,59 +134,70 @@
 			</ul>
 		</div>
 	</nav>
+<div class="res-container">
+  <div class="section">
+    <div class="title-wrap">
+      <div class="text-wrap">
+        <div class="title">나의 예매내역</div>
+        <div class="info">
+          지난 <span style="color: red;">1개월</span>까지의 예매내역을 확인하실 수 있습니다.
+        </div>
+      </div>
 
-	<div class="res-container">
-		<div class="section">
-			<div class="title-wrap">
-				<div class="text-wrap">
-					<div class="title">나의 예매내역</div>
+      <!-- 오른쪽 버튼 -->
+      <input type="button" class="movie-btn" value="내가 본 영화"
+             onclick="location.href='${pageContext.request.contextPath}/member/myMovielist.do'">
+    </div>
+    <!-- <hr class="line"> -->
+    <hr size="1" noshade="noshade" width="100%">
+  </div>
 
-					<div class="info">
-						지난 <span style="color: red;">1개월</span>까지의 예매내역을 확인하실 수 있습니다.
-					</div>
-				</div>
+  <div class="page-main">
+    <div class="content-main">
 
-				<!-- 오른쪽 버튼 -->
-				<input type="button" class="movie-btn" value="내가 본 영화"
-					onclick="location.href='${pageContext.request.contextPath}/member/myMovielist.do'">
-			</div>
-			<hr class="line">
-		</div>
-	</div>
-	
-	<table> <!-- 테이블 시작 -->
-		<thead>
-			<tr>
-				<th>관람극장</th>
-				<th>관람인원</th>
-				<th>영화가격</th>
-				<th>관람일시</th>
-				<th>관람좌석</th>
-				<th>상영관</th>
-				<th>매수</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var = "reservation" items="${reservationList}">
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					
-					
-				</tr>
-			</c:forEach>
-			
-		
-		
-		</tbody>
-	</table>
-	
+      <c:if test="${reservation.payment_status == '완료'}">
+        <div class="item-image">
+          <img src="${pageContext.request.contextPath}/upload/${movie.poster_url}" width="300" alt="영화 포스터">
+        </div>
 
+        <div class="reservation-detail">
+          <form id="reservation_cart">
+
+            <!-- 예약 정보 hidden 처리 -->
+            <input type="hidden" name="reservation_num" value="${reservation.reservation_num}" id="reservation_num">
+            <input type="hidden" name="reservation_mvtitle" value="${reservation.mv_title}" id="reservation_mvtitle">
+            <input type="hidden" name="reservation_name" value="${reservation.name}" id="reservation_name">
+            <input type="hidden" name="reservation_price" value="${reservation.price}" id="reservation_price">
+            <input type="hidden" name="reservation_viewers" value="${reservation.viewers}" id="reservation_viewers">
+            <input type="hidden" name="reservation_screeningTime" value="${reservation.screeningTime}" id="reservation_screeningTime">
+            <input type="hidden" name="reservation_seatnum" value="${reservation.seat_num}" id="reservation_seatnum">
+
+            <!-- 예약 정보 출력 -->
+            <ul>
+              <li>영화 제목: <b><span>${reservation.mv_title}</span></b></li>
+              <li>관람 극장: <b><span>${reservation.name}</span></b></li>
+              <li>가격: <b><fmt:formatNumber value="${reservation.price}"/>원</b></li>
+              <li>관람 인원: <b><span>${reservation.viewers}</span>명</b></li>
+              <li>관람 일시: <b><fmt:formatDate value="${reservation.screeningTime}" pattern="yyyy-MM-dd HH:mm" /></b></li>
+              <li>관람 좌석: <b><span>${reservation.seat_num}</span></b></li>
+              <li>
+                상영관: <b>
+                  <c:if test="${reservation.imax eq 'Y'}">IMAX </c:if>
+                  <c:if test="${reservation.screenx eq 'Y'}">/ SCREENX </c:if>
+                  <c:if test="${reservation.fourdx eq 'Y'}">/ 4DX </c:if>
+                  <c:if test="${reservation.threed eq 'Y'}">/ 3D </c:if>
+                  <c:if test="${reservation.twod eq 'Y'}">/ 2D </c:if>
+                </b>
+              </li>
+            </ul>
+
+          </form>
+        </div>
+      </c:if>
+
+    </div>
+  </div>
+</div>
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>

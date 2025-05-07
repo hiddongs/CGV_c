@@ -4,14 +4,14 @@ import java.sql.Date;
 
 public class Schedule {
 
-	private int sheduleID;
-	private int theaterID;
-	private int movieID;
-	private Date screeningTime;
-	private int price;
-	private boolean isMorning;
-	private boolean isNight;
-	private boolean isAvailable;
+	private int sheduleID; //상영스케줄 ID
+	private int theaterID; //극장 ID
+	private int movieID; //영화 ID
+	private Date screeningTime; //영화 시간
+	private int price; // 가격
+	private boolean isMorning; //조조
+	private boolean isNight; //심야
+	private boolean isAvailable; //가능
 	
 	
 	public int getSheduleID() {
