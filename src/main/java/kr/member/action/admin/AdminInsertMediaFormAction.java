@@ -6,20 +6,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
-import kr.movie.dao.MovieDAO;
-import kr.movie.vo.MovieVO;
 import kr.util.CodeUtil;
 
-public class AdminCouponCreateFormAction implements Action{
+public class AdminInsertMediaFormAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(!CodeUtil.isAdmin(req)) {
-			return "redirect:/main/main.do";
-		}
-		MovieVO movie = MovieDAO.getInstance().getMovie((int) req.getAttribute("movieId"));
-		req.setAttribute("movie", movie);
-		return "member/admin/adminCouponCreateForm.jsp";
+		if(!CodeUtil.isAdmin(req)) return "redirect:/main/main.do";
+		String movieId = req.getParameter("movie_id");
+		req.setAttribute("movie_id", movieId);
+		return "member/admin/insertMediaForm.jsp";
 	}
 
 }

@@ -72,11 +72,21 @@
            	movieTypeBtn.dataset.movieId = movie.movie_id
            	movieTypeBtn.onclick = updateMovieTypeForm;
             
+            const movieMediaBtn = document.createElement('button')
+            movieMediaBtn.type = 'button'
+            movieMediaBtn.className = 'btn btn-warning'
+            movieMediaBtn.textContent = '미디어'
+            movieMediaBtn.dataset.movieId = movie.movie_id
+            movieMediaBtn.onclick = movieMediaManagementForm
+
             actionCell.appendChild(updateBtn);
             actionCell.appendChild(document.createTextNode(' '));
             actionCell.appendChild(deleteBtn);
             actionCell.appendChild(document.createTextNode(' '))
 			actionCell.appendChild(movieTypeBtn)
+            actionCell.appendChild(document.createTextNode(' '))
+			actionCell.appendChild(movieMediaBtn)
+            
             row.appendChild(actionCell);
             container.appendChild(row);
         });
@@ -103,6 +113,11 @@
     function updateMovieTypeForm(event){
 		const movieId = event.target.dataset.movieId;
 		window.location.href = 'updateMovieTypeForm.do?movie_id='+ encodeURIComponent(movieId)
+    }
+
+    function movieMediaManagementForm(event){
+        const movieId = event.target.dataset.movieId
+        window.location.href = 'movieMediaManagement.do?movie_id='+ encodeURIComponent(movieId)
     }
 </script>
 
