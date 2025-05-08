@@ -3,6 +3,7 @@ package kr.reservation.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import kr.reservation.vo.ReservationVO;
 import kr.util.DBUtil;
@@ -47,8 +48,9 @@ public class ReservationDAO {
 			DBUtil.executeClose(null, pstmt, conn);
 		}
 	}
+	
 	// 예매 내역 조회
-	public ReservationVO getReservation(ReservationVO reservation) throws Exception{
+	public ReservationVO getListReservationByUser(ReservationVO reservation) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -82,8 +84,4 @@ public class ReservationDAO {
 		return reservation;
 		
 	}
-	// 예매 상세 조회
-	// 예매 상세 조회
-	// 해당 상영 시간의 좌석 확인 (중복 방지용)
-	// 예매 가능 여부 확인 (좌석 중복 체크)
 }

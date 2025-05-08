@@ -155,7 +155,7 @@
 		<div id="main_aside">
 			<h2>My CGV HOME</h2>
 			<ul class="menu-list">
-				<li class="section-title"><strong><a href="${pageContext.request.contextPath}/member/movieReservation.do">
+				<li class="section-title"><strong><a href="${pageContext.request.contextPath}/member/mypageDetailReservation.do">
 				나의 예매내역</a></strong></li>
 				<li class="section-title"><strong><a href="#">관람권/할인쿠폰
 							관리</a></strong></li>
@@ -185,15 +185,22 @@
 			<div class="mypage-section">
 				<div class="mypage-item">
 					<div class="mypage-label">
-					<a href ="${pageContext.request.contextPath}/member/movieReservation.do" style="text-decoration: none; color: inherit;">> 나의 예매내역</a>
+					<a href ="${pageContext.request.contextPath}/member/mypageDetailReservation.do" style="text-decoration: none; color: inherit;">> 나의 예매내역</a>
 					</div>
-					<div class="mypage-content">예시1</div>
-					<div class="mypage-date">2023.04.16 (화) | 20:30 | COD 2인 |
-						2만원</div>
+					
+					<div class="mypage-content">
+					<!-- 영화 제목 -->
+						<c:forEach var="DetailReservation" items="${mypageDetailReservation}">
+						<h3>${DetailReservation.mv_title}</h3> <!-- 영화제목 -->
+					<div class="mypage-date">${DetailReservation.screeningtime} | ${DetailReservation.name} |${DetailReservation.viewers} |${DetailReservation.price} 
+					</div>
 					<div class="mypage-content">예시2</div>
 					<div class="mypage-date">2023.04.16 (화) | 14:20 | 예매 12건</div>
+					</c:forEach>
 				</div>
-
+				
+			</div>
+			
 				<div class="mypage-item">
 					<div class="mypage-label">> 관람권/할인쿠폰 관리</div>
 					<div class="mypage-content mypage-coupon">${coupon.couponid}

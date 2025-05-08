@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.member.vo.MemberVO;
+import kr.reservation.vo.ReservationVO;
 import kr.util.DBUtil;
 
 public class MemberDAO {
@@ -351,12 +352,53 @@ public class MemberDAO {
 
     
     // 나의 예매내역 가져오기
+    // ReservationVO -> mem_id 
+    public List<ReservationVO> getListReservationByMem_id(int mem_id) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ReservationVO> list = new ArrayList<>();
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// sql
+			sql = "SELECT * FROM reservation WHERE mem_id=?";
+			// 데이터 할당
+			pstmt = conn.prepareStatement(sql);
+			//데이터 바인딩
+			pstmt.setInt(1, mem_id);
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			// 반복
+			while(rs.next()) {
+				ReservationVO vo = new ReservationVO();
+				vo.setMv_title(rs.getString("mv_title")); // 영화제목
+				vo.setName(rs.getString("name")); // 극장이름
+				vo.setScreeningTime(rs.getDate("screeningtime")); //관람일시
+				vo.setViewers(rs.getInt("viewers")); // 관람인원
+				vo.setPrice(rs.getInt("price")); //영화가격
+				
+				list.add(vo); //리스트에 추가
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+
+    	return list;
+    	
+    }
+    
+    
     // 관람권/할인쿠폰 관리 - 확인하기
     // 관람권/할인쿠폰 관리 - 수정, 삭제
     // 문의내역 - 등록, 삭제, 수정, 
     // 나의 포인트
     
-  
+    // 쿠폰 가져오기
 	public List<MemberVO> getMemberCPPossessList() {
 		
 		 Connection conn = null;

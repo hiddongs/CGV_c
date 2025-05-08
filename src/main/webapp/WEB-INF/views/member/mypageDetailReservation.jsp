@@ -117,7 +117,7 @@
 			</h2>
 			<ul class="menu-list">
 				<li class="section-reservation"><strong><a
-						href="${pageContext.request.contextPath}/member/movieReservation.do">나의
+						href="${pageContext.request.contextPath}/member/mypageDetailReservation.do">나의
 							예매내역</a></strong></li>
 				<li class="section-title"><strong><a href="#">관람권/할인쿠폰
 							관리</a></strong></li>
