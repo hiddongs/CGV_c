@@ -29,9 +29,9 @@ public class ReservationDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(++cnt, reservation.getReservation_id());
-			pstmt.setInt(++cnt, reservation.getMem_id());
-			pstmt.setInt(++cnt, reservation.getSchedulle_id());
+			pstmt.setLong(++cnt, reservation.getReservationID());
+			pstmt.setInt(++cnt, reservation.getMemID());
+			pstmt.setInt(++cnt, reservation.getSchedulleID());
 			pstmt.setString(++cnt,reservation.getSeat_num());
 			pstmt.setString(++cnt,reservation.getPayment_staus());
 			pstmt.setDate(++cnt, reservation.getPayment_date());
@@ -63,8 +63,8 @@ public class ReservationDAO {
 			sql = "SELECT * FROM reservation WHERE reservation_id =? AND mem_id=?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setLong(++cnt, reservation.getReservation_id());
-			pstmt.setLong(++cnt, reservation.getMem_id());
+			pstmt.setLong(++cnt, reservation.getReservationID());
+			pstmt.setLong(++cnt, reservation.getMemID());
 			
 			rs = pstmt.executeQuery();
 			if(rs.next()) {

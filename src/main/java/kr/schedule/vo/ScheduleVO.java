@@ -12,6 +12,33 @@ public class ScheduleVO {
     private int slotID;
     private Date screeningDate;
     private boolean isAvailable;
+
+
+    
+    private String auditoriumName;
+    private String auditoriumType;
+    private Timestamp startTime;
+    private Timestamp endTime;
+
+    
+    public Timestamp getStartTime() { return startTime; }
+    public void setStartTime(Timestamp startTime) { this.startTime = startTime; }
+
+    public Timestamp getEndTime() { return endTime; }
+    public void setEndTime(Timestamp endTime) { this.endTime = endTime; }
+
+    public String getAuditoriumName() {
+        return auditoriumName;
+    }
+    public void setAuditoriumName(String auditoriumName) {
+        this.auditoriumName = auditoriumName;
+    }
+    public String getAuditoriumType() {
+        return auditoriumType;
+    }
+    public void setAuditoriumType(String auditoriumType) {
+        this.auditoriumType = auditoriumType;
+    }
 	public int getScheduleID() {
 		return scheduleID;
 	}

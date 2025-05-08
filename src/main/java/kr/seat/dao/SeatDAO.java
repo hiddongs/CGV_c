@@ -21,6 +21,32 @@ public class SeatDAO {
     public static SeatDAO getInstance() {
         return instance;
     }
+ // SeatDAO.java
+    public List<SeatVO> getSeatsByTheater(int theaterId) {
+        List<SeatVO> list = new ArrayList<>();
+        String sql = "SELECT * FROM seat WHERE theater_id = ? ORDER BY seat_row, seat_column";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, theaterId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                SeatVO seat = new SeatVO();
+                seat.setSeatID(rs.getInt("seat_id"));
+                seat.setTheaterID(rs.getInt("theater_id"));
+                seat.setSeatRow(rs.getString("seat_row"));
+                seat.setSeatColumn(rs.getString("seat_column"));
+                seat.setSeatName(rs.getString("seat_name"));
+                list.add(seat);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     
 	public List<SeatVO> getAvailableSeats(int scheduleID) throws Exception{
 		
@@ -54,8 +80,8 @@ public class SeatDAO {
     	            SeatVO seat = new SeatVO();
     	            seat.setSeatID(rs.getInt("seat_id"));
     	            seat.setTheaterID(rs.getInt("theater_id"));
-    	            seat.setRow(rs.getString("seat_row"));
-    	            seat.setColumn(rs.getString("seat_column"));
+    	            seat.setSeatRow(rs.getString("seat_row"));
+    	            seat.setSeatColumn(rs.getString("seat_column"));
     	            seat.setSeatName(rs.getString("seat_name"));
     	            seatList.add(seat);
     	        }
