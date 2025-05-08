@@ -13,11 +13,21 @@
  		$('#backButton').click(function(){
 			window.history.back()
  		})
+		 $("#myForm").on("submit",function(event){
+			 const checkboxes = document.querySelectorAll(".form-check-input")
+			 const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked)
+	 
+			 if(!isChecked){
+				 alert('최소 하나의 영화타입을 선택해주세요')
+				 event.preventDefault()
+			 }
+		 })
  	})
+
  </script>
 </head>
 <body>
-	<form action="updateMovieType.do" class="form-container">
+	<form id="myForm" action="updateMovieType.do" class="form-container">
 		<input type="hidden" value="${movie_id}" id="movie_id" name="movie_id">
 		<h3 class="form-title">영화 타입 수정</h3>
 		<div class="form-group">

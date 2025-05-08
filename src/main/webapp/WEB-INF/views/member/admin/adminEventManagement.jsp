@@ -120,6 +120,7 @@
 	
 	<div class="admin-card">
 		<div class="event-grid" id="event-grid">
+		
 		</div>
 	</div>
 	<div class="admin-button-group">
