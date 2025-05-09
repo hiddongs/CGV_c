@@ -19,8 +19,8 @@ public class CouponIssueAction implements Action {
 			return "redirect:/main/main.do";
 		}
 		
-		int coupon_id = Integer.parseInt(req.getParameter("coupon_id"));
-		int member_id = Integer.parseInt(req.getParameter("member_id"));
+		int coupon_id = Integer.parseInt(req.getParameter("couponId"));
+		int member_id = Integer.parseInt(req.getParameter("memberId"));
 		
 		CpPossessVO cpPossess = new CpPossessVO();
 		cpPossess.setCoupon_id((long) coupon_id);

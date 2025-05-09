@@ -55,7 +55,7 @@ $(document).ready(function(){
 			</div>
 			<div class="admin-button-group">
 				<button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> 생성</button>
-				<button type="button" onclick="location.href='adminCouponManagement.do'" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 쿠폰 관리로</button>
+				<button type="button" onclick="location.href='couponManagement.do'" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 쿠폰 관리로</button>
 			</div>
 		</form>
 	</div>
