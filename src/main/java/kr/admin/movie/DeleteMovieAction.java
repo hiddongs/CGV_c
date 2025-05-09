@@ -1,6 +1,7 @@
 package kr.admin.movie;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
 import kr.movie.dao.MovieDAO;
 import kr.movie.vo.MovieVO;
+import kr.moviemedia.dao.MovieMediaDAO;
+import kr.moviemedia.vo.MovieMediaVO;
 import kr.util.CodeUtil;
 import kr.util.FileUtil;
 
@@ -19,13 +22,20 @@ public class DeleteMovieAction implements Action {
 			return "redirect:/main/main.do";
 		}
 		
+		
 		int movie_id = Integer.parseInt(req.getParameter("movie_id"));
-		String poster_url = req.getParameter("poster_url");
-		
+		System.out.println("movie_id : " + movie_id);
+		MovieVO vo = MovieDAO.getInstance().getMovie(movie_id);
+		String poster_url = vo.getPoster_url();
 		MovieDAO dao = MovieDAO.getInstance();
-		int result = dao.deleteMovie(movie_id);
 		
-		if(result == 1) {
+		List<MovieMediaVO> list = MovieMediaDAO.getInstance().getTargetMovieMediaList(movie_id);
+		
+		if(list != null) {
+			list.stream().forEach( e -> FileUtil.removeFile(req, e.getMedia_url()));
+		}
+		int result = dao.deleteMovie(movie_id);
+		if(result > 0) {
 			if(poster_url != null && !poster_url.isEmpty()) {
 				FileUtil.removeFile(req, poster_url);
 			}

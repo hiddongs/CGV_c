@@ -30,7 +30,7 @@ public class MovieMediaDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "SELECT * FROM MOVIE_MEDIA WHERE MOVIE_ID = ? ORDER BY MOVIE_ID";
+			sql = "SELECT * FROM MOVIE_MEDIA WHERE MOVIE_ID = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, movie_id);
 			rs = pstmt.executeQuery();
