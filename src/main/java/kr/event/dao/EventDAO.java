@@ -122,7 +122,7 @@ public class EventDAO {
 
 	
 	//이벤트 id로 이벤트 검색후 반환
-	public EventVO getEvent(int event_id) {
+	public EventVO getEvent(Long event_id) {
 		
 		Connection conn = null;
 		String sql = null;
@@ -134,7 +134,7 @@ public class EventDAO {
 			conn = DBUtil.getConnection();
 			sql = "SELECT * FROM EVENT WHERE EVENT_ID = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, event_id);
+			pstmt.setLong(1, event_id);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {

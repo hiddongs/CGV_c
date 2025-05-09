@@ -62,14 +62,15 @@ public class MovieDAO {
 		    
 		    while(rs.next()) {
 		    	MovieVO movie = new MovieVO();
-				movie.setMovie_id(rs.getInt("MOVIE_ID"));
+		    	movie.setMovie_id(rs.getInt("MOVIE_ID"));
 				movie.setMv_title(rs.getString("TITLE"));
 				movie.setDirector(rs.getString("DIRECTOR"));
 				movie.setActor(rs.getString("ACTOR"));
 				movie.setGenre(rs.getString("GENRE"));
 				movie.setRuntime(rs.getInt("RUNTIME"));
 				movie.setRelease_date(rs.getDate("RELEASE_DATE"));
-				movie.setRating(rs.getString("AGE_LIMIT"));
+				movie.setAge_limit(rs.getString("AGE_LIMIT"));
+//				movie.setRating(rs.getString("RATING"));
 				movie.setPoster_url(rs.getString("POSTER_URL"));
 				movie.setDescription(rs.getString("DESCRIPTION"));
 				movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
@@ -146,7 +147,8 @@ public class MovieDAO {
 					movie.setGenre(rs.getString("GENRE"));
 					movie.setRuntime(rs.getInt("RUNTIME"));
 					movie.setRelease_date(rs.getDate("RELEASE_DATE"));
-					movie.setRating(rs.getString("AGE_LIMIT"));
+					movie.setAge_limit(rs.getString("AGE_LIMIT"));
+//					movie.setRating(rs.getString("RATING"));
 					movie.setPoster_url(rs.getString("POSTER_URL"));
 					movie.setDescription(rs.getString("DESCRIPTION"));
 					movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
@@ -187,7 +189,8 @@ public class MovieDAO {
 						movie.setGenre(rs.getString("GENRE"));
 						movie.setRuntime(rs.getInt("RUNTIME"));
 						movie.setRelease_date(rs.getDate("RELEASE_DATE"));
-						movie.setRating(rs.getString("AGE_LIMIT"));
+						movie.setAge_limit(rs.getString("AGE_LIMIT"));
+//						movie.setRating(rs.getString("RATING"));
 						movie.setPoster_url(rs.getString("POSTER_URL"));
 						movie.setDescription(rs.getString("DESCRIPTION"));
 						movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
@@ -229,7 +232,8 @@ public class MovieDAO {
 					movie.setGenre(rs.getString("GENRE"));
 					movie.setRuntime(rs.getInt("RUNTIME"));
 					movie.setRelease_date(rs.getDate("RELEASE_DATE"));
-					movie.setRating(rs.getString("AGE_LIMIT"));
+					movie.setAge_limit(rs.getString("AGE_LIMIT"));
+//					movie.setRating(rs.getString("RATING"));
 					movie.setPoster_url(rs.getString("POSTER_URL"));
 					movie.setDescription(rs.getString("DESCRIPTION"));
 					movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
@@ -270,10 +274,11 @@ public class MovieDAO {
 					result.setGenre(rs.getString("GENRE"));
 					result.setRuntime(rs.getInt("RUNTIME"));
 					result.setRelease_date(rs.getDate("RELEASE_DATE"));
-					result.setRating(rs.getString("AGE_LIMIT"));
+//					result.setRating(rs.getString("RATING"));
 					result.setPoster_url(rs.getString("POSTER_URL"));
 					result.setDescription(rs.getString("DESCRIPTION"));
 					result.setMovie_create(rs.getDate("MOVIE_CREATE"));
+					result.setAge_limit(rs.getString("AGE_LIMIT"));
 					
 				}while(rs.next());
 			}
@@ -353,10 +358,11 @@ public class MovieDAO {
 	            movie.setGenre(rs.getString("GENRE"));
 	            movie.setRuntime(rs.getInt("RUNTIME"));
 	            movie.setRelease_date(rs.getDate("RELEASE_DATE"));
-	            movie.setRating(rs.getString("AGE_LIMIT"));
+//	            movie.setRating(rs.getString("RATING")); 레이팅이 테이블에 존재 X
 	            movie.setPoster_url(rs.getString("POSTER_URL"));
 	            movie.setDescription(rs.getString("DESCRIPTION"));
 	            movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
+	            movie.setAge_limit(rs.getString("AGE_LIMIT"));
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

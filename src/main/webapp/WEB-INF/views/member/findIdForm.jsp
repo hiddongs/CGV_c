@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<head>
+	<meta charset="UTF-8">
+	<title>아이디찾기</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+</head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
 <div class="container">
     <div class="form-container">
         <h2>아이디 찾기</h2>

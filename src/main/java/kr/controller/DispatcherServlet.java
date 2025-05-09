@@ -102,12 +102,14 @@ public class DispatcherServlet extends HttpServlet{
 		}catch(Exception e){
 			throw new ServletException(e);
 		}
-		if (view == null) {
-		    return;
-		} else if (view.startsWith("ajax:")) {
-		    // 응답 이미 처리했으니 아무것도 안 하고 종료
-		    return;
+		
+		// 뷰 경로가 null인 경우 (AJAX 응답 등) 처리 없이 종료
+		if(view == null) {
+			System.out.println("[DispatcherServlet] No view path returned (null), response already committed");
+			System.out.println("---------------------------------------------------------------------------------------");
+			return;
 		}
+		
 		if(view.startsWith("redirect:")){//리다이렉트
 			view = view.substring("redirect:".length());
 			response.sendRedirect(request.getContextPath()+view);

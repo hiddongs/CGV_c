@@ -23,6 +23,9 @@ public class RegisterAction implements Action {
         String mem_phone = request.getParameter("mem_phone");
         String mem_email = request.getParameter("mem_email");
         String mem_gender = request.getParameter("mem_gender");
+        String address = request.getParameter("address");
+        String addressDetail = request.getParameter("addressDetail");
+        
         
         MemberVO member = new MemberVO();
         member.setUser_id(mem_id);
@@ -31,6 +34,8 @@ public class RegisterAction implements Action {
         member.setPhone(mem_phone);
         member.setEmail(mem_email);
         member.setGender(mem_gender);
+        member.setAddress(address);
+        member.setAddressDetail(addressDetail);
         
         MemberDAO dao = MemberDAO.getInstance();
         

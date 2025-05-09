@@ -20,15 +20,15 @@ public class MemberDAO {
     private MemberDAO() {}
     
     // 회원가입
-    public void insertMember(MemberVO member) throws Exception {
+    public void insertMember(MemberVO member) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         String sql = null;
         
         try {
             conn = DBUtil.getConnection();
-            sql = "INSERT INTO member (MEMBER_ID, USER_ID, PASSWORD, NAME, REG_DATE, PHONE, EMAIL, GENDER) "
-                + "VALUES (member_seq.nextval,?,?,?,SYSDATE,?,?,?)";
+            sql = "INSERT INTO member (MEMBER_ID, USER_ID, PASSWORD, NAME, REG_DATE, PHONE, EMAIL, GENDER, ADDRESS, ADDRESS_DETAIL) "
+                + "VALUES (member_seq.nextval,?,?,?,SYSDATE,?,?,?,?,?)";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, member.getUser_id());
@@ -37,16 +37,20 @@ public class MemberDAO {
             pstmt.setString(4, member.getPhone());
             pstmt.setString(5, member.getEmail());
             pstmt.setString(6, member.getGender());
+            pstmt.setString(7, member.getAddress());
+            pstmt.setString(8, member.getAddressDetail());
             
             pstmt.executeUpdate();
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(null, pstmt, conn);
         }
     }
     
     // 로그인 체크
-    public MemberVO login(String mem_id, String mem_pw) throws Exception {
+    public MemberVO login(String mem_id, String mem_pw){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -79,7 +83,9 @@ public class MemberDAO {
                 
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
@@ -160,7 +166,7 @@ public class MemberDAO {
     }
     
     // 회원정보 가져오기
-    public MemberVO getMember(String mem_id) throws Exception {
+    public MemberVO getMember(String user_id){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -169,29 +175,37 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "SELECT * FROM member WHERE mem_id=?";
+            sql = "SELECT * FROM member WHERE USER_ID=?";
             
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, mem_id);
+            pstmt.setString(1, user_id);
             
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                member = new MemberVO();
-                member.setMember_id(rs.getInt("mem_num"));
-                member.setUser_id(rs.getString("mem_id"));
-                member.setName(rs.getString("mem_name"));
-                member.setPhone(rs.getString("mem_phone"));
-                member.setEmail(rs.getString("mem_email"));
-                member.setReg_date(rs.getDate("reg_date"));
+            	member = new MemberVO();
+            	 member.setMember_id(rs.getInt("MEMBER_ID"));
+                 member.setUser_id(rs.getString("USER_ID"));
+                 member.setPassword(rs.getString("PASSWORD"));
+                 member.setPoint(rs.getInt("POINT"));
+                 member.setName(rs.getString("NAME"));
+                 member.setPhone(rs.getString("PHONE"));
+                 member.setEmail(rs.getString("EMAIL"));
+                 member.setReg_date(rs.getDate("REG_DATE"));
+                 member.setGender(rs.getString("GENDER"));
+                 member.setGrade(rs.getString("GRADE"));
+                 member.setAddress(rs.getString("ADDRESS"));
+                 member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
         return member;
     }
-    public MemberVO getMember(int mem_num) throws Exception {
+    public MemberVO getMember(int mem_num){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -208,21 +222,23 @@ public class MemberDAO {
             rs = pstmt.executeQuery();
             if(rs.next()) {
             	member = new MemberVO();
-                member.setMember_id(rs.getInt("MEMBER_ID"));
-                member.setUser_id(rs.getString("USER_ID"));
-                member.setPassword(rs.getString("PASSWORD"));
-                member.setPoint(rs.getInt("POINT"));
-                member.setName(rs.getString("NAME"));
-                member.setPhone(rs.getString("PHONE"));
-                member.setEmail(rs.getString("EMAIL"));
-                member.setReg_date(rs.getDate("REG_DATE"));
-                member.setGender(rs.getString("GENDER"));
-                member.setGrade(rs.getString("GRADE"));
-                member.setAddress(rs.getString("ADDRESS"));
-                member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
+            	 member.setMember_id(rs.getInt("MEMBER_ID"));
+                 member.setUser_id(rs.getString("USER_ID"));
+                 member.setPassword(rs.getString("PASSWORD"));
+                 member.setPoint(rs.getInt("POINT"));
+                 member.setName(rs.getString("NAME"));
+                 member.setPhone(rs.getString("PHONE"));
+                 member.setEmail(rs.getString("EMAIL"));
+                 member.setReg_date(rs.getDate("REG_DATE"));
+                 member.setGender(rs.getString("GENDER"));
+                 member.setGrade(rs.getString("GRADE"));
+                 member.setAddress(rs.getString("ADDRESS"));
+                 member.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
@@ -230,14 +246,14 @@ public class MemberDAO {
     }
     
     // 회원정보 수정
-    public void updateMember(MemberVO member) throws Exception {
+    public void updateMember(MemberVO member){
         Connection conn = null;
         PreparedStatement pstmt = null;
         String sql = null;
         
         try {
             conn = DBUtil.getConnection();
-            sql = "UPDATE member SET mem_name=?,mem_phone=?,mem_email=? WHERE mem_num=?";
+            sql = "UPDATE member SET name=?,phone=?,email=? WHERE MEMBER_ID=?";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, member.getName());
@@ -247,7 +263,9 @@ public class MemberDAO {
             
             pstmt.executeUpdate();
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(null, pstmt, conn);
         }
     }
@@ -260,7 +278,7 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "UPDATE member SET mem_pw=? WHERE mem_num=?";
+            sql = "UPDATE MEMBER SET PASSWORD=? WHERE MEMBER_ID=?";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, mem_pw);
@@ -274,7 +292,7 @@ public class MemberDAO {
     }
     
     // 회원 탈퇴
-    public void deleteMember(int mem_num) throws Exception {
+    public void deleteMember(int mem_num){
         Connection conn = null;
         PreparedStatement pstmt = null;
         String sql = null;
@@ -288,13 +306,15 @@ public class MemberDAO {
             
             pstmt.executeUpdate();
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(null, pstmt, conn);
         }
     }
     
     // 아이디 찾기
-    public String findId(String mem_name, String mem_email) throws Exception {
+    public String findId(String mem_name, String mem_email){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -303,7 +323,7 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "SELECT mem_id FROM member WHERE mem_name=? AND mem_email=?";
+            sql = "SELECT USER_ID FROM MEMBER WHERE name=? AND email=?";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, mem_name);
@@ -314,7 +334,9 @@ public class MemberDAO {
                 mem_id = rs.getString(1);
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
@@ -322,7 +344,7 @@ public class MemberDAO {
     }
     
     // 비밀번호 찾기를 위한 회원 확인
-    public boolean checkMemberForPw(String mem_id, String mem_email) throws Exception {
+    public boolean checkMemberForPw(String mem_id, String mem_email){
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -331,7 +353,7 @@ public class MemberDAO {
         
         try {
             conn = DBUtil.getConnection();
-            sql = "SELECT COUNT(*) FROM member WHERE mem_id=? AND mem_email=?";
+            sql = "SELECT COUNT(*) FROM member WHERE USER_ID=? AND EMAIL=?";
             
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, mem_id);
@@ -342,7 +364,9 @@ public class MemberDAO {
                 if(rs.getInt(1) > 0) result = true;
             }
             
-        } finally {
+        } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         
@@ -356,29 +380,5 @@ public class MemberDAO {
     // 문의내역 - 등록, 삭제, 수정, 
     // 나의 포인트
     
-  
-	public List<MemberVO> getMemberCPPossessList() {
-		
-		 Connection conn = null;
-         PreparedStatement pstmt = null;
-         ResultSet rs = null;
-         MemberVO member = null;
-         String sql = null;
-         List<MemberVO> result = new ArrayList<>();
-         
-         try {
-			
-        	 conn = DBUtil.getConnection();
-        	 sql = "";
-        	 pstmt = conn.prepareStatement(sql);
-        	 
-        	 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.executeClose(rs, pstmt, conn);
-		}
-		
-		return null;
-	}
+
 }
