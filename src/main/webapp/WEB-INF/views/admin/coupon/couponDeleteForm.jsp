@@ -164,13 +164,13 @@
     
     function confirmDelete(couponId, couponName) {
         if (confirm('정말로 "' + couponName + '" 쿠폰을 삭제하시겠습니까?')) {
-            location.href = '${pageContext.request.contextPath}/member/couponDelete.do?couponId=' + couponId;
+            location.href = '${pageContext.request.contextPath}/admin/couponDelete.do?couponId=' + couponId;
         }
     }
     
     function confirmDeleteMember(couponId, memberId, memberName, possessId) {
         if (confirm('정말로 ' + memberName + ' 회원의 쿠폰을 삭제하시겠습니까?')) {
-            location.href = '${pageContext.request.contextPath}/member/couponDeleteMember.do?possessId=' + possessId;
+            location.href = '${pageContext.request.contextPath}/admin/couponDeleteMember.do?possessId=' + possessId;
         }
     }
 </script>
@@ -187,7 +187,7 @@
                     <div class="empty-state">
                         <div class="empty-state-icon"><i class="fas fa-ticket-alt"></i></div>
                         <p>등록된 쿠폰이 없습니다.</p>
-                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponCreateForm.do'"><i class="fas fa-plus-circle"></i> 쿠폰 등록하기</button>
+                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/admin/couponCreateForm.do'"><i class="fas fa-plus-circle"></i> 쿠폰 등록하기</button>
                     </div>
                 </c:when>
                 <c:otherwise>
@@ -242,9 +242,9 @@
                     </div>
                     
                     <div class="admin-button-group">
-                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponCreateForm.do'"><i class="fas fa-plus-circle"></i> 쿠폰 등록</button>
-                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/member/adminCouponIssueForm.do'"><i class="fas fa-share-square"></i> 쿠폰 발행</button>
-                        <button type="button" onclick="location.href='adminCouponManagement.do'" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 쿠폰 관리로</button>
+                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/admin/couponCreateForm.do'"><i class="fas fa-plus-circle"></i> 쿠폰 등록</button>
+                        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/admin/couponIssueForm.do'"><i class="fas fa-share-square"></i> 쿠폰 발행</button>
+                        <button type="button" onclick="location.href='couponManagement.do'" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 쿠폰 관리로</button>
 				   </div>
                 </c:otherwise>
             </c:choose>

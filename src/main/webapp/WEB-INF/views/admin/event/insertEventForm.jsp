@@ -75,7 +75,7 @@ function previewImage(event){
 			</div>
 			<div class="button_group">
 				<button type="submit" class="btn btn-primary">이벤트 등록</button>
-				 <button type="button" id="backbutton" onclick="location.href='adminEventManagement.do'" class="btn btn-warning">이벤트관리로</button>
+				 <button type="button" id="backbutton" onclick="location.href='eventManagement.do'" class="btn btn-warning">이벤트관리로</button>
 			</div>
 		</form>
 	</div>

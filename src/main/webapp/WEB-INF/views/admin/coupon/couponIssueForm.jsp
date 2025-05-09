@@ -192,7 +192,7 @@ $(document).ready(function(){
 				</div>
 				<div class="admin-button-group">
 					<button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> 쿠폰 발행</button>
-					<button type="button" onclick="location.href='adminCouponManagement.do'" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 쿠폰 관리로</button>
+					<button type="button" onclick="location.href='couponManagement.do'" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 쿠폰 관리로</button>
 				</div>
 			</form>
 		</div>
