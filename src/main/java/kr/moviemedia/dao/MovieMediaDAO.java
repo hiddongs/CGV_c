@@ -82,4 +82,30 @@ public class MovieMediaDAO {
 		return result;
 	}
 
+	public int updateMediaStatus(int media_id, String status) {
+		
+		
+		return 0;
+	}
+
+	public int deleteMedia(long media_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql =  null;
+		int result = 0;
+		try {
+			
+			conn = DBUtil.getConnection();
+			sql = "DELETE FROM MOVIE_MEDIA WHERE MEDIA_ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, media_id);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		return result;
+	}
+
 }

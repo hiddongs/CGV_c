@@ -1,11 +1,13 @@
 package kr.cp_possess.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.coupon.vo.CouponVO;
 import kr.cp_possess.vo.CpPossessVO;
 import kr.util.DBUtil;
 
@@ -19,6 +21,29 @@ public class CpPossessDAO {
 		if(instance == null) instance = new CpPossessDAO();
 		return instance;
 	}
+	
+	public int issueCoupon(CpPossessVO vo) {
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			int result = 0;
+			
+			try {
+				conn = DBUtil.getConnection();
+				sql = "INSERT INTO CP_POSSESS (CP_POSSESS_ID , COUPON_ID, MEMBER_ID) VALUES (CP_POSSESS_SEQ.NEXTVAL, ? , ? )";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setLong(1, vo.getCoupon_id());
+				pstmt.setLong(2, vo.getMember_id());
+				result = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+			return result;
+	}
+	
 	
 	public List<CpPossessVO> getCpPossessList(){
 		Connection conn = null;
@@ -50,7 +75,7 @@ public class CpPossessDAO {
 		return result;
 	}
 
-	public int deleteCouponFromMember(int possessId) {
+	public int deleteCpPossess(int cp_possess_id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -60,7 +85,7 @@ public class CpPossessDAO {
 			conn = DBUtil.getConnection();
 			sql = "DELETE FROM CP_POSSESS WHERE CP_POSSESS_ID = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, possessId);
+			pstmt.setInt(1, cp_possess_id);
 			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {

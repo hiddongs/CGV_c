@@ -23,30 +23,6 @@ public class CouponDAO {
 		return instance;
 	} 	
 	
-	public int insertCoupon(CouponVO couponVO) {
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		int cnt = 0;
-		int result = 0;
-		try {
-		
-			conn = DBUtil.getConnection();
-			sql = "INSERT INTO COUPON (COUPON_ID, COUPON_NAME, DISCOUNT_AMOUNT, EXPIRED_DATE) VALUES("
-					+ "COUPON_SEQ.NEXTVAL, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(++cnt, couponVO.getCoupon_name());
-			pstmt.setInt(++cnt, couponVO.getDiscount_amount());
-			pstmt.setDate(++cnt, (Date) couponVO.getExpired_date());
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.executeClose(null, pstmt, conn);
-		}
-		return result;
-	}
 	
 	public List<CouponVO> getCouponList(){
 		
@@ -80,27 +56,31 @@ public class CouponDAO {
 		return result;
 	}
 
-	public int issueCoupon(Long couponId, int memberId) {
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		int result = 0;
-		
-		try {
-			conn = DBUtil.getConnection();
-			sql = "INSERT INTO CP_POSSESS (CP_POSSESS_ID , COUPON_ID, MEMBER_ID) VALUES (CP_POSSESS_SEQ.NEXTVAL, ? , ? )";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setLong(1, couponId);
-			pstmt.setLong(2, memberId);
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.executeClose(null, pstmt, conn);
+	
+	public int insertCoupon(CouponVO couponVO) {
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			int cnt = 0;
+			int result = 0;
+			try {
+			
+				conn = DBUtil.getConnection();
+				sql = "INSERT INTO COUPON (COUPON_ID, COUPON_NAME, DISCOUNT_AMOUNT, EXPIRED_DATE) VALUES("
+						+ "COUPON_SEQ.NEXTVAL, ?, ?, ?)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(++cnt, couponVO.getCoupon_name());
+				pstmt.setInt(++cnt, couponVO.getDiscount_amount());
+				pstmt.setDate(++cnt, (Date) couponVO.getExpired_date());
+				result = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+			return result;
 		}
-		return result;
-	}
 
 	public int deleteCoupon(int couponId) {
 		
