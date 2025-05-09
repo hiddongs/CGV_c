@@ -7,10 +7,11 @@ import java.util.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
 import kr.Auditorium.dao.AuditoriumDAO;
 import kr.Auditorium.vo.AuditoriumVO;
 import kr.controller.Action;
+import kr.member.vo.MemberVO;
 import kr.movie.dao.MovieTypeDAO;
 import kr.movie.vo.MovieTypeVO;
 import kr.theater.dao.TheaterDAO;
@@ -22,7 +23,9 @@ public class SelectTheaterAction implements Action {
             int movieID = Integer.parseInt(req.getParameter("movieID"));
             int theaterID = Integer.parseInt(req.getParameter("theaterID"));
             String screenDate = req.getParameter("screenDate");
-
+            HttpSession session = req.getSession();
+    		MemberVO member = (MemberVO) session.getAttribute("member");
+    		int memberID = member.getMember_id(); // 로그인된 사용자 ID
             if (screenDate == null || screenDate.isEmpty()) {
                 screenDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             }
@@ -49,7 +52,7 @@ public class SelectTheaterAction implements Action {
                     filtered.add(aud);
                 }
             }
-
+            req.setAttribute("mem_ID", memberID);
             req.setAttribute("movieID", movieID);
             req.setAttribute("theaterID", theaterID);
             req.setAttribute("screenDate", screenDate);

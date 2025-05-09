@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -65,13 +65,17 @@ button:hover {
 <body>
 <div class="container">
   <h2 style="text-align:center;">🎟 좌석 선택</h2>
+  <p>사용자 ID: ${mem_ID}</p>
    <p>영화 ID: ${movieID}</p>
   <p>극장 ID: ${theaterID}</p>
   <p>스케줄 ID: ${scheduleID}</p>
   <div class="screen"></div>
-  <form action="reserve.do" method="post">
-  
+  <form name = "movie" action="reserve.do" method="post">
+    <input type="hidden" id="selectedSeats" name="selectedSeats"/>
+   <input type="hidden" name="memberID" value="${mem_ID}" />
+    <input type="hidden" name="scheduleID" value="${scheduleID}" />
     <input type="hidden" id="selectedSeats" name="selectedSeats" />
+    <c:if test="${not empty seatList}">
     <c:set var="prevRow" value="" />
     <c:forEach var="seat" items="${seatList}">
       <c:if test="${seat.seatRow ne prevRow}">
@@ -81,41 +85,44 @@ button:hover {
       </c:if>
       <div class="seat" data-seat="${seat.seatName}">${seat.seatName}</div>
     </c:forEach>
-    </div>
-    <button type="submit">예약하기</button>
+     </div> <!-- 마지막 줄 닫기 -->
+</c:if>
+    
+    <button type="button" onclick="reservation()">예약하기</button>
   </form>
-</div>
 
 <script>
-document.querySelectorAll('.seat').forEach(seat => {
-  seat.addEventListener('click', () => {
-    seat.classList.toggle('selected');
-    updateSeats();
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll('.seat').forEach(seat => {
+    seat.addEventListener('click', () => {
+      seat.classList.toggle('selected');
+      updateSeats();
+    });
   });
+
+  function updateSeats() {
+    const selected = document.querySelectorAll('.seat.selected');
+    const seatNames = Array.from(selected).map(seat => seat.dataset.seat);
+    document.getElementById('selectedSeats').value = seatNames.join(',');
+  }
+
+  window.reservation = function () {
+    const f = document.movie;
+    const selectedSeatsValue = document.getElementById('selectedSeats').value;
+    const seats = selectedSeatsValue ? selectedSeatsValue.split(',') : [];
+
+    if (seats.length === 0) {
+      alert("좌석은 1개 이상 선택해야 합니다.");
+      return;
+    }
+    if (seats.length > 4) {
+      alert("좌석은 최대 4개까지만 선택 가능합니다.");
+      return;
+    }
+
+    f.submit();
+  };
 });
-function updateSeats() {
-  const selected = document.querySelectorAll('.seat.selected');
-  const seatNames = Array.from(selected).map(seat => seat.dataset.seat);
-  document.getElementById('selectedSeats').value = seatNames.join(',');
-}
-
-function reservation(){
-    
-	const f = document.movie;
-	  const selectedSeatsValue = document.getElementById('selectedSeats').value;
-	  const seats = selectedSeatsValue ? selectedSeatsValue.split(',') : [];
-
-	  if (seats.length === 0) {
-	    alert("좌석은 1개 이상 선택해야 합니다.");
-	    return;
-	  }
-	  if (seats.length > 4) {
-	    alert("좌석은 최대 4개까지만 선택 가능합니다.");
-	    return;
-	  }
-
-	  f.submit();
-}
 </script>
 </body>
 </html>

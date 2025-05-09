@@ -62,6 +62,7 @@ button:hover {
   <div class="hero-text">🎬 영화관을 선택해주세요</div>
 
   <form action="selectTime.do" method="post">
+   <input type="hidden" name="memberID" value="${mem_ID}" />
     <input type="hidden" name="movieID" value="${movieID}" />
     <input type="hidden" name="screenDate" value="${now}" />
 

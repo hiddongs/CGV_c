@@ -96,6 +96,7 @@ input[type="radio"] {
   <c:choose>
     <c:when test="${not empty scheduleList}">
       <form action="selectSeat.do" method="post">
+      <input type="hidden" name="memberID" value="${mem_ID}" />
         <input type="hidden" name="movieID" value="${movieID}" />
         <input type="hidden" name="theaterID" value="${theaterID}" />
         <input type="hidden" name="auditoriumID" value="${auditoriumID}" />

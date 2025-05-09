@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div class="inner-box fade-in">
   <h3>영화</h3>
-
+<input type="hidden" name="memberID" value="${mem_ID}" />
   <!-- 🎯 정렬 셀렉트 박스 form -->
   <form action="reservationMV.do" method="get" style="margin-bottom: 20px;">
     <label for="title">정렬</label>

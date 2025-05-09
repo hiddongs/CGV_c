@@ -61,13 +61,14 @@ public class SeatDAO {
     		conn = DBUtil.getConnection();
     		
     		sql = """
-    	            SELECT s.*
-    	            FROM seat s
-    	            JOIN schedule sch ON s.theater_id = sch.theater_id
-    	            LEFT JOIN reservation r ON s.seat_name = r.seat_number AND r.schedule_id = sch.schedule_id
-    	            WHERE sch.schedule_id = ?
-    	              AND r.seat_number IS NULL
-    	            ORDER BY s.row, s.column
+    				SELECT s.*
+    				FROM seat s
+    				JOIN schedule sch ON s.theater_id = sch.theater_id
+    				LEFT JOIN reservation r ON s.seat_id = r.seat_id AND r.schedule_id = sch.schedule_id
+    				WHERE sch.schedule_id = ?
+    				AND r.seat_id IS NULL
+    				ORDER BY s.seat_row, s.seat_column
+
     	        """;
     		
     		pstmt = conn.prepareStatement(sql);
@@ -87,7 +88,7 @@ public class SeatDAO {
     	        }
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new Exception(e);
+			e.printStackTrace();
 		} finally {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
