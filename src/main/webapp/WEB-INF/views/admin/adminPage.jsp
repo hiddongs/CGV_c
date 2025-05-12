@@ -52,6 +52,12 @@
 					<h3>극장관리</h3>
 				</a>
 			</div>
+			<div class="admin-menu-item">
+				<a href="${pageContext.request.contextPath}/admin/priceManagement.do">
+					<div class="icon"><i class="fas fa-dollar-sign"></i></div>
+					<h3>가격관리</h3>
+				</a>
+			</div>
 		</div>
 	</div>
 </body>
