@@ -131,6 +131,27 @@
   text-align: center;
 }
 
+
+.r-title {
+  color: #ffffff; /* 흰색 제목 */
+}
+
+.r-subText {
+  color: #cccccc; /* 부드러운 회색 서브텍스트 */
+  font-size: 15px;
+  text-align: center;
+}
+
+.r-text {
+  color: #f0f0f0; /* 밝은 회색 본문 텍스트 */
+  text-align: left;
+  font-size: 18px;
+}
+
+.r-strong {
+  color: #ffffff; /* 강조 부분도 흰색 */
+}
+
 /* 특별관 영화 카드 스타일 */
 .specialMovie {
   border: 1px solid #333;

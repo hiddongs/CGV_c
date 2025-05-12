@@ -15,8 +15,52 @@ public class ReservationVO {
     private String name;              // 극장 이름
     private String mvTitle;           // 영화 제목
     private String movieType;         // 상영관 유형 (IMAX, 4DX 등)
+    private String seatName;
+    private String mem_Name;
+    private String auditoriumName;
+    private int theaterID;
+    
+    public int getTheaterID() {
+		return theaterID;
+	}
 
-    // Getter & Setter
+	public void setTheaterID(int theaterID) {
+		this.theaterID = theaterID;
+	}
+
+	public long getpMovie() {
+		return pMovie;
+	}
+
+	public void setpMovie(long pMovie) {
+		this.pMovie = pMovie;
+	}
+
+	public String getSeatName() {
+		return seatName;
+	}
+
+	public void setSeatName(String seatName) {
+		this.seatName = seatName;
+	}
+
+	public String getMem_Name() {
+		return mem_Name;
+	}
+
+	public void setMem_Name(String mem_Name) {
+		this.mem_Name = mem_Name;
+	}
+
+	public String getAuditoriumName() {
+		return auditoriumName;
+	}
+
+	public void setAuditoriumName(String auditoriumName) {
+		this.auditoriumName = auditoriumName;
+	}
+
+	// Getter & Setter
     public int getReservationID() {
         return reservationID;
     }
