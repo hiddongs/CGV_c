@@ -3,3 +3,4 @@
     // Redirect root URL to main controller
     response.sendRedirect(request.getContextPath() + "/main/main.do");
 %>
+

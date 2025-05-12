@@ -103,6 +103,13 @@ public class DispatcherServlet extends HttpServlet{
 			throw new ServletException(e);
 		}
 		
+		// 뷰 경로가 null인 경우 (AJAX 응답 등) 처리 없이 종료
+		if(view == null) {
+			System.out.println("[DispatcherServlet] No view path returned (null), response already committed");
+			System.out.println("---------------------------------------------------------------------------------------");
+			return;
+		}
+		
 		if(view.startsWith("redirect:")){//리다이렉트
 			view = view.substring("redirect:".length());
 			response.sendRedirect(request.getContextPath()+view);

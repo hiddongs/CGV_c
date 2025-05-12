@@ -21,21 +21,22 @@ public class LoginAction implements Action {
         
         try {
             MemberVO member = dao.login(mem_id, mem_pw);
-            System.out.println(member.getMember_id());
+            if(member == null) {
+            	// 인증 실패
+            	request.setAttribute("result_title", "로그인 실패");
+            	request.setAttribute("result_msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
+            	request.setAttribute("result_url", request.getContextPath() + "/index.jsp");        	
+            	return "common/result_view.jsp";           	
+            }
             HttpSession session = request.getSession();
             session.setAttribute("member", member);
-            if(member != null && member.getMember_id() != 1) { // 인증 성공 일반유저
-                return "redirect:/main/main.do";
-            }else if(member != null && member.getMember_id() == 1) { // 인증 성공 어드민
-                return "redirect:/member/adminLogin.do";
+            
+            if(member.getMember_id() != 1) { // 인증 성공 일반유저
+            	return "redirect:/main/main.do";
+            }else{ // 인증 성공 어드민
+            	return "admin/adminPage.jsp";
             }
             
-            // 인증 실패
-            request.setAttribute("result_title", "로그인 실패");
-            request.setAttribute("result_msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            request.setAttribute("result_url", request.getContextPath() + "/index.jsp");
-            
-            return "common/result_view.jsp";
             
         } catch(Exception e) {
             e.printStackTrace();
