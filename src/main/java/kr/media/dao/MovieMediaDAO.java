@@ -1,4 +1,4 @@
-package kr.moviemedia.dao;
+package kr.media.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.moviemedia.vo.MovieMediaVO;
+import kr.media.vo.MovieMediaVO;
 import kr.util.DBUtil;
 
 public class MovieMediaDAO {

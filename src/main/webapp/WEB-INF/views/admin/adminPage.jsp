@@ -46,6 +46,12 @@
 					<h3>쿠폰관리</h3>
 				</a>
 			</div>
+			<div class="admin-menu-item">
+				<a href="${pageContext.request.contextPath}/admin/theaterManagement.do">
+					<div class="icon"><i class="fas fa-building"></i></div>
+					<h3>극장관리</h3>
+				</a>
+			</div>
 		</div>
 	</div>
 </body>

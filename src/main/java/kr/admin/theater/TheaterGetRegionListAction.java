@@ -1,4 +1,4 @@
-package kr.admin.media;
+package kr.admin.theater;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,18 +9,23 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
-import kr.media.dao.MovieMediaDAO;
-import kr.media.vo.MovieMediaVO;
+import kr.theater.dao.TheaterDAO;
+import kr.theater.vo.TheaterVO;
 
-public class GetMovieMediaAction implements Action {
+public class TheaterGetRegionListAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int movie_id = Integer.parseInt(req.getParameter("movie_id"));
-		List<MovieMediaVO> movieMediaList = MovieMediaDAO.getInstance().getTargetMovieMediaList(movie_id);
+		
+		List<TheaterVO> list = TheaterDAO.getInstance().getAllRegionList();
+		
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
 		
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.writeValue(resp.getWriter(), movieMediaList);
+		mapper.writeValue(resp.getWriter(), list);
+		
 		return null;
 	}
+
 }

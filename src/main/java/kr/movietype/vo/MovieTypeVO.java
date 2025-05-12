@@ -1,4 +1,4 @@
-package kr.moivetype.vo;
+package kr.movietype.vo;
 
 public class MovieTypeVO {
 	

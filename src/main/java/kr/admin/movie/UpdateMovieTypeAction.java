@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
 import kr.movie.dao.MovieDAO;
-import kr.moivetype.vo.MovieTypeVO;
+import kr.movietype.vo.MovieTypeVO;
 import kr.util.CodeUtil;
 
 public class UpdateMovieTypeAction implements Action {
