@@ -3,6 +3,7 @@ package kr.reservation.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.reservation.vo.ReservationVO;
@@ -31,7 +32,7 @@ public class ReservationDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setLong(++cnt, reservation.getReservation_id());
-			pstmt.setInt(++cnt, reservation.getMem_id());
+			pstmt.setInt(++cnt, reservation.getMember_id());
 			pstmt.setInt(++cnt, reservation.getSchedulle_id());
 			pstmt.setString(++cnt,reservation.getSeat_num());
 			pstmt.setString(++cnt,reservation.getPayment_staus());
@@ -49,6 +50,54 @@ public class ReservationDAO {
 		}
 	}
 	
+	  // 나의 예매내역 가져오기
+    // ReservationVO -> member_id
+    public List<ReservationVO> getListReservationByUser(int member_id) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ReservationVO> list = new ArrayList<>();
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// sql
+			sql = "SELECT * FROM reservation WHERE member_id=?";
+			// 데이터 할당
+			pstmt = conn.prepareStatement(sql);
+			//데이터 바인딩
+			pstmt.setInt(1, member_id);
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			// 반복
+			while(rs.next()) {
+				ReservationVO vo = new ReservationVO();
+				vo.setMv_title(rs.getString("mv_title")); // 영화제목
+				vo.setName(rs.getString("name")); // 극장이름
+				vo.setScreening_date(rs.getDate("screening_date")); //관람일시
+				vo.setViewers(rs.getInt("viewers")); // 관람인원
+				vo.setP_movie(rs.getInt("p_movie")); //영화가격
+				
+				list.add(vo); //리스트에 추가
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+
+    	return list;
+    	
+    }
+
+    // 예매 상세내역 보기
+    // memberid, status = 완료
+    
+    
+    
+    
+	/*
 	// 예매 내역 조회
 	public ReservationVO getListReservationByUser(ReservationVO reservation) throws Exception{
 		Connection conn = null;
@@ -84,4 +133,9 @@ public class ReservationDAO {
 		return reservation;
 		
 	}
+	*/
+    
+    
+    
 }
+

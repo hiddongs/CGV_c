@@ -10,8 +10,8 @@ import kr.controller.Action;
 public class MypageDetailReservationAction implements Action {
 
 	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// status 대로 
 		return "member/mypageDetailReservation.jsp";
 	}
 

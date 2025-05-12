@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,8 +10,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/leftMenu.css">
 
 <style>
 .container {
@@ -98,81 +99,17 @@
 	cursor: pointer;
 }
 
-/* 사이드바 스타일 */
-#main_nav {
-	width: 240px;
-	background-color: #f8f8f8;
-	font-family: sans-serif;
-	border-right: 1px solid #ccc;
-	height: 850px;
-	padding: 20px;
-	float: left;
-}
 
-#main_nav h2 {
-	background-color: #ef4b64;
-	color: white;
-	font-size: 16px;
-	padding: 12px;
-	margin-bottom: 15px;
-}
-
-.menu-list {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.menu-list li {
-	margin: 6px 0;
-}
-
-.menu-list li.section-title {
-	font-weight: bold;
-	margin-top: 15px;
-	color: #222;
-}
-
-.menu-list li a {
-	color: #444;
-	text-decoration: none;
-	padding-left: 10px;
-	display: block;
-	font-size: 14px;
-}
-
-.menu-list li a:hover {
-	color: #ef4b64;
-}
 </style>
 
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-
-	<!-- 사이드바 부분 -->
-	<nav id="main_nav">
-		<div id="main_aside">
-			<h2>My CGV HOME</h2>
-			<ul class="menu-list">
-				<li class="section-title"><strong><a href="${pageContext.request.contextPath}/member/mypageDetailReservation.do">
-				나의 예매내역</a></strong></li>
-				<li class="section-title"><strong><a href="#">관람권/할인쿠폰
-							관리</a></strong></li>
-				<li><a href="#">-CGV할인쿠폰</a></li>
-				<li><a href="#">-CJ ONE 쿠폰</a></li>
-				<li class="section-title"><strong><a href="#">이벤트
-							참여내역</a></strong></li>
-				<li class="section-title"><strong><a href="#">회원정보</a></strong></li>
-				<li><a href="#">-개인정보 설정</a></li>
-				<li><a href="#">-회원탈퇴</a></li>
-				<li class="section-title"><strong><a href="#">나의
-							문의내역</a></strong></li>
-				<li><a href="#">-1:1 문의</a></li>
-			</ul>
-		</div>
-	</nav>
-  
+	<!-- Header -->
+	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+	
+		<!-- LEFT MENU -->
+      <jsp:include page="/WEB-INF/views/common/leftMenu.jsp"></jsp:include>
+	
 	<div class="container">
 		<div class="mypage-container">
 			<div class="mypage-header">
@@ -181,40 +118,50 @@
 				<button type="button" class="confirm-button"
 					onclick="location.href='${pageContext.request.contextPath}/member/modifyForm.do'">회원정보수정</button>
 			</div>
-			
+	
 			<div class="mypage-section">
 				<div class="mypage-item">
 					<div class="mypage-label">
+					<!-- 나의 예매 목록으로 이동 -->
 					<a href ="${pageContext.request.contextPath}/member/mypageDetailReservation.do" style="text-decoration: none; color: inherit;">> 나의 예매내역</a>
-					</div>
-					
-					<div class="mypage-content">
-					<!-- 영화 제목 -->
-						<c:forEach var="DetailReservation" items="${mypageDetailReservation}">
-						<h3>${DetailReservation.mv_title}</h3> <!-- 영화제목 -->
-					<div class="mypage-date">${DetailReservation.screeningtime} | ${DetailReservation.name} |${DetailReservation.viewers} |${DetailReservation.price} 
-					</div>
-					<div class="mypage-content">예시2</div>
-					<div class="mypage-date">2023.04.16 (화) | 14:20 | 예매 12건</div>
-					</c:forEach>
-				</div>
-				
-			</div>
-			
-				<div class="mypage-item">
-					<div class="mypage-label">> 관람권/할인쿠폰 관리</div>
-					<div class="mypage-content mypage-coupon">${coupon.couponid}
-						쿠폰</div>
-				</div>
 
+					<div class="mypage-content"> 
+					<!-- 영화 구매 목록 -->
+						<c:forEach var="reservation" items="${reservationList}">
+						<h3>${reservation.mv_title}</h3> 
+					<div class="mypage-date">${reservation.screening_date} | ${reservation.name} |${reservation.viewers}명 |${reservation.p_movie}원 </div>
+					</c:forEach>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- 관람권 
 				<div class="mypage-item">
-					<div class="mypage-label">> 문의내역</div>
+				
+					<a href="${pageContext.request.contextPath}/member/mypageCoupon.do" style="text-decoration: none; color: inherit;">> 할인쿠폰 관리
+					</a>
+					<c:forEach var="coupon" items="${couponList}">
+					<div>
+						<strong> ${coupon.coupon_name}</strong><br>
+						할인 금액: ${coupon.discount_amount}원 | 유효기간 : ${coupon.expired_date}
+					</div>
+					</c:forEach>
+					</div>
+					-->
+				<!-- 문의사항 : ask-->
+				<div class="mypage-item">
+					<a href="${pageContext.request.contextPath}/notice/ask.do" style="text-decoration: none; color: inherit;">
+					<div class="mypage-label">> 문의내역
+					</a>
+					</div>
+				
 					<div class="mypage-content">블랙팬서입니다</div>
 					<div class="mypage-date">2023.04.16 (화) | 10:30 | 등록완료</div>
 					<div class="mypage-content">집가고싶다</div>
 					<div class="mypage-date">2023.04.16 (화) | 10:30 | 등록완료</div>
 				</div>
-
+				
+	<!--  
 				<div class="mypage-item">
 					<div class="mypage-label">> 나의 포인트</div>
 					<div class="mypage-content mypage-point">${member.point}
@@ -222,7 +169,7 @@
 					<div class="mypage-date">다음 적립예정 2,500P 적립예정</div>
 				</div>
 			</div>
-
+-->
 			<div class="button-group">
 				<button type="button" class="btn btn-danger"
 					onclick="location.href='${pageContext.request.contextPath}/member/deleteForm.do'">회원탈퇴</button>
@@ -231,7 +178,8 @@
 			</div>
 		</div>
 	</div>
-
-	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+</div>
+	<!-- footer -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
 </html>

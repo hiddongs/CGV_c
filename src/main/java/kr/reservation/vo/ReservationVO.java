@@ -5,13 +5,13 @@ import java.sql.Date;
 // 예약 VO 재 설정
 public class ReservationVO {
    private int reservation_id; //예매 id
-   private int mem_id; // 멤버 id
+   private int member_id; // 멤버 id
    private int schedulle_id; // 스케둘 id
    private String seat_num; //좌석번호
    private int viewers; //관람인원
    //관람일시 (시각) 8:30분
-   private Date screeningTime;	//관람일시 -> schedule의 screeningTime ? 어떤 거?
-   private int price; //영화가격
+   private Date screening_date;	//관람일시 -> schedule의 screeningTime ? 어떤 거?
+   private int p_movie; //영화가격
    private String name; //극장이름
    private String mv_title; //영화제목
    private String payment_staus; //결제상태
@@ -25,11 +25,11 @@ public int getReservation_id() {
 public void setReservation_id(int reservation_id) {
 	this.reservation_id = reservation_id;
 }
-public int getMem_id() {
-	return mem_id;
+public int getMember_id() {
+	return member_id;
 }
-public void setMem_id(int mem_id) {
-	this.mem_id = mem_id;
+public void setMember_id(int member_id) {
+	this.member_id = member_id;
 }
 public int getSchedulle_id() {
 	return schedulle_id;
@@ -49,17 +49,17 @@ public int getViewers() {
 public void setViewers(int viewers) {
 	this.viewers = viewers;
 }
-public Date getScreeningTime() {
-	return screeningTime;
+public Date getScreening_date() {
+	return screening_date;
 }
-public void setScreeningTime(Date screeningTime) {
-	this.screeningTime = screeningTime;
+public void setScreening_date(Date screening_date) {
+	this.screening_date = screening_date;
 }
-public int getPrice() {
-	return price;
+public int getP_movie() {
+	return p_movie;
 }
-public void setPrice(int price) {
-	this.price = price;
+public void setP_movie(int p_movie) {
+	this.p_movie = p_movie;
 }
 public String getName() {
 	return name;
