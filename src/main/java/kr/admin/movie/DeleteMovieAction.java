@@ -7,10 +7,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
+import kr.media.dao.MovieMediaDAO;
+import kr.media.vo.MovieMediaVO;
 import kr.movie.dao.MovieDAO;
 import kr.movie.vo.MovieVO;
-import kr.moviemedia.dao.MovieMediaDAO;
-import kr.moviemedia.vo.MovieMediaVO;
 import kr.util.CodeUtil;
 import kr.util.FileUtil;
 

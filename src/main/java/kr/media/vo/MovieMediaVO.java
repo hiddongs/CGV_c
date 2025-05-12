@@ -1,4 +1,4 @@
-package kr.moviemedia.vo;
+package kr.media.vo;
 
 public class MovieMediaVO {
 	

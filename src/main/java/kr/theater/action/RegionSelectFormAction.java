@@ -14,7 +14,7 @@ public class RegionSelectFormAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TheaterDAO dao = TheaterDAO.getInstance();
-        List<String> regionList = dao.getAllRegionList();
+        List<String> regionList = dao.getAllStringRegionList();
 
         req.setAttribute("movieID", req.getParameter("movieID"));
         req.setAttribute("regionList", regionList);
