@@ -9,8 +9,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
-import kr.moviemedia.dao.MovieMediaDAO;
-import kr.moviemedia.vo.MovieMediaVO;
+import kr.media.dao.MovieMediaDAO;
+import kr.media.vo.MovieMediaVO;
 
 public class GetMovieMediaAction implements Action {
 

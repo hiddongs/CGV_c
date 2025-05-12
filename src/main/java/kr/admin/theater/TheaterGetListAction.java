@@ -17,10 +17,14 @@ public class TheaterGetListAction implements Action{
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		List<TheaterVO> theaterList = TheaterDAO.getInstance().getTheaterList();
+		List<TheaterVO> list = TheaterDAO.getInstance().getTheaterList();
 		
-		ObjectMapper om = new ObjectMapper();
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue(resp.getWriter(), list);
+		
 		return null;
 	}
-
 }

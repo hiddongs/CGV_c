@@ -73,7 +73,6 @@
 		<div class="form-group">
 	        <label class="form-label" for="poster_url">대표포스터</label>
 	        <input type="file" class="form-input" id="poster_url" name="poster_url" accept="image/*" onchange="previewImage(event)">
-	        <input type="hidden" id="delete_URL" name="deletePosterUrl" value="${movie.poster_url}">
         	<input type="hidden" id="oldPosterUrl" value="${movie.poster_url}" name="oldPosterUrl"> <!-- 현재 포스터 URL 저장 -->
 		  <br>
        		<img id="preview" class="movie-poster" src="${pageContext.request.contextPath}/upload/${movie.poster_url}" alt="포스터 미리보기" style="max-width: 200px; margin-top: 10px;">

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.moviemedia.vo.MovieMediaVO;
+import kr.media.vo.MovieMediaVO;
 import kr.util.DBUtil;
 
 public class MovieMediaDAO {
@@ -30,7 +30,7 @@ public class MovieMediaDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-			sql = "SELECT * FROM MOVIE_MEDIA WHERE MOVIE_ID = ? ORDER BY MOVIE_ID";
+			sql = "SELECT * FROM MOVIE_MEDIA WHERE MOVIE_ID = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, movie_id);
 			rs = pstmt.executeQuery();
