@@ -25,7 +25,9 @@ public class MainAction implements Action{
 		
 
 		System.out.println("파일경로 : " + req.getServletContext());
-		
+		System.out.println("상영중 영화 수: " + list.size());
+		System.out.println("개봉예정 영화 수: " + releaseList.size());
+
 		req.setAttribute("list", list);
 		req.setAttribute("releaseList", releaseList);
 		req.setAttribute("ongoingEventList", ongoingEventList);

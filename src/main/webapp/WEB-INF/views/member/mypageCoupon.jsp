@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <div class="coupon-header">
             <h1>CGV 할인쿠폰 내역</h1>
         </div>
         

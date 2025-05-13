@@ -14,8 +14,11 @@ import javax.sql.DataSource;
 public class DBUtil {
 	private static final String DB_DRIVER = "oracle.jdbc.OracleDriver";
 	private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private static final String DB_ID = "user01";
-	private static final String DB_PASSWORD = "1234";
+    private static final String DB_ID = "steam01";
+   private static final String DB_PASSWORD = "s1234";
+		
+	//private static final String DB_ID = "user01";
+	//private static final String DB_PASSWORD = "1234";
 	
 	//Connection 객체를 생성해서 반환
 	/*

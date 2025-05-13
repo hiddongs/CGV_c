@@ -18,7 +18,10 @@ public class ListMovieAction implements Action{
 		// TODO Auto-generated method stub
 		MovieDAO movieDAO = MovieDAO.getInstance();
 		List<MovieVO> releaseList = movieDAO.getReleaseMovieList();
-		List<MovieVO> list = movieDAO.getShowingMovieList();
+		String align = req.getParameter("align");
+		if (align == null) align = "1"; // 기본 정렬: 가나다순
+		List<MovieVO> list = movieDAO.getShowingMovieAlignList(align);
+		
 		
 		
         System.out.println("파일경로 : " + req.getServletContext());
