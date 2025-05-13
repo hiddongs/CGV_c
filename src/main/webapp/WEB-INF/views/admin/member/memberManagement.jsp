@@ -5,38 +5,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>ud68cuc6d0 uad00ub9ac</title>
+<meta charset="UTF-8"> <!-- 여기서 UTF-8로 인코딩 설정 -->
+<title>극장 관리</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <%@ include file="../../common/adminHeader.jsp" %>
 <div class="container">
-    <h1>ud68cuc6d0 uad00ub9ac</h1>
+    <h1>극장 관리</h1>
     
     <div class="search-container">
         <form action="${pageContext.request.contextPath}/admin/memberManagement.do" method="get">
             <select name="searchType">
-                <option value="id" ${param.searchType == 'id' ? 'selected' : ''}>ud68cuc6d0ID</option>
-                <option value="name" ${param.searchType == 'name' ? 'selected' : ''}>uc774ub984</option>
-                <option value="email" ${param.searchType == 'email' ? 'selected' : ''}>uc774uba54uc77c</option>
+                <option value="id" ${param.searchType == 'id' ? 'selected' : ''}>회원ID</option>
+                <option value="name" ${param.searchType == 'name' ? 'selected' : ''}>이름</option>
+                <option value="email" ${param.searchType == 'email' ? 'selected' : ''}>이메일</option>
             </select>
-            <input type="text" name="searchKeyword" placeholder="uac80uc0c9uc5b4 uc785ub825" value="${param.searchKeyword}">
-            <button type="submit" class="btn btn-primary">uac80uc0c9</button>
+            <input type="text" name="searchKeyword" placeholder="검색어 입력" value="${param.searchKeyword}">
+            <button type="submit" class="btn btn-primary">검색</button>
         </form>
     </div>
     
     <table class="data-table">
         <thead>
             <tr>
-                <th>ud68cuc6d0ID</th>
-                <th>uc774ub984</th>
-                <th>uc774uba54uc77c</th>
-                <th>uc804ud654ubc88ud638</th>
-                <th>uac00uc785uc77c</th>
-                <th>uc0c1ud0dc</th>
-                <th>uad00ub9ac</th>
+                <th>회원ID</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>전화번호</th>
+                <th>가입일</th>
+                <th>상태</th>
+                <th>관리</th>
             </tr>
         </thead>
         <tbody>
@@ -47,12 +47,12 @@
                     <td>${member.email}</td>
                     <td>${member.phone}</td>
                     <td><fmt:formatDate value="${member.reg_date}" pattern="yyyy-MM-dd" /></td>
-                    <td>${member.status == 1 ? 'ud65cuc131' : 'ube44ud65cuc131'}</td>
+                    <td>${member.status == 1 ? '활성' : '비활성'}</td>
                     <td>
-                        <button class="btn btn-sm btn-info" onclick="location.href='${pageContext.request.contextPath}/admin/memberDetail.do?member_id=${member.member_id}'">uc0c1uc138</button>
+                        <button class="btn btn-sm btn-info" onclick="location.href='${pageContext.request.contextPath}/admin/memberDetail.do?member_id=${member.member_id}'">상세</button>
                         <button class="btn btn-sm ${member.status == 1 ? 'btn-warning' : 'btn-success'}" 
                                 onclick="updateMemberStatus(${member.member_id}, ${member.status})">
-                            ${member.status == 1 ? 'ube44ud65cuc131ud654' : 'ud65cuc131ud654'}
+                            ${member.status == 1 ? '비활성화' : '활성화'}
                         </button>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
         </tbody>
     </table>
     
-    <!-- ud398uc774uc9c0ub124uc774uc158 -->
+    <!-- 페이징 -->
     <div class="pagination">
         <c:if test="${pageVO.prev}">
             <a href="${pageContext.request.contextPath}/admin/memberManagement.do?page=${pageVO.startPage-1}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}">&laquo;</a>
@@ -80,7 +80,7 @@
 <script>
 function updateMemberStatus(memberId, currentStatus) {
     var newStatus = currentStatus == 1 ? 0 : 1;
-    var confirmMsg = newStatus == 1 ? 'ud68cuc6d0uc744 ud65cuc131ud654 ud558uc2dcuaca0uc2b5ub2c8uae4c?' : 'ud68cuc6d0uc744 ube44ud65cuc131ud654 ud558uc2dcuaca0uc2b5ub2c8uae4c?';
+    var confirmMsg = newStatus == 1 ? '정말로 이 회원을 활성화 하시겠습니까?' : '정말로 이 회원을 비활성화 하시겠습니까?';
     
     if(confirm(confirmMsg)) {
         $.ajax({
@@ -91,11 +91,11 @@ function updateMemberStatus(memberId, currentStatus) {
                 status: newStatus
             },
             success: function(response) {
-                alert("ud68cuc6d0 uc0c1ud0dcuac00 ubcc0uacbdub418uc5c8uc2b5ub2c8ub2e4.");
+                alert("회원 상태가 업데이트 되었습니다.");
                 location.reload();
             },
             error: function(xhr, status, error) {
-                alert("uc624ub958uac00 ubc1cuc0ddud588uc2b5ub2c8ub2e4: " + error);
+                alert("오류가 발생하였습니다: " + error);
             }
         });
     }
