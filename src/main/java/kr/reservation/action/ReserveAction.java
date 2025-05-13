@@ -55,6 +55,7 @@ public class ReserveAction implements Action {
             ReservationVO detail = dao.getReservationDetail(reservationID);
             req.setAttribute("reservation", detail);
             req.setAttribute("msg", "예매 준비가 완료되었습니다.");
+            
             return "/theater/confirmReservation.jsp";
 
         } catch (Exception e) {

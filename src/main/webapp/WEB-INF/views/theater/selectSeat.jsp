@@ -60,6 +60,12 @@ button {
 button:hover {
   background-color: #c20710;
 }
+.seat.reserved {
+  background-color: #444;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
 </style>
 </head>
 <body>
@@ -77,14 +83,27 @@ button:hover {
     <input type="hidden" id="selectedSeats" name="selectedSeats" />
     <c:if test="${not empty seatList}">
     <c:set var="prevRow" value="" />
-    <c:forEach var="seat" items="${seatList}">
-      <c:if test="${seat.seatRow ne prevRow}">
-        <c:if test="${not empty prevRow}"></div></c:if>
-        <div class="row">
-        <c:set var="prevRow" value="${seat.seatRow}" />
-      </c:if>
-      <div class="seat" data-seat="${seat.seatName}">${seat.seatName}</div>
-    </c:forEach>
+  <c:forEach var="seat" items="${seatList}">
+  <c:if test="${seat.seatRow ne prevRow}">
+    <c:if test="${not empty prevRow}"></div></c:if>
+    <div class="row">
+    <c:set var="prevRow" value="${seat.seatRow}" />
+  </c:if>
+
+  <c:set var="isReserved" value="false"/>
+  <c:forEach var="r" items="${reservedSeatList}">
+    <c:if test="${seat.seatName eq r}">
+      <c:set var="isReserved" value="true"/>
+    </c:if>
+  </c:forEach>
+
+  <div class="seat ${isReserved ? 'reserved' : ''}" 
+       data-seat="${seat.seatName}" 
+       ${isReserved ? 'style="pointer-events: none; opacity: 0.4;"' : ''}>
+    ${seat.seatName}
+  </div>
+</c:forEach>
+  
      </div> <!-- 마지막 줄 닫기 -->
 </c:if>
     

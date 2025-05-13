@@ -3,6 +3,8 @@ package kr.reservation.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import kr.reservation.vo.ReservationVO;
 import kr.util.DBUtil;
@@ -206,5 +208,32 @@ public class ReservationDAO {
 		
 		return reservationID;
 	}
+	// 특정 스케줄에서 이미 예약된 좌석 이름 리스트 반환
+	public List<String> getReservedSeatNames(int scheduleID) throws Exception {
+	    List<String> reservedSeats = new ArrayList<>();
+	    String sql = """
+	        SELECT st.seat_name
+	        FROM reservation r
+	        JOIN seat st ON r.seat_id = st.seat_id
+	        WHERE r.schedule_id = ?
+	    """;
+
+	    try (Connection conn = DBUtil.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setInt(1, scheduleID);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            reservedSeats.add(rs.getString("seat_name"));
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return reservedSeats;
+	}
+
 
 }
