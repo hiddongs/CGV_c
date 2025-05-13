@@ -24,7 +24,7 @@ public class CouponIssueAction implements Action {
 		
 		CpPossessVO cpPossess = new CpPossessVO();
 		cpPossess.setCoupon_id((long) coupon_id);
-		cpPossess.setMember_id((long) member_id);
+		cpPossess.setMember_id((int) member_id);
 		
 		CpPossessDAO dao = CpPossessDAO.getInstance();
 		int result = dao.getInstance().issueCoupon(cpPossess);

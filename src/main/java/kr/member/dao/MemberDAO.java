@@ -374,12 +374,7 @@ public class MemberDAO {
         return result;
     }
 
-    // 관람권/할인쿠폰 관리 - 확인하기
-    // 관람권/할인쿠폰 관리 - 수정, 삭제
-    // 문의내역 - 등록, 삭제, 수정, 
-    // 나의 포인트
     
-<<<<<<< HEAD
     // 쿠폰 가져오기
 	public List<MemberVO> getMemberCPPossessList() {
 		
@@ -405,7 +400,6 @@ public class MemberDAO {
 		
 		return null;
 	}
-=======
-
->>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 }
+
+

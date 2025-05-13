@@ -22,35 +22,6 @@ public class CouponDAO {
 		}
 		return instance;
 	} 	
-<<<<<<< HEAD
-	// 쿠폰 입력
-	public int insertCoupon(CouponVO couponVO) {
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		int cnt = 0;
-		int result = 0;
-		try {
-		
-			conn = DBUtil.getConnection();
-			sql = "INSERT INTO COUPON (COUPON_ID, COUPON_NAME, DISCOUNT_AMOUNT, EXPIRED_DATE) VALUES("
-					+ "COUPON_SEQ.NEXTVAL, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(++cnt, couponVO.getCoupon_name());
-			pstmt.setInt(++cnt, couponVO.getDiscount_amount());
-			pstmt.setDate(++cnt, (Date) couponVO.getExpired_date());
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.executeClose(null, pstmt, conn);
-		}
-		return result;
-	}
-=======
-	
->>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 	
 	// 쿠폰 리스트
 	public List<CouponVO> getCouponList(){
@@ -152,13 +123,9 @@ public class CouponDAO {
 			}
 			return result;
 		}
-<<<<<<< HEAD
-		return result;
-	}
+
 	
-	
-=======
->>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
+
 
 	public int deleteCoupon(int couponId) {
 		
