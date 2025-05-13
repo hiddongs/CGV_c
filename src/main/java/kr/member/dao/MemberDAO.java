@@ -400,6 +400,22 @@ public class MemberDAO {
 		
 		return null;
 	}
+	
+	public void usePoint(int memberId, int usedPoint) throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    try {
+	        conn = DBUtil.getConnection();
+	        String sql = "UPDATE MEMBER SET POINT = POINT - ? WHERE MEMBER_ID = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, usedPoint);
+	        pstmt.setInt(2, memberId);
+	        pstmt.executeUpdate();
+	    } finally {
+	        DBUtil.executeClose(null, pstmt, conn);
+	    }
+	}
+
 }
 
 

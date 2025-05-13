@@ -88,6 +88,7 @@ public class ScheduleDAO {
         vo.setScreeningDate(rs.getDate("screening_date")); 
         vo.setAvailable(rs.getInt("is_available") == 1);
         vo.setAuditoriumID(rs.getInt("auditorium_id"));
+        vo.setStartTime(rs.getTimestamp("start_time")); // ✅ 이게 누락되었을 가능성 큼
         return vo;
     }
  // 영화 + 극장 + 날짜 기준으로 상영관 정보 + 시간대 정보 포함 조회
@@ -187,5 +188,44 @@ public class ScheduleDAO {
         return list;
     }
     */
+
+    public ScheduleVO getSchedule(int scheduleID) {
+        ScheduleVO vo = null;
+
+        String sql = """
+            SELECT s.*, sl.start_time, sl.end_time
+            FROM schedule s
+            JOIN slot sl ON s.slot_id = sl.slot_id
+            WHERE s.schedule_id = ?
+        """;
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, scheduleID);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                vo = new ScheduleVO();
+                vo.setScheduleID(rs.getInt("schedule_id"));
+                vo.setTheaterID(rs.getInt("theater_id"));
+                vo.setMovieID(rs.getInt("movie_id"));
+                vo.setAuditoriumID(rs.getInt("auditorium_id"));
+                vo.setScreeningDate(rs.getDate("screening_date"));
+                vo.setSlotID(rs.getInt("slot_id"));
+                vo.setAvailable(rs.getInt("is_available") == 1);
+
+                // ✅ 오류 발생 지점
+                vo.setStartTime(rs.getTimestamp("start_time"));
+                vo.setEndTime(rs.getTimestamp("end_time"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return vo;
+    }
+
 
 }

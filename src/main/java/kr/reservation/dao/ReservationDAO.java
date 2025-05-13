@@ -17,11 +17,19 @@ public class ReservationDAO {
 	}
 	
 	// 예매 등록
+<<<<<<< HEAD
 	public void insertReservation(ReservationVO vo) throws Exception {
+=======
+
+	public int insertReservation(ReservationVO reservation) throws Exception {
+>>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 	    Connection conn = null;
 	    PreparedStatement pstmt = null;
-	    
+	    String sql = null;
+	    int result = 0;
+
 	    try {
+<<<<<<< HEAD
 	    	String sql ="""
 	    			INSERT INTO reservation (
 	    			reservation_id, member_id, schedule_id, seat_id,
@@ -37,30 +45,50 @@ public class ReservationDAO {
 	    			(SELECT theater_id FROM schedule WHERE schedule_id = ?)
 	    			)
 	    			"""; 
+=======
+>>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 	        conn = DBUtil.getConnection();
-	        pstmt = conn.prepareStatement(sql);
-	        int i = 1;
+	        sql = """
+	            INSERT INTO reservation (
+	                reservation_id, member_id, schedule_id, seat_id,
+	                payment_status, payment_date, viewers, screening_date,
+	                p_movie, name, mv_title, movie_type, theater_id, price_id
+	            ) VALUES (
+	                reservation_seq.NEXTVAL, ?, ?, ?, 'N', SYSDATE, ?,
+	                (SELECT screening_date FROM schedule WHERE schedule_id = ?),
+	                (SELECT movie_id FROM schedule WHERE schedule_id = ?),
+	                (SELECT name FROM member WHERE member_id = ?),
+	                (SELECT title FROM movie WHERE movie_id = (SELECT movie_id FROM schedule WHERE schedule_id = ?)),
+	                (SELECT type FROM auditorium WHERE auditorium_id = (SELECT auditorium_id FROM schedule WHERE schedule_id = ?)),
+	                (SELECT theater_id FROM schedule WHERE schedule_id = ?),
+	                1 -- PRICE_ID는 현재 시스템에서 고정값
+	            )
+	        """;
 
-	        pstmt.setInt(i++, vo.getMemberID());
-	        pstmt.setInt(i++, vo.getScheduleID());
-	        pstmt.setInt(i++, vo.getSeatID());
-	        pstmt.setInt(i++, vo.getViewers());
-	        pstmt.setInt(i++, vo.getScheduleID()); // for screening_date
-	        pstmt.setInt(i++, vo.getScheduleID()); // for p_movie
-	        pstmt.setInt(i++, vo.getMemberID());       // for name
-	        pstmt.setInt(i++, vo.getScheduleID()); // for mv_title
-	        pstmt.setInt(i++, vo.getScheduleID()); // for movie_type
-            pstmt.setInt(i++, vo.getScheduleID());
-	        
-	        pstmt.executeUpdate();
-	    } catch(Exception e){
+	        pstmt = conn.prepareStatement(sql);
+	        int idx = 0;
+	        pstmt.setInt(++idx, reservation.getMemberID());
+	        pstmt.setInt(++idx, reservation.getScheduleID());
+	        pstmt.setInt(++idx, reservation.getSeatID());
+	        pstmt.setInt(++idx, reservation.getViewers());
+	        pstmt.setInt(++idx, reservation.getScheduleID());
+	        pstmt.setInt(++idx, reservation.getScheduleID());
+	        pstmt.setInt(++idx, reservation.getMemberID());
+	        pstmt.setInt(++idx, reservation.getScheduleID());
+	        pstmt.setInt(++idx, reservation.getScheduleID());
+	        pstmt.setInt(++idx, reservation.getScheduleID());
+
+	        result = pstmt.executeUpdate();
+	    } catch (Exception e) {
 	        e.printStackTrace();
-	    }finally {
-	    	
-	    
+	        throw new Exception("[ERROR] 예약 등록 중 오류 발생");
+	    } finally {
 	        DBUtil.executeClose(null, pstmt, conn);
 	    }
+
+	    return result;
 	}
+
 /**
 	public void reservationMV(ReservationVO reservation) throws Exception{
 		Connection conn = null;
@@ -184,21 +212,25 @@ public class ReservationDAO {
 	    ReservationVO reservation = null;
 
 	    String sql = """
-	        SELECT
-	          r.reservation_id,
-	          m.name AS member_name,
-	          mv.title AS mv_title,
-	          a.name AS auditorium_name,
-	          s.screening_date,
-	          st.seat_name AS seat_name
-	        FROM reservation r
-	        JOIN member m ON r.member_id = m.member_id
-	        JOIN schedule s ON r.schedule_id = s.schedule_id
-	        JOIN movie mv ON s.movie_id = mv.movie_id
-	        JOIN seat st ON r.seat_id = st.seat_id
-	        JOIN auditorium a ON s.auditorium_id = a.auditorium_id
-	        WHERE r.reservation_id = ?
-	    """;
+	    		      SELECT
+	    		r.reservation_id,
+	    		r.schedule_id,
+	    		r.viewers, -- ✅ 추가
+	    		m.name AS member_name,
+	    		mv.title AS mv_title,
+	    		a.name AS auditorium_name,
+	    		s.screening_date,
+	    		st.seat_name AS seat_name
+
+	    		       FROM reservation r
+	    		       JOIN member m ON r.member_id = m.member_id
+	    		       JOIN schedule s ON r.schedule_id = s.schedule_id
+	    		       JOIN movie mv ON s.movie_id = mv.movie_id
+	    		       JOIN price p ON r.price_id = p.price_id
+	    		       JOIN seat st ON r.seat_id = st.seat_id
+	    		       JOIN auditorium a ON s.auditorium_id = a.auditorium_id
+	    		       WHERE r.reservation_id = ?
+	    		   """;
 
 	    try {
 	        conn = DBUtil.getConnection();
@@ -209,6 +241,8 @@ public class ReservationDAO {
 	        if (rs.next()) {
 	            reservation = new ReservationVO();
 	            reservation.setReservationID(rs.getInt("reservation_id"));
+	            reservation.setScheduleID(rs.getInt("schedule_id")); // 🔴 이거 필수!
+	            reservation.setViewers(rs.getInt("viewers")); // ✅ 꼭 추가!
 	            reservation.setMem_Name(rs.getString("member_name"));
 	            reservation.setMovieType(rs.getString("mv_title"));
 	            reservation.setAuditoriumName(rs.getString("auditorium_name"));
@@ -224,7 +258,12 @@ public class ReservationDAO {
 	    return reservation;
 	}
 
+<<<<<<< HEAD
 	
+=======
+
+	// 예매 상세 조회
+>>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 	// 해당 상영 시간의 좌석 확인 (중복 방지용)
 	// 예매 가능 여부 확인 (좌석 중복 체크)
 
@@ -314,7 +353,30 @@ public class ReservationDAO {
 
 
     
-    
+	public void updatePaymentInfo(int reservationID, int paidAmount, String method) throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    try {
+	        conn = DBUtil.getConnection();
+	        String sql = """
+	            UPDATE reservation
+	            SET payment_status = 'Y',
+	                payment_date = SYSDATE,
+	                p_movie = ?,         -- 결제 금액 저장
+	                payment_method = ?
+	            WHERE reservation_id = ?
+	        """;
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, paidAmount);
+	        pstmt.setString(2, method);
+	        pstmt.setInt(3, reservationID);
+	        pstmt.executeUpdate();
+	    } finally {
+	        DBUtil.executeClose(null, pstmt, conn);
+	    }
+	}
+
+
     
 }
 

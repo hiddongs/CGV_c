@@ -34,11 +34,10 @@ public class ReserveAction implements Action {
 
             // 2. DAO 호출
             ReservationDAO dao = ReservationDAO.getInstance();
-            int viewers = selectedSeats.length;
-            
+            int viewers = Integer.parseInt(req.getParameter("viewers"));
 
             for (String seatName : selectedSeats) {
-                int seatID = dao.getSeatIDByName(scheduleID, seatName); // 이름 → ID 변환
+                int seatID = dao.getSeatIDByName(scheduleID, seatName);
 
                 ReservationVO vo = new ReservationVO();
                 vo.setMemberID(memberID);
@@ -46,11 +45,11 @@ public class ReserveAction implements Action {
                 vo.setSeatID(seatID);
                 vo.setPaymentStatus("대기");
                 vo.setPaymentDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-                vo.setViewers(viewers);
+                vo.setViewers(1); // 🔥 각 좌석당 1명으로 저장
 
-                // TODO: 가격 및 영화/상영관 정보 추후 연동
                 dao.insertReservation(vo);
             }
+
             int reservationID = dao.getReservationID(memberID);
             ReservationVO detail = dao.getReservationDetail(reservationID);
             req.setAttribute("reservation", detail);
