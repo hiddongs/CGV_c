@@ -62,7 +62,7 @@ public class CpPossessDAO {
 					CpPossessVO VO = new CpPossessVO();
 					VO.setCp_possess_id(rs.getLong("cp_possess_id"));
 					VO.setCoupon_id(rs.getLong("coupon_id"));
-					VO.setMember_id(rs.getInt("member_id"));
+					VO.setMember_id(rs.getLong("member_id"));
 					result.add(VO);
 				}while(rs.next());
 			}
