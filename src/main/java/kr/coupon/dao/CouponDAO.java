@@ -22,6 +22,33 @@ public class CouponDAO {
 		}
 		return instance;
 	} 	
+
+	// 쿠폰 입력
+	public int insertCoupon(CouponVO couponVO) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int cnt = 0;
+		int result = 0;
+		try {
+		
+			conn = DBUtil.getConnection();
+			sql = "INSERT INTO COUPON (COUPON_ID, COUPON_NAME, DISCOUNT_AMOUNT, EXPIRED_DATE) VALUES("
+					+ "COUPON_SEQ.NEXTVAL, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(++cnt, couponVO.getCoupon_name());
+			pstmt.setInt(++cnt, couponVO.getDiscount_amount());
+			pstmt.setDate(++cnt, (Date) couponVO.getExpired_date());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+		return result;
+	}
+
 	
 	// 쿠폰 리스트
 	public List<CouponVO> getCouponList(){
@@ -95,38 +122,7 @@ public class CouponDAO {
 		
 		
 		
-	}
-	
-
-	
-	public int insertCoupon(CouponVO couponVO) {
-			
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			String sql = null;
-			int cnt = 0;
-			int result = 0;
-			try {
-			
-				conn = DBUtil.getConnection();
-				sql = "INSERT INTO COUPON (COUPON_ID, COUPON_NAME, DISCOUNT_AMOUNT, EXPIRED_DATE) VALUES("
-						+ "COUPON_SEQ.NEXTVAL, ?, ?, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(++cnt, couponVO.getCoupon_name());
-				pstmt.setInt(++cnt, couponVO.getDiscount_amount());
-				pstmt.setDate(++cnt, (Date) couponVO.getExpired_date());
-				result = pstmt.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				DBUtil.executeClose(null, pstmt, conn);
-			}
-			return result;
-		}
-
-	
-
-
+	}	
 	public int deleteCoupon(int couponId) {
 		
 		Connection conn = null;
