@@ -77,6 +77,8 @@ button:hover {
   <p>스케줄 ID: ${scheduleID}</p>
   <div class="screen"></div>
   <form name = "movie" action="reserve.do" method="post">
+  <input type="hidden" id="viewers" name="viewers" />
+  
     <input type="hidden" id="selectedSeats" name="selectedSeats"/>
    <input type="hidden" name="memberID" value="${mem_ID}" />
     <input type="hidden" name="scheduleID" value="${scheduleID}" />
@@ -123,6 +125,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const selected = document.querySelectorAll('.seat.selected');
     const seatNames = Array.from(selected).map(seat => seat.dataset.seat);
     document.getElementById('selectedSeats').value = seatNames.join(',');
+     //  선택된 좌석 수 = 관람 인원 수
+    document.getElementById('viewers').value = seatNames.length;
   }
 
   window.reservation = function () {

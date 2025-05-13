@@ -22,7 +22,16 @@ public class ReservationVO {
     private String auditoriumName;
     private int theaterID;
     
-    public int getTheaterID() {
+    private int priceID;
+    public int getPriceID() {
+		return priceID;
+	}
+
+	public void setPriceID(int priceID) {
+		this.priceID = priceID;
+	}
+
+	public int getTheaterID() {
 		return theaterID;
 	}
 

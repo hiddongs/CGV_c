@@ -36,8 +36,8 @@ public class CouponDAO {
 			sql = "INSERT INTO COUPON (COUPON_ID, COUPON_NAME, DISCOUNT_AMOUNT, EXPIRED_DATE) VALUES("
 					+ "COUPON_SEQ.NEXTVAL, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(++cnt, couponVO.getCoupon_name());
-			pstmt.setInt(++cnt, couponVO.getDiscount_amount());
+			pstmt.setString(++cnt, couponVO.getCouponName());
+			pstmt.setInt(++cnt, couponVO.getDiscountAmount());
 			pstmt.setDate(++cnt, (Date) couponVO.getExpired_date());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -66,8 +66,8 @@ public class CouponDAO {
 				do {
 					CouponVO couponVO = new CouponVO();
 					couponVO.setCouponID(rs.getLong("coupon_id"));
-					couponVO.setCoupon_name(rs.getString("coupon_name"));
-					couponVO.setDiscount_amount(rs.getInt("discount_amount"));
+					couponVO.setCouponName(rs.getString("coupon_name"));
+					couponVO.setDiscountAmount(rs.getInt("discount_amount"));
 					couponVO.setExpired_date(rs.getDate("expired_date"));
 					result.add(couponVO);
 				}while(rs.next());
@@ -92,8 +92,9 @@ public class CouponDAO {
 		try {
 			conn = DBUtil.getConnection();
 			// sql
-			sql = "SELECT c.coupon_id, c.coupon_name, c.discount_amount, c.expired_date FROM CP_POSSESS cp "
-					+ "JOIN COUPON c ON cp.coupon_id = c.coupon_id WHERE cp.member_id = ?";
+			sql = "SELECT cp.cp_possess_id, c.coupon_id, c.coupon_name, c.discount_amount, c.expired_date "
+				    + "FROM cp_possess cp JOIN COUPON c ON cp.coupon_id = c.coupon_id "
+				    + "WHERE cp.member_id = ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,member_id);
@@ -102,13 +103,16 @@ public class CouponDAO {
 			// 반복
 			while(rs.next()) {
 				CouponVO coupon = new CouponVO();
+				coupon.setCpPossessId(rs.getInt("cp_possess_id")); // ← 이 컬럼을 SELECT에서 가져와야 함
 				coupon.setCouponID(rs.getLong("coupon_id"));
-				coupon.setCoupon_name(rs.getString("coupon_name"));
-				coupon.setDiscount_amount(rs.getInt("discount_amount"));
+				coupon.setCouponName(rs.getString("coupon_name"));
+				coupon.setDiscountAmount(rs.getInt("discount_amount"));
 				coupon.setExpired_date(rs.getDate("expired_date"));
+
 				list.add(coupon);
 				
 			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -140,10 +144,75 @@ public class CouponDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
 		
 		return result;
 	}
+	public int getDiscountAmountByPossessIdAndMemberId(int cpPossessId, int memberId) throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    int discount = 0;
+
+	    try {
+	        conn = DBUtil.getConnection();
+	        String sql = """
+	            SELECT c.discount_amount
+	            FROM cp_possess cp
+	            JOIN coupon c ON cp.coupon_id = c.coupon_id
+	            WHERE cp.cp_possess_id = ? AND cp.member_id = ?
+	        """;
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, cpPossessId);
+	        pstmt.setInt(2, memberId);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            discount = rs.getInt("discount_amount");
+	        } else {
+	            throw new IllegalArgumentException("[ERROR] 해당 쿠폰은 이 회원의 것이 아닙니다.");
+	        }
+	    }catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    }finally {
+	        DBUtil.executeClose(rs, pstmt, conn);
+	    }
+
+	    return discount;
+	}
 	
+	public void usedCouponByPossessId(int cpPossessId) throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+
+	    try {
+	        conn = DBUtil.getConnection();
+	        String sql = "DELETE FROM cp_possess WHERE cp_possess_id = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, cpPossessId);
+	        pstmt.executeUpdate();
+	    } catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    }
+	    finally {
+	    
+	        DBUtil.executeClose(null, pstmt, conn);
+	    }
+	}
+
+	public void useCouponByPossessId(int cpPossessId) {
+	    try {
+	        usedCouponByPossessId(cpPossessId);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("[ERROR] 쿠폰 사용 처리 중 오류 발생");
+	    }
+	}
+
 	
 	
 	
