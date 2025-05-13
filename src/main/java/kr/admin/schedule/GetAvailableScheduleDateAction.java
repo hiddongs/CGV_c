@@ -10,23 +10,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
 import kr.schedule.dao.ScheduleDAO;
-import kr.schedule.vo.ScheduleDetailVO;
+import kr.schedule.vo.ScheduleVO;
 
-public class ScheduleManagementAction implements Action{
+public class GetAvailableScheduleDateAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		Long theaterId = Long.parseLong(req.getParameter("theaterId"));
-		req.setAttribute("theaterId", theaterId);
+		Long movieId = Long.parseLong(req.getParameter("movieId"));
+		Long auditoriumId = Long.parseLong(req.getParameter("auditoriumId"));
 		
-		List<ScheduleDetailVO> scheduleList = ScheduleDAO.getInstance().getDetailScheduleList(theaterId);
-		
+		List<ScheduleVO> list = ScheduleDAO.getInstance().getAvailableScreeningDate(auditoriumId, movieId);
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonScheduleList = mapper.writeValueAsString(scheduleList);
-		req.setAttribute("scheduleList", jsonScheduleList);
 		
-		return "admin/schedule/scheduleManagement.jsp";
+		mapper.writeValue(resp.getWriter(), list);
+		
+		return null;
 	}
 
 }

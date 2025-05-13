@@ -37,7 +37,7 @@ public class MovieDAO {
 		    
 		    while(rs.next()) {
 		    	MovieVO movie = new MovieVO();
-		    	movie.setMovie_id(rs.getInt("MOVIE_ID"));
+		    	movie.setMovie_id(rs.getLong("MOVIE_ID"));
 				movie.setMv_title(rs.getString("TITLE"));
 				movie.setDirector(rs.getString("DIRECTOR"));
 				movie.setActor(rs.getString("ACTOR"));
@@ -109,7 +109,7 @@ public class MovieDAO {
 			if(rs.next()) {
 				do {
 					MovieVO movie = new MovieVO();
-					movie.setMovie_id(rs.getInt("MOVIE_ID"));
+					movie.setMovie_id(rs.getLong("MOVIE_ID"));
 					movie.setMv_title(rs.getString("TITLE"));
 					movie.setDirector(rs.getString("DIRECTOR"));
 					movie.setActor(rs.getString("ACTOR"));
@@ -151,7 +151,7 @@ public class MovieDAO {
 				if(rs.next()) {
 					do {
 						MovieVO movie = new MovieVO();
-						movie.setMovie_id(rs.getInt("MOVIE_ID"));
+						movie.setMovie_id(rs.getLong("MOVIE_ID"));
 						movie.setMv_title(rs.getString("TITLE"));
 						movie.setDirector(rs.getString("DIRECTOR"));
 						movie.setActor(rs.getString("ACTOR"));
@@ -194,7 +194,7 @@ public class MovieDAO {
 			if(rs.next()) {
 				do {
 					MovieVO movie = new MovieVO();
-					movie.setMovie_id(rs.getInt("MOVIE_ID"));
+					movie.setMovie_id(rs.getLong("MOVIE_ID"));
 					movie.setMv_title(rs.getString("TITLE"));
 					movie.setDirector(rs.getString("DIRECTOR"));
 					movie.setActor(rs.getString("ACTOR"));
@@ -236,7 +236,7 @@ public class MovieDAO {
 			if(rs.next()) {
 				do {
 					result = new MovieVO();
-					result.setMovie_id(rs.getInt("MOVIE_ID"));
+					result.setMovie_id(rs.getLong("MOVIE_ID"));
 					result.setMv_title(rs.getString("TITLE"));
 					result.setDirector(rs.getString("DIRECTOR"));
 					result.setActor(rs.getString("ACTOR"));
@@ -320,7 +320,7 @@ public class MovieDAO {
 
 	        if (rs.next()) {
 	            movie = new MovieVO();
-	            movie.setMovie_id(rs.getInt("MOVIE_ID"));
+	            movie.setMovie_id(rs.getLong("MOVIE_ID"));
 	            movie.setMv_title(rs.getString("TITLE"));
 	            movie.setDirector(rs.getString("DIRECTOR"));
 	            movie.setActor(rs.getString("ACTOR"));
@@ -398,6 +398,8 @@ public class MovieDAO {
 		
 		return result;
 	}
+
+
 
 }
 

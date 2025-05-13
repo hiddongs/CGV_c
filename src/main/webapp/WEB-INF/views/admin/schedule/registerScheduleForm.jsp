@@ -56,113 +56,146 @@
 </style>
 <script>
     // JSP에서 전달된 극장 ID
-    var preSelectedTheaterId = "${theaterId}";
+    var theaterId = "${theaterId}";
+    var auditoriumId;
+    var movieId;
+    var screeningDate;
+    
 
     $(function(){
-        // 극장 목록 가져오기
-        $.ajax({
-            url: 'theaterGetList.do',
-            type: 'GET',
-            dataType: 'json',
-            success: function(theaters) {
-                const theaterSelect = $('#theaterId');
-                theaterSelect.empty();
-                theaterSelect.append('<option value="" selected disabled>극장을 선택해주세요</option>');
-
-                theaters.forEach(function(theater) {
-                    theaterSelect.append(
-                        '<option value="' + theater.theaterId + '">' + theater.name + ' (' + theater.region + ')</option>'
-                    );
-                });
-
-                if (preSelectedTheaterId && preSelectedTheaterId !== "") {
-                    theaterSelect.val(preSelectedTheaterId);
-                    loadAuditoriums(preSelectedTheaterId);
+        // 상영관 목록 가져오기 1번
+        console.log("시작 1번")
+        loadAuditoriums(theaterId)
+        
+        
+        // 영화 목록 가져오기 2번
+        $('#auditoriumId').change(function(){  
+        	console.log("시작 2번")
+            auditoriumId = $('#auditoriumId').val()
+            
+            $.ajax({
+                url: 'getAvailableTypeMovieList.do',
+                data: {auditoriumId : auditoriumId},
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+	
+                    displayMovieList(response);
+                },
+                error: function() {
+                    alert('영화 목록을 불러오는 중 오류가 발생했습니다.');
                 }
-            },
-            error: function() {
-                alert('극장 목록을 불러오는 중 오류가 발생했습니다.');
-            }
+            });
+        })
+        
+        $('#movieId').change(function() {
+            console.log('영화가 변경되었습니다.');// 맞는 날짜 가져오기 3번
+            getAvailableScheduleDate();
         });
         
-        // 날짜 변경시 비어있는 시간 반환
-       $('#screeningDate').change(function () {
-    const theaterId = $('#theaterId').val();
-    const auditoriumId = $('#auditoriumId').val();
-    const screeningDate = $('#screeningDate').val();
-
-    if (theaterId && auditoriumId && screeningDate) {
-        $.ajax({
-            url: 'getAvailableTimezone.do',
-            type: 'POST',
-            data: {
-                theaterId: theaterId,
+        $('#screeningDate').change(function(){
+            console.log('상영날짜가 변경되었습니다');
+            screeningDate = $('#screeningDate').val();
+            console.log('선택된 날짜:', screeningDate);
+            getAvailableSlot();
+        });
+        
+        function getAvailableSlot(){
+            console.log('getAvailableSlot 실행됨');
+            console.log('파라미터 확인:', {
                 auditoriumId: auditoriumId,
+                movieId: movieId,
                 screeningDate: screeningDate
-            },
-            dataType: 'json',
-            success: function (response) {
-                const slotSelect = $('#slotId');
-                slotSelect.empty();
-                slotSelect.append('<option value="" selected disabled>시간대를 선택해주세요</option>');
+            });
 
-                if (response.length === 0) {
-                    slotSelect.append('<option disabled>사용 가능한 시간대가 없습니다</option>');
-                    return;
+            $.ajax({
+                url: 'getAvailableSlot.do',
+                data: {
+                    auditoriumId: auditoriumId,
+                    movieId: movieId,
+                    screeningDate: screeningDate
+                },
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(response) {
+                    console.log('사용 가능한 시간대:', response);
+                    displayAvailableSlot(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('시간대 조회 중 오류 발생:', {
+                        status: status,
+                        error: error,
+                        response: xhr.responseText
+                    });
+                    alert('상영 시간대를 불러오는 중 오류가 발생했습니다.');
                 }
+            });
+        }
 
-                response.forEach(function (slot) {
-                    const optionText = slot.startTime + ' ~ ' + slot.endTime;
-                    slotSelect.append('<option value="' + slot.slotId + '">' + optionText + '</option>');
-                });
-            },
-            error: function () {
-                alert('시간대 조회 중 오류가 발생했습니다.');
-            }
-        });
-    }
-});
+        function displayAvailableSlot(slotList) {
+            const slotSelect = $('#slotId');
+            slotSelect.empty();
+            slotSelect.append('<option value="" selected disabled>상영 시간대를 선택해주세요</option>');
 
-        // 극장 변경 시 상영관 목록 가져오기
-        $('#theaterId').change(function() {
-            const theaterId = $(this).val();
-            if (theaterId) {
-                loadAuditoriums(theaterId);
-            }
-        });
-
-        // 영화 목록 가져오기
-        $.ajax({
-            url: 'movieList.do',
-            type: 'GET',
-            dataType: 'json',
-            success: function(movies) {
-                const movieSelect = $('#movieId');
-                movieSelect.empty();
-                movieSelect.append('<option value="" selected disabled>영화를 선택해주세요</option>');
-
-                movies.forEach(function(movie) {
-                    movieSelect.append(
-                        '<option value="' + movie.movie_id + '">' + movie.mv_title + ' (' + movie.runtime + '분)</option>'
+            if (slotList && slotList.length > 0) {
+                slotList.forEach(function(slot) {
+                    slotSelect.append(
+                        '<option value="' + slot.slotId + '">' + 
+                        slot.startTime + ' ~ ' + slot.endTime + 
+                        '</option>'
                     );
                 });
-            },
-            error: function() {
-                alert('영화 목록을 불러오는 중 오류가 발생했습니다.');
+            } else {
+                slotSelect.append('<option value="" disabled>사용 가능한 시간대가 없습니다</option>');
             }
-        });
-
+        }
         
-      
+        function getAvailableScheduleDate() { 
+        	console.log('getAvailableScheduleDate 실행됨'); 
+            movieId = $('#movieId').val()
+            console.log('선택된 상영관 ID:', auditoriumId);
+            console.log('선택된 영화 ID:', movieId);
+            
+            $.ajax({
+                url: 'getAvailableScheduleDate.do',
+                data: {auditoriumId : auditoriumId , movieId : movieId},
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(response){
+					console.log('서버 응답:', response);
+                    displayAvailableScreeningDate(response);
+                },
+                error: function(xhr, status, error){
+                    console.error('에러 상세 정보:', {
+                        status: status,
+                        error: error,
+                        response: xhr.responseText
+                    });
+                    alert('날짜 정보를 가져오는 중 오류가 발생했습니다.');
+                }
+            })
+        }
+        
+        function displayMovieList(movieList){
+            const movieSelect = $('#movieId')
 
+            movieSelect.off('change')
+
+            movieSelect.empty()
+            movieSelect.append('<option value="" selected disabled>영화를 선택해주세요</option>')
+            movieList.forEach(function(movie){
+                movieSelect.append(
+                    '<option value="' + movie.movie_id + '">' + movie.mv_title + ' (' + movie.runtime + '분)</option>'
+                )
+            })
+
+            movieSelect.on('change', getAvailableScheduleDate)
+        }
+    
+        
         // 폼 유효성 검사
         $("#scheduleForm").submit(function(event){
-            if (!$("#theaterId").val()) {
-                alert("극장을 선택해주세요.");
-                $("#theaterId").focus();
-                event.preventDefault();
-                return;
-            }
+
             if (!$("#auditoriumId").val()) {
                 alert("상영관을 선택해주세요.");
                 $("#auditoriumId").focus();
@@ -192,31 +225,55 @@
                 event.preventDefault();
             }
         });
-    });
 
-    // 상영관 목록 가져오기
-    function loadAuditoriums(theaterId) {
-        $.ajax({
-            url: 'auditoriumList.do',
-            type: 'GET',
-            data: { theaterId: theaterId },
-            dataType: 'json',
-            success: function(auditoriums) {
-                const auditoriumSelect = $('#auditoriumId');
-                auditoriumSelect.empty();
-                auditoriumSelect.append('<option value="" selected disabled>상영관을 선택해주세요</option>');
+        function displayAvailableScreeningDate(scheduleList) {
+            const dateSelect = $('#screeningDate');
+            dateSelect.empty();
+            dateSelect.append('<option value="" selected disabled>상영 날짜를 선택해주세요</option>');
 
-                auditoriums.forEach(function(auditorium) {
-                    auditoriumSelect.append(
-                        '<option value="' + auditorium.auditoriumId + '">' + auditorium.name + ' (' + auditorium.type + ')</option>'
-                    );
+            if (scheduleList && scheduleList.length > 0) {
+                scheduleList.forEach(function (element) {
+                    try {
+                        const date = new Date(element.screeningDate);
+                        if (!isNaN(date.getTime())) {  // 유효한 날짜인지 확인
+                            const formattedDate = date.toISOString().split('T')[0];
+                            dateSelect.append('<option value="' + formattedDate + '">' + formattedDate + '</option>');
+                        }
+                    } catch (e) {
+                        console.error('날짜 변환 중 오류 발생:', e, element.screeningDate);
+                    }
                 });
-            },
-            error: function() {
-                alert('상영관 목록을 불러오는 중 오류가 발생했습니다.');
+            } else {
+                dateSelect.append('<option value="" disabled>사용 가능한 날짜가 없습니다</option>');
             }
-        });
-    }
+        }
+                
+        function loadAuditoriums(theaterId) {
+            $.ajax({
+                url: 'auditoriumList.do',
+                type: 'GET',
+                data: { theaterId: theaterId },
+                dataType: 'json',
+                success: function(auditoriums) {
+                    const auditoriumSelect = $('#auditoriumId');
+                    auditoriumSelect.empty();
+                    auditoriumSelect.append('<option value="" selected disabled>상영관을 선택해주세요</option>');
+
+                    auditoriums.forEach(function(auditorium) {
+                        auditoriumSelect.append(
+                            '<option value="' + auditorium.auditoriumId + '">' + auditorium.name + ' (' + auditorium.type + ')</option>'
+                        );
+                    });
+                },
+                error: function() {
+                    alert('상영관 목록을 불러오는 중 오류가 발생했습니다.');
+                }
+            });
+        }
+        
+    } );// end 시작
+
+ 
 </script>
 </head>
 <body>
@@ -226,15 +283,18 @@
         <p>새로운 상영 스케줄을 등록해주세요.</p>
         
         <form id="scheduleForm" action="registerSchedule.do" method="post" class="form-container">
+            
+            <input type="hidden" value="${theaterId}" id="theaterId" name="theaterId">
+            <!--
             <div class="form-group">
                 <label for="theaterId" class="form-label">극장</label>
                 <select id="theaterId" name="theaterId" class="form-input" required></select>
             </div>
-            
+            -->
+
             <div class="form-group">
                 <label for="auditoriumId" class="form-label">상영관</label>
                 <select id="auditoriumId" name="auditoriumId" class="form-input" required>
-                    <option value="" selected disabled>극장을 먼저 선택해주세요</option>
                 </select>
             </div>
             
@@ -245,7 +305,7 @@
 
             <div class="form-group">
                 <label for="screeningDate" class="form-label">상영 날짜</label>
-                <input type="date" id="screeningDate" name="screeningDate" class="form-input" required>
+                <select id="screeningDate" name="screeningDate" class="form-input" required></select>
             </div>
             
             <div class="form-group">

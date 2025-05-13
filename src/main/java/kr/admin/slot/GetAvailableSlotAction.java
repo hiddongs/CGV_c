@@ -16,7 +16,7 @@ import kr.schedule.dao.ScheduleDAO;
 import kr.slot.dao.SlotDAO;
 import kr.slot.vo.SlotVO;
 
-public class getAvailableSlotAction implements Action{
+public class GetAvailableSlotAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

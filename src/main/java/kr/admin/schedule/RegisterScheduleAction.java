@@ -46,7 +46,7 @@ public class RegisterScheduleAction implements Action {
 			}
 		} catch (NumberFormatException | ParseException e) {
 			e.printStackTrace();
-			req.setAttribute("result_message", "입력 데이터를 확인해주세요.");
+			req.setAttribute("result_msg", "입력 데이터를 확인해주세요.");
 			req.setAttribute("result_url", "registerScheduleForm.do");
 			return "/common/result_view.jsp";
 		}
@@ -65,11 +65,13 @@ public class RegisterScheduleAction implements Action {
 		
 		if(result > 0) {
 			// 등록 성공
-			req.setAttribute("result_message", "스케줄이 성공적으로 등록되었습니다.");
+			req.setAttribute("result_title", "스케쥴등록 완료");
+			req.setAttribute("result_msg", "스케줄이 성공적으로 등록되었습니다.");
 			req.setAttribute("result_url", "scheduleManagement.do?theaterId=" + theaterId);
 		} else {
 			// 등록 실패
-			req.setAttribute("result_message", "스케줄 등록에 실패했습니다.");
+			req.setAttribute("result_title", "스케쥴등록 실패");
+			req.setAttribute("result_msg", "스케줄 등록에 실패했습니다.");
 			req.setAttribute("result_url", "registerScheduleForm.do");
 		}
 		

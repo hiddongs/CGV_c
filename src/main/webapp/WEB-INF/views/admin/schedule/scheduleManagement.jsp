@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     let detailScheduleList = ${scheduleList}
+    let preSelectedTheaterId = ${theaterId}
     $(function(){
         displaySchedule(detailScheduleList)
     })
@@ -92,7 +93,7 @@
     }
     
     function registerScheduleForm(event){
-		window.location.href = 'registerScheduleForm.do'
+		window.location.href = 'registerScheduleForm.do?theaterId=' + encodeURIComponent(preSelectedTheaterId)
     }
     </script>
 </head>

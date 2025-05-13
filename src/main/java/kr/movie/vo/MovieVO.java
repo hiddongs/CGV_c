@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class MovieVO {
 
-	private int movie_id;       // 영화 번호
+	private Long movie_id;       // 영화 번호
 	private String mv_title;     // 제목
 	private String director;	//감독
 	private String actor;        //배우
@@ -18,6 +18,12 @@ public class MovieVO {
 	private String movieType; // 영화타입
 	private String age_limit; // 연령제한
 	
+	public Long getMovie_id() {
+		return movie_id;
+	}
+	public void setMovie_id(Long movie_id) {
+		this.movie_id = movie_id;
+	}
 	
 	public String getAge_limit() {
 		return age_limit;
@@ -45,12 +51,7 @@ public class MovieVO {
 	}
 	
 	
-	public int getMovie_id() {
-		return movie_id;
-	}
-	public void setMovie_id(int movie_id) {
-		this.movie_id = movie_id;
-	}
+
 	public String getMv_title() {
 		return mv_title;
 	}

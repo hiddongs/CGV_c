@@ -125,7 +125,7 @@ function deleteTheaterForm(event){
 
 function scheduleManagement(event){
     const theaterId = event.target.dataset.theaterId
-    window.location.href = 'scheduleManagement.do?theaterId=' + theaterId
+    window.location.href = 'scheduleManagement.do?theaterId=' + theaterId;
 }
 
 function registerTheaterForm() {

@@ -8,6 +8,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.movie.vo.MovieVO;
 import kr.schedule.vo.ScheduleDetailVO;
 import kr.schedule.vo.ScheduleVO;
 import kr.slot.vo.SlotVO;
@@ -273,4 +274,110 @@ public class ScheduleDAO {
 		}
 		return result;
 	}
+
+		public List<MovieVO> getAvailableMovieList(Long auditoriumId) {
+		
+		Connection conn = null;
+		String sql = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MovieVO> result = new ArrayList<>();
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT DISTINCT M.MOVIE_ID, M.TITLE, M.RUNTIME FROM SCHEDULE S JOIN MOVIE M ON M.MOVIE_ID = S.MOVIE_ID WHERE AUDITORIUM_ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, auditoriumId);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					MovieVO vo = new MovieVO();
+					vo.setMovie_id(rs.getLong("movie_id"));
+					vo.setMv_title(rs.getString("title"));
+					vo.setRuntime(rs.getInt("runtime"));
+					result.add(vo);
+				}while(rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		return result;
+	}
+
+		public List<ScheduleVO> getAvailableScreeningDate(Long auditoriumId, Long movieId) {
+			
+			Connection conn = null;
+			String sql = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<ScheduleVO> result = new ArrayList<>();
+			
+			try {
+				conn = DBUtil.getConnection();
+				sql = "SELECT SCREENING_DATE FROM SCHEDULE WHERE AUDITORIUM_ID = ? AND MOVIE_ID = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setLong(1, auditoriumId);
+				pstmt.setLong(2, movieId);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						ScheduleVO vo = new ScheduleVO();
+						vo.setScreeningDate(rs.getDate("SCREENING_DATE"));
+						result.add(vo);
+					}while(rs.next());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.executeClose(rs, pstmt, conn);
+			}
+			return result;
+		}
+		
+		 public List<SlotVO> getAvailableSlots(int auditoriumId, int movieId, String screeningDate) throws Exception {
+		        Connection conn = null;
+		        PreparedStatement pstmt = null;
+		        ResultSet rs = null;
+		        List<SlotVO> slotList = new ArrayList<>();
+		        String sql = null;
+		        
+		        try {
+		            conn = DBUtil.getConnection();
+		            // 해당 상영관, 영화, 날짜에 대해 이미 예약된 시간대를 제외한 사용 가능한 시간대 조회
+		            sql = "SELECT t.slot_id, t.start_time, t.end_time " +
+		                  "FROM slot t " +
+		                  "WHERE t.slot_id NOT IN ( " +
+		                  "    SELECT s.slot_id " +
+		                  "    FROM schedule s " +
+		                  "    WHERE s.auditorium_id = ? " +
+		                  "    AND s.screening_date = ? " +
+		                  ") " +
+		                  "ORDER BY t.start_time";
+		            
+		            pstmt = conn.prepareStatement(sql);
+		            pstmt.setInt(1, auditoriumId);
+		            pstmt.setString(2, screeningDate);
+		            
+		            rs = pstmt.executeQuery();
+		            
+		            while(rs.next()) {
+		            	SlotVO slot = new SlotVO();
+		                slot.setSlotId(rs.getLong("slot_id"));
+		                slot.setStartTime(new Time(rs.getDate("start_time").getTime()));
+		                slotList.add(slot);
+		            }
+		            
+		        } catch(Exception e) {
+		            throw new Exception(e);
+		        } finally {
+		            DBUtil.executeClose(rs, pstmt, conn);
+		        }
+		        
+		        return slotList;
+		    }
+
 }
