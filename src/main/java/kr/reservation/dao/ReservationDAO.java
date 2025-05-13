@@ -17,6 +17,7 @@ public class ReservationDAO {
 	}
 	
 	// 예매 등록
+
 	public void insertReservation(ReservationVO vo) throws Exception {
 	    Connection conn = null;
 	    PreparedStatement pstmt = null;
@@ -63,9 +64,91 @@ public class ReservationDAO {
 	        DBUtil.executeClose(null, pstmt, conn);
 	    }
 	}
+/**
+	public void reservationMV(ReservationVO reservation) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		int cnt = 0;
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "INSERT INTO reservation(reservation_id,mem_id,schedule_id,"
+					+ "seat_number,payment_status, payment_date) VALUES ("
+					+ "reservation.seq.nextval,?,?,?,?,?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setLong(++cnt, reservation.getReservationID());
+			pstmt.setInt(++cnt, reservation.getMemberID());
+			pstmt.setInt(++cnt, reservation.getScheduleID());
+			pstmt.setInt(++cnt,reservation.getSeatID());
+			pstmt.setString(++cnt,reservation.getPaymentDate());
+			pstmt.setDate(++cnt, reservation.getPaymentDate());
+			
+			pstmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			throw new Exception(e);
+		} finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
+
+	}
+**/
+	
+	  // 나의 예매내역 가져오기
+    // ReservationVO -> member_id
+    public List<ReservationVO> getListReservationByUser(int member_id) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ReservationVO> list = new ArrayList<>();
+		String sql = null;
+		
+		try {
+			// 커넥션 풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			// sql
+			sql = "SELECT * FROM reservation WHERE member_id=?";
+			// 데이터 할당
+			pstmt = conn.prepareStatement(sql);
+			//데이터 바인딩
+			pstmt.setInt(1, member_id);
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			// 반복
+			while(rs.next()) {
+				ReservationVO vo = new ReservationVO();
+				vo.setMvTitle(rs.getString("mv_title")); // 영화제목
+				vo.setName(rs.getString("name")); // 극장이름
+				vo.setScreeningDate(rs.getDate("screening_date")); //관람일시
+				vo.setViewers(rs.getInt("viewers")); // 관람인원
+				vo.setPMovie(rs.getInt("p_movie")); //영화가격
+				
+				list.add(vo); //리스트에 추가
+			}
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+
+    	return list;
+    	
+    }
+
+    // 예매 상세내역 보기
+    // memberid, status = 완료
+    
+    
+    
 
 	// 예매 내역 조회
-	public ReservationVO getReservation(ReservationVO reservation) throws Exception{
+	public ReservationVO getListReservationByUser(ReservationVO reservation) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -236,4 +319,8 @@ public class ReservationDAO {
 	}
 
 
+    
+    
+    
 }
+

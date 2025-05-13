@@ -2,7 +2,9 @@ package kr.reservation.vo;
 
 import java.sql.Date;
 
+// 예약 VO 재 설정
 public class ReservationVO {
+
     private int reservationID;         // 예매 고유 식별자
     private int memberID;             // 유저 식별자
     private int scheduleID;           // 상영 스케줄 ID
@@ -156,4 +158,5 @@ public class ReservationVO {
     public void setMovieType(String movieType) {
         this.movieType = movieType;
     }
+
 }

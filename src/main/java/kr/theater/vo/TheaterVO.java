@@ -3,10 +3,10 @@ package kr.theater.vo;
 public class TheaterVO {
 	
 	
-   private int theaterId;
-   private String region;
-   private String name;
-   private String description;
+   private int theaterId; // 극장 ID
+   private String region; // 지역
+   private String name; //극장 지역
+   private String description; //극장 묘사
 
 public int getTheaterId() {
 	return theaterId;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.member.vo.MemberVO;
+import kr.reservation.vo.ReservationVO;
 import kr.util.DBUtil;
 
 public class MemberDAO {
@@ -373,12 +374,34 @@ public class MemberDAO {
         return result;
     }
 
-    
-    // 나의 예매내역 가져오기
     // 관람권/할인쿠폰 관리 - 확인하기
     // 관람권/할인쿠폰 관리 - 수정, 삭제
     // 문의내역 - 등록, 삭제, 수정, 
     // 나의 포인트
     
-
+    // 쿠폰 가져오기
+	public List<MemberVO> getMemberCPPossessList() {
+		
+		 Connection conn = null;
+         PreparedStatement pstmt = null;
+         ResultSet rs = null;
+         MemberVO member = null;
+         String sql = null;
+         List<MemberVO> result = new ArrayList<>();
+         
+         try {
+			
+        	 conn = DBUtil.getConnection();
+        	 sql = "";
+        	 pstmt = conn.prepareStatement(sql);
+        	 
+        	 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return null;
+	}
 }
