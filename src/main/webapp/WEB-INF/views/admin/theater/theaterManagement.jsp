@@ -93,9 +93,18 @@ function displayTheaterList(theaterList){
         deleteBtn.dataset.theaterId = theater.theaterId
         deleteBtn.onclick = deleteTheaterForm
 
+        const scheduleBtn = document.createElement('button')
+        scheduleBtn.type = 'button'
+        scheduleBtn.className = 'btn btn-warning'
+        scheduleBtn.textContent = '스케쥴관리'
+        scheduleBtn.dataset.theaterId = theater.theaterId
+        scheduleBtn.onclick = scheduleManagement
+
         actionCell.appendChild(updateBtn)
         actionCell.appendChild(document.createTextNode(' '))
         actionCell.appendChild(deleteBtn)
+        actionCell.appendChild(document.createTextNode(' '))
+        actionCell.appendChild(scheduleBtn)
 
         row.appendChild(actionCell)
         container.appendChild(row)
@@ -112,6 +121,11 @@ function deleteTheaterForm(event){
     if(confirm('정말로 이 극장을 삭제하시겠습니까?')) {
         window.location.href='deleteTheaterForm.do?theaterId=' + theaterId;
     }
+}
+
+function scheduleManagement(event){
+    const theaterId = event.target.dataset.theaterId
+    window.location.href = 'scheduleManagement.do?theaterId=' + theaterId;
 }
 
 function registerTheaterForm() {
