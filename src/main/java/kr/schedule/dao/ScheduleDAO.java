@@ -380,4 +380,25 @@ public class ScheduleDAO {
 		        return slotList;
 		    }
 
+		public int changeStatus(Long scheduleId) {
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			int result = 0;
+			
+			try {
+				conn = DBUtil.getConnection();
+				sql = "UPDATE SCHEDULE SET IS_AVAILABLE = CASE WHEN IS_AVAILABLE = 1 THEN 0 ELSE 1 END  WHERE SCHEDULE_ID = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setLong(1, scheduleId);
+				result = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+			return result;
+		}
+
 }
