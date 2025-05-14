@@ -9,6 +9,8 @@
 	height: 760px;
 	padding: 20px;
 	float: left;
+	
+	
 }
 /**
 #main_nav h2 {
@@ -19,14 +21,17 @@
 	margin-bottom: 15px;
 }
 */
+
 #main_nav h2 a {
   background-color: #ef4b64;
   color: white;
   font-size: 16px;
   padding: 12px;
   text-decoration: none;
+  outline: none;
   display: block;
   margin-bottom: 15px;
+  border: none;
 }
 
 .menu-list {

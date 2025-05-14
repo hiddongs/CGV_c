@@ -22,6 +22,7 @@ public class CouponDAO {
 		}
 		return instance;
 	} 	
+
 	// 쿠폰 입력
 	public int insertCoupon(CouponVO couponVO) {
 		
@@ -47,6 +48,7 @@ public class CouponDAO {
 		}
 		return result;
 	}
+
 	
 	// 쿠폰 리스트
 	public List<CouponVO> getCouponList(){
@@ -124,10 +126,7 @@ public class CouponDAO {
 		
 		
 		
-	}
-	
-
-	
+	}	
 	public int deleteCoupon(int couponId) {
 		
 		Connection conn = null;

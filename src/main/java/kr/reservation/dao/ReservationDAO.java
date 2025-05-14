@@ -25,6 +25,21 @@ public class ReservationDAO {
 	    int result = 0;
 
 	    try {
+	    	sql ="""
+	    			INSERT INTO reservation (
+	    			reservation_id, member_id, schedule_id, seat_id,
+	    			payment_status, payment_date, viewers, screening_date,
+	    			p_movie, name, mv_title, movie_type, theater_id
+	    			) VALUES (
+	    			reservation_seq.NEXTVAL, ?, ?, ?, 'N', SYSDATE, ?,
+	    			(SELECT screening_date FROM schedule WHERE schedule_id = ?),
+	    			(SELECT movie_id FROM schedule WHERE schedule_id = ?),
+	    			(SELECT name FROM member WHERE member_id = ?),
+	    			(SELECT title FROM movie WHERE movie_id = (SELECT movie_id FROM schedule WHERE schedule_id = ?)),
+	    			(SELECT type FROM auditorium WHERE auditorium_id = (SELECT auditorium_id FROM schedule WHERE schedule_id = ?)),
+	    			(SELECT theater_id FROM schedule WHERE schedule_id = ?)
+	    			)
+	    			"""; 
 	        conn = DBUtil.getConnection();
 	        sql = """
 	            INSERT INTO reservation (
@@ -144,12 +159,7 @@ public class ReservationDAO {
     	
     }
 
-    // 예매 상세내역 보기
-    // memberid, status = 완료
-    
-    
-    
-
+/*
 	// 예매 내역 조회
 	public ReservationVO getListReservationByUser(ReservationVO reservation) throws Exception{
 		Connection conn = null;
@@ -183,8 +193,10 @@ public class ReservationDAO {
 		} 
 		
 		return reservationList;
-		
 	}
+	*/
+    
+    
 	// 예매 상세 조회
 	public ReservationVO getReservationDetail(int reservationID) {
 	    Connection conn = null;
@@ -238,7 +250,6 @@ public class ReservationDAO {
 
 	    return reservation;
 	}
-
 
 	// 예매 상세 조회
 	// 해당 상영 시간의 좌석 확인 (중복 방지용)

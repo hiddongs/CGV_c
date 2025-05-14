@@ -39,7 +39,7 @@ public class PaymentProcessAction implements Action {
 		try {
 		ReservationVO reservation = reservationDAO.getReservationDetail(reservationID);
 		ScheduleVO schedule = scheduleDAO.getSchedule(reservation.getScheduleID());
-		AuditoriumVO auditorium = auditoriumDAO.getAuditorium(schedule.getAuditoriumID());
+		AuditoriumVO auditorium = auditoriumDAO.getAuditorium(schedule.getAuditoriumId());
 		PriceVO pricePolicy = priceDAO.getPricePolicy();
 		MemberVO member = memberDAO.getMember(memberId);
 

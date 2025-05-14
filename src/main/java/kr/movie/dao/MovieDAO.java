@@ -28,7 +28,7 @@ public class MovieDAO {
 
             while (rs.next()) {
                 MovieVO vo = new MovieVO();
-                vo.setMovie_id(rs.getInt("movie_id"));
+                vo.setMovie_id(rs.getLong("movie_id"));
                 vo.setMv_title(rs.getString("mv_title"));
                 vo.setPoster_url(rs.getString("poster_url"));
                 list.add(vo);
@@ -62,7 +62,7 @@ public class MovieDAO {
 		    
 		    while(rs.next()) {
 		    	MovieVO movie = new MovieVO();
-		    	movie.setMovie_id(rs.getInt("MOVIE_ID"));
+		    	movie.setMovie_id(rs.getLong("MOVIE_ID"));
 				movie.setMv_title(rs.getString("TITLE"));
 				movie.setDirector(rs.getString("DIRECTOR"));
 				movie.setActor(rs.getString("ACTOR"));
@@ -117,6 +117,48 @@ public class MovieDAO {
     }
     
     //상영중인 영화 리스트
+/*
+    public List<MovieVO> getShowingMovieList(){
+    	
+    	Connection conn = null;
+    	PreparedStatement pstmt = null;
+    	String sql = null;
+    	ResultSet rs = null;
+    	List<MovieVO> movieList = new ArrayList<>();
+    	
+    	try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM MOVIE WHERE RELEASE_DATE <= SYSDATE";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					MovieVO movie = new MovieVO();
+					movie.setMovie_id(rs.getLong("MOVIE_ID"));
+					movie.setMv_title(rs.getString("TITLE"));
+					movie.setDirector(rs.getString("DIRECTOR"));
+					movie.setActor(rs.getString("ACTOR"));
+					movie.setGenre(rs.getString("GENRE"));
+					movie.setRuntime(rs.getInt("RUNTIME"));
+					movie.setRelease_date(rs.getDate("RELEASE_DATE"));
+					movie.setAge_limit(rs.getString("AGE_LIMIT"));
+//					movie.setRating(rs.getString("RATING"));
+					movie.setPoster_url(rs.getString("POSTER_URL"));
+					movie.setDescription(rs.getString("DESCRIPTION"));
+					movie.setMovie_create(rs.getDate("MOVIE_CREATE"));
+					movieList.add(movie);
+					
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+    	return movieList;
+    	*/
     public List<MovieVO> getShowingMovieList() {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -132,7 +174,7 @@ public class MovieDAO {
 
             while (rs.next()) {
                 MovieVO movie = new MovieVO();
-                movie.setMovie_id(rs.getInt("MOVIE_ID"));
+                movie.setMovie_id(rs.getLong("MOVIE_ID"));
                 movie.setMv_title(rs.getString("TITLE"));
                 movie.setDirector(rs.getString("DIRECTOR"));
                 movie.setActor(rs.getString("ACTOR"));
@@ -152,6 +194,7 @@ public class MovieDAO {
             DBUtil.executeClose(rs, pstmt, conn);
         }
         return movieList;
+
     }
 
     
@@ -172,7 +215,7 @@ public class MovieDAO {
 			
 				while (rs.next()) {
 						MovieVO movie = new MovieVO();
-						movie.setMovie_id(rs.getInt("MOVIE_ID"));
+						movie.setMovie_id(rs.getLong("MOVIE_ID"));
 						movie.setMv_title(rs.getString("TITLE"));
 						movie.setDirector(rs.getString("DIRECTOR"));
 						movie.setActor(rs.getString("ACTOR"));
@@ -214,7 +257,7 @@ public class MovieDAO {
 			if(rs.next()) {
 				do {
 					MovieVO movie = new MovieVO();
-					movie.setMovie_id(rs.getInt("MOVIE_ID"));
+					movie.setMovie_id(rs.getLong("MOVIE_ID"));
 					movie.setMv_title(rs.getString("TITLE"));
 					movie.setDirector(rs.getString("DIRECTOR"));
 					movie.setActor(rs.getString("ACTOR"));
@@ -256,7 +299,7 @@ public class MovieDAO {
 			if(rs.next()) {
 				do {
 					result = new MovieVO();
-					result.setMovie_id(rs.getInt("MOVIE_ID"));
+					result.setMovie_id(rs.getLong("MOVIE_ID"));
 					result.setMv_title(rs.getString("TITLE"));
 					result.setDirector(rs.getString("DIRECTOR"));
 					result.setActor(rs.getString("ACTOR"));
@@ -340,7 +383,7 @@ public class MovieDAO {
 
 	        if (rs.next()) {
 	            movie = new MovieVO();
-	            movie.setMovie_id(rs.getInt("MOVIE_ID"));
+	            movie.setMovie_id(rs.getLong("MOVIE_ID"));
 	            movie.setMv_title(rs.getString("TITLE"));
 	            movie.setDirector(rs.getString("DIRECTOR"));
 	            movie.setActor(rs.getString("ACTOR"));
@@ -419,6 +462,7 @@ public class MovieDAO {
 		return result;
 	}
 
+
 	public List<MovieVO> getShowingMovieAlignList(String align) {
 		Connection conn = null;
     	PreparedStatement pstmt = null;
@@ -448,7 +492,7 @@ public class MovieDAO {
 			if(rs.next()) {
 				do {
 					MovieVO movie = new MovieVO();
-					movie.setMovie_id(rs.getInt("MOVIE_ID"));
+					movie.setMovie_id(rs.getLong("MOVIE_ID"));
 					movie.setMv_title(rs.getString("TITLE"));
 					movie.setDirector(rs.getString("DIRECTOR"));
 					movie.setActor(rs.getString("ACTOR"));
@@ -472,7 +516,6 @@ public class MovieDAO {
     	return movieList;
 	}
 
-	
 
 }
 

@@ -24,14 +24,14 @@
 </head>
 <body>
     <form action="updateTheater.do" method="post" class="form-container">
-        <input type="hidden" value="theater.theaterId">
+        <input type="hidden" value="${theater.theaterId}" id="theaterId" name="theaterId">
         <div class="form-group">
             <label for="theaterName" class="form-label">극장이름</label>
-            <input type="text" class="form-input" value="${theater.name}">
+            <input type="text" class="form-input" value="${theater.name}" name="name" id="name">
         </div>
         <div class="form-group">
             <label for="region" class="form-label">지역</label>
-            <select name="region" id="region">
+            <select name="region" id="region" value = "${theater.region }">
 
             </select>
         </div>
@@ -39,6 +39,10 @@
             <label for="description" class="form-label">설명</label>
             <textarea rows="10" cols="70" id="description" name="description" class="form-input">${theater.description}</textarea>
         </div>
+        <div class="form-actions">
+                <button type="submit" class="btn btn-primary">수정 완료</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='theaterManagement.do'">취소</button>
+            </div>
     </form>
 </body>
 </html>

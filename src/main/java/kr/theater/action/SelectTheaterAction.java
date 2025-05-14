@@ -14,7 +14,6 @@ import kr.controller.Action;
 import kr.member.vo.MemberVO;
 import kr.movie.dao.MovieTypeDAO;
 import kr.movie.vo.MovieTypeVO;
-import kr.theater.dao.TheaterDAO;
 
 public class SelectTheaterAction implements Action {
     @Override
