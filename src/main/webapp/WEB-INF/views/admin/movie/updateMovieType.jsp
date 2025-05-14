@@ -8,21 +8,48 @@
 <title>영화 상영관 선택</title>
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script type="text/javascript">
+
+	var movietype = ${movietype};
+	console.log('받은 데이터 : '+movietype)
+
  	$(document).ready(function(){
-		
- 		$('#backButton').click(function(){
-			window.history.back()
- 		})
-		 $("#myForm").on("submit",function(event){
-			 const checkboxes = document.querySelectorAll(".form-check-input")
-			 const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked)
-	 
-			 if(!isChecked){
-				 alert('최소 하나의 영화타입을 선택해주세요')
-				 event.preventDefault()
-			 }
-		 })
- 	})
+    // movietype에 따라 체크박스 상태 설정
+    checkMovietype(movietype);
+
+    // 뒤로가기 버튼 클릭 시 동작
+    $('#backButton').click(function(){
+      window.history.back();
+    });
+
+    // 폼 제출 시 최소한 하나의 체크박스가 선택되었는지 확인
+    $("#myForm").on("submit", function(event){
+      const checkboxes = document.querySelectorAll(".form-check-input");
+      const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+      if (!isChecked) {
+        alert('최소 하나의 영화타입을 선택해주세요');
+        event.preventDefault();  // 폼 제출을 막습니다.
+      }
+    });
+  });
+
+  // movietype 객체에 따라 체크박스 상태 설정
+ function checkMovietype(movietype) {
+  const checkboxes = document.querySelectorAll(".form-check-input");
+
+  checkboxes.forEach(checkbox => {
+    const type = checkbox.value;  // 체크박스의 value 값 ("2d", "3d", "4dx" 등)
+    
+    // 첫 글자가 숫자일 경우, 그 앞에 "_"를 붙입니다.
+    const movietypeKey = /^[0-9]/.test(type) ? "_" + type : type;
+
+    // movietype 객체에서 해당 type의 값이 "Y"이면 체크
+    if (movietype[movietypeKey] === "Y") {
+      checkbox.checked = true;
+    }
+  });
+}
+
 
  </script>
 </head>
