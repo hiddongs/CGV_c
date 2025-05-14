@@ -100,15 +100,29 @@ function displayTheaterList(theaterList){
         scheduleBtn.dataset.theaterId = theater.theaterId
         scheduleBtn.onclick = scheduleManagement
 
+        const auditoriumBtn = document.createElement('button')
+        auditoriumBtn.type = 'button'
+        auditoriumBtn.className = 'btn btn-warning'
+        auditoriumBtn.textContent = '상영관관리'
+        auditoriumBtn.dataset.theaterId = theater.theaterId
+        auditoriumBtn.onclick = auditoriumManagement
+
         actionCell.appendChild(updateBtn)
         actionCell.appendChild(document.createTextNode(' '))
         actionCell.appendChild(deleteBtn)
         actionCell.appendChild(document.createTextNode(' '))
         actionCell.appendChild(scheduleBtn)
+        actionCell.appendChild(document.createTextNode(' '))
+        actionCell.appendChild(auditoriumBtn)
 
         row.appendChild(actionCell)
         container.appendChild(row)
     })
+}
+
+function auditoriumManagement(event){
+    const theaterId = event.target.dataset.theaterId
+    window.location.href = 'auditoriumManagement.do?theaterId='+theaterId
 }
 
 function updateTheaterForm(event){
