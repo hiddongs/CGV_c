@@ -13,7 +13,7 @@
 <body>
 <%@ include file="../../common/adminHeader.jsp" %>
 <div class="container">
-    <h1>극장 관리</h1>
+    <h1>멤버 관리</h1>
     
     <div class="search-container">
         <form action="${pageContext.request.contextPath}/admin/memberManagement.do" method="get">
@@ -27,38 +27,38 @@
         </form>
     </div>
     
-    <table class="data-table">
-        <thead>
+    <table class="table">
+    <thead>
+        <tr>
+            <th>회원ID</th>
+            <th>이름</th>
+            <th>이메일</th>
+            <th>전화번호</th>
+            <th>가입일</th>
+            <th>상태</th>
+            <th>관리(등급)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="member" items="${memberList}">
             <tr>
-                <th>회원ID</th>
-                <th>이름</th>
-                <th>이메일</th>
-                <th>전화번호</th>
-                <th>가입일</th>
-                <th>상태</th>
-                <th>관리</th>
+                <td>${member.user_id}</td> <!-- user_id에 직접 접근 -->
+                <td>${member.name}</td>
+                <td>${member.email}</td>
+                <td>${member.phone}</td>
+                <td><fmt:formatDate value="${member.reg_date}" pattern="yyyy-MM-dd" /></td>
+                <td>${member.grade eq '정지' ? '비활성' : '활성'}</td>
+                <td>
+                    <button class="btn btn-sm btn-info" onclick="location.href='${pageContext.request.contextPath}/admin/memberDetail.do?member_id=${member.member_id}'">상세</button>
+                    <button class="btn btn-sm ${member.grade eq '정지' ? 'btn-warning' : 'btn-success'}" 
+                            onclick="updateMemberStatus(${member.member_id}, '${member.grade eq '정지' ? '비활성' : '활성'}')">
+                        ${member.grade eq '정지' ? '활성화' : '비활성화'}
+                    </button>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="member" items="${members}">
-                <tr>
-                    <td>${member.member_id}</td>
-                    <td>${member.name}</td>
-                    <td>${member.email}</td>
-                    <td>${member.phone}</td>
-                    <td><fmt:formatDate value="${member.reg_date}" pattern="yyyy-MM-dd" /></td>
-                    <td>${member.status == 1 ? '활성' : '비활성'}</td>
-                    <td>
-                        <button class="btn btn-sm btn-info" onclick="location.href='${pageContext.request.contextPath}/admin/memberDetail.do?member_id=${member.member_id}'">상세</button>
-                        <button class="btn btn-sm ${member.status == 1 ? 'btn-warning' : 'btn-success'}" 
-                                onclick="updateMemberStatus(${member.member_id}, ${member.status})">
-                            ${member.status == 1 ? '비활성화' : '활성화'}
-                        </button>
-                    </td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+        </c:forEach>
+    </tbody>
+</table>
     
     <!-- 페이징 -->
     <div class="pagination">
@@ -79,7 +79,7 @@
 
 <script>
 function updateMemberStatus(memberId, currentStatus) {
-    var newStatus = currentStatus == 1 ? 0 : 1;
+    var newStatus = currentStatus === '정지' ? 0 : 1;
     var confirmMsg = newStatus == 1 ? '정말로 이 회원을 활성화 하시겠습니까?' : '정말로 이 회원을 비활성화 하시겠습니까?';
     
     if(confirm(confirmMsg)) {
@@ -87,7 +87,7 @@ function updateMemberStatus(memberId, currentStatus) {
             url: "${pageContext.request.contextPath}/admin/memberStatusUpdate.do",
             type: "POST",
             data: {
-                member_id: memberId,
+                memberId: memberId,
                 status: newStatus
             },
             success: function(response) {

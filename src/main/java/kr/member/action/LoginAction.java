@@ -28,6 +28,14 @@ public class LoginAction implements Action {
             	request.setAttribute("result_url", request.getContextPath() + "/index.jsp");        	
             	return "common/result_view.jsp";           	
             }
+            
+            if(member.getGrade().equals("정지")) {
+            	request.setAttribute("result_title", "정지된 회원입니다.");
+            	request.setAttribute("result_msg", "활동정지된 회원입니다.");
+            	request.setAttribute("result_url", request.getContextPath() + "/index.jsp");        	
+            	return "common/result_view.jsp";  
+            }
+            
             HttpSession session = request.getSession();
             session.setAttribute("member", member);
             
