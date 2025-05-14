@@ -10,37 +10,27 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hiddongs.css">
 <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-<script>
-document.getElementById('region').addEventListener('change', function() {
-    const selectedRegion = this.value;
-    if (selectedRegion) {
-        // AJAX로 서버에 요청 보내기
-        // 서버는 selectedRegion을 받아서 해당 지역의 극장 리스트를 반환
-    }
-});
-</script>
 </head>
-
 <body>
-
-    <div class="center-box">
-    
-        <div class="inner-box">
+    <!--  <div class="center-box">-->
+        <div class="inner-box fade-in">
             <h3>극장 선택</h3>
-            <form action="regionSubmit.do" method="post" class="container mt-4">
-                <div class="mb-3">
-                    <label for="region" class="form-label-left">지역 선택</label> 
-                   <select name="region" id="region" class="form-select-left">
-                    <option value="">-- 범위를 선택하세요 --</option>
-                     <c:forEach var="theater" items="${regionList}">
-                        <option value="${theater.region}">${theater.region}</option>
-                     </c:forEach>
-                   </select>
-                </div>
-                <input type="submit" value="전송" class="btn btn-primary">
-            </form>
+        <form action="regionSubmit.do" method="post">
+         <input type="hidden" name="memberID" value="${mem_ID}" />
+  <input type="hidden" name="movieID" value="${movieID}">
+  <label>지역을 선택하세요</label>
+  <select name="region" required>
+    <option value="">-- 선택 --</option>
+    <c:forEach var="region" items="${regionList}">
+      <option value="${region}">${region}</option>
+    </c:forEach>
+  </select>
+  <button type="submit">다음</button>
+</form>
+        
+           
         </div>
-    </div>
+   <!--  </div> -->
 </body>
 
 </html>

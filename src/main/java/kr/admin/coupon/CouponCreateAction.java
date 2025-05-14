@@ -18,8 +18,8 @@ public class CouponCreateAction implements Action {
 		
 		CouponVO couponVO = new CouponVO();
 		
-		couponVO.setCoupon_name(req.getParameter("coupon_name"));
-		couponVO.setDiscount_amount(Integer.parseInt(req.getParameter("discount_amount")));
+		couponVO.setCouponName(req.getParameter("coupon_name"));
+		couponVO.setDiscountAmount(Integer.parseInt(req.getParameter("discount_amount")));
 		couponVO.setExpired_date(DBUtil.toSqlDate(req.getParameter("expired_date")));
 		
 		int result = CouponDAO.getInstance().insertCoupon(couponVO);

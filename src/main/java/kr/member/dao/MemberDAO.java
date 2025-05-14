@@ -374,10 +374,6 @@ public class MemberDAO {
         return result;
     }
 
-    // 관람권/할인쿠폰 관리 - 확인하기
-    // 관람권/할인쿠폰 관리 - 수정, 삭제
-    // 문의내역 - 등록, 삭제, 수정, 
-    // 나의 포인트
     
     // 쿠폰 가져오기
 	public List<MemberVO> getMemberCPPossessList() {
@@ -404,4 +400,22 @@ public class MemberDAO {
 		
 		return null;
 	}
+	
+	public void usePoint(int memberId, int usedPoint) throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    try {
+	        conn = DBUtil.getConnection();
+	        String sql = "UPDATE MEMBER SET POINT = POINT - ? WHERE MEMBER_ID = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, usedPoint);
+	        pstmt.setInt(2, memberId);
+	        pstmt.executeUpdate();
+	    } finally {
+	        DBUtil.executeClose(null, pstmt, conn);
+	    }
+	}
+
 }
+
+

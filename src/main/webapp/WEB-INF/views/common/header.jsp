@@ -24,7 +24,7 @@
                 <li><a href="${pageContext.request.contextPath}/movie">영화</a>
 
                 </li>
-                <li><a href="${pageContext.request.contextPath}/theaters">극장</a>
+                <li><a href="${pageContext.request.contextPath}/movie/theaterPage.do">극장</a>
                     <ul>
                       <li><a href="${pageContext.request.contextPath}/movie/specialMovie.do">특별관</a>
                       

@@ -81,5 +81,10 @@ public class PriceDAO {
 		}
 		return result;
 	}
+
+	public PriceVO getPricePolicy() {
+	    return getPrice();
+	}
+
 	
 }

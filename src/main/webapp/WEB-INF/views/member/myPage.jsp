@@ -94,12 +94,11 @@
 	color: white;
 	border: none;
 	padding: 8px 16px;
+	
 	border-radius: 4px;
 	font-size: 14px;
 	cursor: pointer;
 }
-
-
 </style>
 
 </head>
@@ -128,8 +127,8 @@
 					<div class="mypage-content"> 
 					<!-- 영화 구매 목록 -->
 						<c:forEach var="reservation" items="${reservationList}">
-						<h3>${reservation.mv_title}</h3> 
-					<div class="mypage-date">${reservation.screening_date} | ${reservation.name} |${reservation.viewers}명 |${reservation.p_movie}원 </div>
+						<h3>${reservation.mvTitle}</h3> 
+					<div class="mypage-date">${reservation.screeningDate} | ${reservation.name} |${reservation.viewers}명 |${reservation.pMovie}원 </div>
 					</c:forEach>
 					</div>
 				</div>
