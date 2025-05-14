@@ -1,4 +1,4 @@
-package kr.Auditorium.dao;
+package kr.auditorium.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.Auditorium.vo.AuditoriumVO;
+import kr.auditorium.vo.AuditoriumVO;
 import kr.util.DBUtil;
 
 public class AuditoriumDAO {
