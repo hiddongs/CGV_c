@@ -28,7 +28,7 @@ public class MovieDAO {
 
             while (rs.next()) {
                 MovieVO vo = new MovieVO();
-                vo.setMovie_id(rs.getInt("movie_id"));
+                vo.setMovie_id(rs.getLong("movie_id"));
                 vo.setMv_title(rs.getString("mv_title"));
                 vo.setPoster_url(rs.getString("poster_url"));
                 list.add(vo);
@@ -117,7 +117,7 @@ public class MovieDAO {
     }
     
     //상영중인 영화 리스트
-
+/*
     public List<MovieVO> getShowingMovieList(){
     	
     	Connection conn = null;
@@ -158,6 +158,7 @@ public class MovieDAO {
 			DBUtil.executeClose(rs, pstmt, conn);
 		}
     	return movieList;
+    	*/
     public List<MovieVO> getShowingMovieList() {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -173,7 +174,7 @@ public class MovieDAO {
 
             while (rs.next()) {
                 MovieVO movie = new MovieVO();
-                movie.setMovie_id(rs.getInt("MOVIE_ID"));
+                movie.setMovie_id(rs.getLong("MOVIE_ID"));
                 movie.setMv_title(rs.getString("TITLE"));
                 movie.setDirector(rs.getString("DIRECTOR"));
                 movie.setActor(rs.getString("ACTOR"));
@@ -491,7 +492,7 @@ public class MovieDAO {
 			if(rs.next()) {
 				do {
 					MovieVO movie = new MovieVO();
-					movie.setMovie_id(rs.getInt("MOVIE_ID"));
+					movie.setMovie_id(rs.getLong("MOVIE_ID"));
 					movie.setMv_title(rs.getString("TITLE"));
 					movie.setDirector(rs.getString("DIRECTOR"));
 					movie.setActor(rs.getString("ACTOR"));

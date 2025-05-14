@@ -1,23 +1,24 @@
-package kr.Auditorium.vo;
+package kr.auditorium.vo;
 
 
 public class AuditoriumVO {
-    private int auditoriumID;
-    private int theaterID;
-    private String name;
-    private String Type;
-    // getter, setter
-	public int getAuditoriumID() {
-		return auditoriumID;
+	
+	private Long auditoriumId;
+	private Long theaterId;
+	private String name;
+	private String type;
+	
+	public Long getAuditoriumId() {
+		return auditoriumId;
 	}
-	public void setAuditoriumID(int auditoriumID) {
-		this.auditoriumID = auditoriumID;
+	public void setAuditoriumId(Long auditoriumId) {
+		this.auditoriumId = auditoriumId;
 	}
-	public int getTheaterID() {
-		return theaterID;
+	public Long getTheaterId() {
+		return theaterId;
 	}
-	public void setTheaterID(int theaterID) {
-		this.theaterID = theaterID;
+	public void setTheaterId(Long theaterId) {
+		this.theaterId = theaterId;
 	}
 	public String getName() {
 		return name;
@@ -26,11 +27,11 @@ public class AuditoriumVO {
 		this.name = name;
 	}
 	public String getType() {
-		return Type;
+		return type;
 	}
 	public void setType(String type) {
-		Type = type;
+		this.type = type;
 	}
-	
-    
+
+
 }

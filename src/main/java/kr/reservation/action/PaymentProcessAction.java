@@ -5,8 +5,8 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.Auditorium.dao.AuditoriumDAO;
-import kr.Auditorium.vo.AuditoriumVO;
+import kr.auditorium.dao.AuditoriumDAO;
+import kr.auditorium.vo.AuditoriumVO;
 import kr.controller.Action;
 import kr.coupon.dao.CouponDAO;
 import kr.member.dao.MemberDAO;
@@ -39,7 +39,7 @@ public class PaymentProcessAction implements Action {
 		try {
 		ReservationVO reservation = reservationDAO.getReservationDetail(reservationID);
 		ScheduleVO schedule = scheduleDAO.getSchedule(reservation.getScheduleID());
-		AuditoriumVO auditorium = auditoriumDAO.getAuditorium(schedule.getAuditoriumID());
+		AuditoriumVO auditorium = auditoriumDAO.getAuditorium(schedule.getAuditoriumId());
 		PriceVO pricePolicy = priceDAO.getPricePolicy();
 		MemberVO member = memberDAO.getMember(memberId);
 

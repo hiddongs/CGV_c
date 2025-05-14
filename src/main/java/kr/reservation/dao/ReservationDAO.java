@@ -17,20 +17,15 @@ public class ReservationDAO {
 	}
 	
 	// 예매 등록
-<<<<<<< HEAD
-	public void insertReservation(ReservationVO vo) throws Exception {
-=======
 
 	public int insertReservation(ReservationVO reservation) throws Exception {
->>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 	    Connection conn = null;
 	    PreparedStatement pstmt = null;
 	    String sql = null;
 	    int result = 0;
 
 	    try {
-<<<<<<< HEAD
-	    	String sql ="""
+	    	sql ="""
 	    			INSERT INTO reservation (
 	    			reservation_id, member_id, schedule_id, seat_id,
 	    			payment_status, payment_date, viewers, screening_date,
@@ -45,8 +40,6 @@ public class ReservationDAO {
 	    			(SELECT theater_id FROM schedule WHERE schedule_id = ?)
 	    			)
 	    			"""; 
-=======
->>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 	        conn = DBUtil.getConnection();
 	        sql = """
 	            INSERT INTO reservation (
@@ -258,12 +251,7 @@ public class ReservationDAO {
 	    return reservation;
 	}
 
-<<<<<<< HEAD
-	
-=======
-
 	// 예매 상세 조회
->>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 	// 해당 상영 시간의 좌석 확인 (중복 방지용)
 	// 예매 가능 여부 확인 (좌석 중복 체크)
 
