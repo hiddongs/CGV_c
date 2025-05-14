@@ -1,4 +1,4 @@
-package kr.Auditorium.dao;
+package kr.auditorium.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,17 +6,56 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.Auditorium.vo.AuditoriumVO;
+import kr.auditorium.vo.AuditoriumVO;
 import kr.util.DBUtil;
 
 public class AuditoriumDAO {
 
-	 private static AuditoriumDAO instance = new AuditoriumDAO();
-	    public static AuditoriumDAO getInstance() {
-	        return instance;
-	   }
-	    
-	    public AuditoriumVO getAuditorium(int auditoriumID) throws Exception {
+private AuditoriumDAO() {}
+	
+	private static AuditoriumDAO instance = null;
+	
+	public static AuditoriumDAO getInstance() {
+		if(instance == null) instance = new AuditoriumDAO();
+		return instance;
+	}
+	
+	public List<AuditoriumVO> getAuditoriumList(Long theaterId) {
+		
+		Connection conn = null;
+		String sql = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<AuditoriumVO> result = new ArrayList<>();
+		
+		try {
+			conn = DBUtil.getConnection();
+			sql = "SELECT * FROM AUDITORIUM WHERE THEATER_ID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, theaterId);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					AuditoriumVO vo = new AuditoriumVO();
+					vo.setAuditoriumId(rs.getLong("AUDITORIUM_ID"));
+		            vo.setTheaterId(rs.getLong("THEATER_ID"));
+		            vo.setName(rs.getString("NAME"));
+		            vo.setType(rs.getString("TYPE"));
+
+		            result.add(vo);
+					
+				}while(rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+		
+		return result;
+	}
+	    public AuditoriumVO getAuditorium(Long auditoriumId) throws Exception {
 	        AuditoriumVO vo = null;
 	        Connection conn = null;
 	        PreparedStatement pstmt = null;
@@ -27,13 +66,13 @@ public class AuditoriumDAO {
 	        try {
 	            conn = DBUtil.getConnection();
 	            pstmt = conn.prepareStatement(sql); // 여기에서 SQL이 null이면 안 됨
-	            pstmt.setInt(1, auditoriumID);
+	            pstmt.setLong(1, auditoriumId);
 	            rs = pstmt.executeQuery();
 
 	            if (rs.next()) {
 	                vo = new AuditoriumVO();
-	                vo.setAuditoriumID(rs.getInt("auditorium_id"));
-	                vo.setTheaterID(rs.getInt("theater_id"));
+	                vo.setAuditoriumId(rs.getLong("auditorium_id"));
+	                vo.setTheaterId(rs.getLong("theater_id"));
 	                vo.setName(rs.getString("name"));
 	                vo.setType(rs.getString("type"));
 	            }
@@ -60,8 +99,8 @@ public class AuditoriumDAO {
 
 	            while (rs.next()) {
 	                AuditoriumVO vo = new AuditoriumVO();
-	                vo.setAuditoriumID(rs.getInt("auditorium_id"));
-	                vo.setTheaterID(rs.getInt("theater_id"));
+	                vo.setAuditoriumId(rs.getLong("auditorium_id"));
+	                vo.setTheaterId(rs.getLong("theater_id"));
 	                vo.setName(rs.getString("name"));
 	                vo.setType(rs.getString("type"));
 	                list.add(vo);

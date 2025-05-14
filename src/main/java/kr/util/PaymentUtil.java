@@ -3,7 +3,7 @@ package kr.util;
 import java.time.LocalTime;
 import java.util.Calendar;
 
-import kr.Auditorium.vo.AuditoriumVO;
+import kr.auditorium.vo.AuditoriumVO;
 import kr.member.vo.MemberVO;
 import kr.price.vo.PriceVO;
 import kr.schedule.vo.ScheduleVO;

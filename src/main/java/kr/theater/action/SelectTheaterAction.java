@@ -8,13 +8,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import kr.Auditorium.dao.AuditoriumDAO;
-import kr.Auditorium.vo.AuditoriumVO;
+import kr.auditorium.dao.AuditoriumDAO;
+import kr.auditorium.vo.AuditoriumVO;
 import kr.controller.Action;
 import kr.member.vo.MemberVO;
 import kr.movie.dao.MovieTypeDAO;
 import kr.movie.vo.MovieTypeVO;
-import kr.theater.dao.TheaterDAO;
 
 public class SelectTheaterAction implements Action {
     @Override

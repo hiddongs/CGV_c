@@ -5,10 +5,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-
 import kr.movie.vo.MovieVO;
 import kr.schedule.vo.ScheduleDetailVO;
 import kr.schedule.vo.ScheduleVO;
@@ -380,18 +380,6 @@ public class ScheduleDAO {
 		        
 		        return slotList;
 		    }
-=======
-import java.sql.*;
-import java.util.*;
-import kr.schedule.vo.ScheduleVO;
-import kr.util.DBUtil;
-
-public class ScheduleDAO {
-    private static ScheduleDAO instance = new ScheduleDAO();
-
-    public static ScheduleDAO getInstance() {
-        return instance;
-    }
 
     // 영화 + 극장으로 전체 스케줄 조회
     public List<ScheduleVO> getSchedules(int movieID, int theaterID) {
@@ -443,12 +431,12 @@ public class ScheduleDAO {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 ScheduleVO vo = new ScheduleVO();
-                vo.setScheduleID(rs.getInt("schedule_id"));
-                vo.setTheaterID(rs.getInt("theater_id"));
-                vo.setMovieID(rs.getInt("movie_id"));
+                vo.setScheduleId(rs.getLong("schedule_id"));
+                vo.setTheaterId(rs.getLong("theater_id"));
+                vo.setMovieId(rs.getLong("movie_id"));
                 vo.setScreeningDate(rs.getDate("screening_date"));
                 vo.setAvailable(rs.getInt("is_available") == 1);
-                vo.setAuditoriumID(rs.getInt("auditorium_id"));
+                vo.setAuditoriumId(rs.getLong("auditorium_id"));
                 list.add(vo);
             }
 
@@ -461,14 +449,14 @@ public class ScheduleDAO {
 
 
     // 스케줄 매핑 함수
-    private ScheduleVO mapSchedule(ResultSet rs) throws SQLException {
+    private ScheduleVO mapSchedule(ResultSet rs) throws SQLException{
         ScheduleVO vo = new ScheduleVO();
-        vo.setScheduleID(rs.getInt("schedule_id"));
-        vo.setTheaterID(rs.getInt("theater_id"));
-        vo.setMovieID(rs.getInt("movie_id"));
+        vo.setScheduleId(rs.getLong("schedule_id"));
+        vo.setTheaterId(rs.getLong("theater_id"));
+        vo.setMovieId(rs.getLong("movie_id"));
         vo.setScreeningDate(rs.getDate("screening_date")); 
         vo.setAvailable(rs.getInt("is_available") == 1);
-        vo.setAuditoriumID(rs.getInt("auditorium_id"));
+        vo.setAuditoriumId(rs.getLong("auditorium_id"));
         vo.setStartTime(rs.getTimestamp("start_time")); // ✅ 이게 누락되었을 가능성 큼
         return vo;
     }
@@ -496,13 +484,13 @@ public class ScheduleDAO {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 ScheduleVO vo = new ScheduleVO();
-                vo.setScheduleID(rs.getInt("schedule_id"));
-                vo.setTheaterID(rs.getInt("theater_id"));
-                vo.setMovieID(rs.getInt("movie_id"));
-                vo.setAuditoriumID(rs.getInt("auditorium_id"));
+                vo.setScheduleId(rs.getLong("schedule_id"));
+                vo.setTheaterId(rs.getLong("theater_id"));
+                vo.setMovieId(rs.getLong("movie_id"));
+                vo.setAuditoriumId(rs.getLong("auditorium_id"));
                 vo.setScreeningDate(rs.getDate("screening_date"));
                 vo.setAvailable(rs.getInt("is_available") == 1);
-                vo.setSlotID(rs.getInt("slot_id"));
+                vo.setSlotId(rs.getLong("slot_id"));
 
                 // 추가 필드
                 vo.setAuditoriumName(rs.getString("auditorium_name"));
@@ -588,12 +576,12 @@ public class ScheduleDAO {
 
             if (rs.next()) {
                 vo = new ScheduleVO();
-                vo.setScheduleID(rs.getInt("schedule_id"));
-                vo.setTheaterID(rs.getInt("theater_id"));
-                vo.setMovieID(rs.getInt("movie_id"));
-                vo.setAuditoriumID(rs.getInt("auditorium_id"));
+                vo.setScheduleId(rs.getLong("schedule_id"));
+                vo.setTheaterId(rs.getLong("theater_id"));
+                vo.setMovieId(rs.getLong("movie_id"));
+                vo.setAuditoriumId(rs.getLong("auditorium_id"));
                 vo.setScreeningDate(rs.getDate("screening_date"));
-                vo.setSlotID(rs.getInt("slot_id"));
+                vo.setSlotId(rs.getLong("slot_id"));
                 vo.setAvailable(rs.getInt("is_available") == 1);
 
                 // ✅ 오류 발생 지점
