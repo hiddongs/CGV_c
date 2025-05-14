@@ -415,6 +415,28 @@ public class MemberDAO {
 	        DBUtil.executeClose(null, pstmt, conn);
 	    }
 	}
+	public void changeStatus(Long memberId) {
+		
+		 Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    try {
+	        conn = DBUtil.getConnection();
+	        String sql = "UPDATE MEMBER SET GRADE = "
+	        		+ "	CASE"
+	        		+ "	WHEN GRADE = '정지' THEN '안정지'"
+	        		+ " ELSE '정지'"
+	        		+ " END"
+	        		+ " WHERE MEMBER_ID = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setLong(1, memberId);
+	        pstmt.executeUpdate();
+	    } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	        DBUtil.executeClose(null, pstmt, conn);
+	    }
+		
+	}
 
 }
 

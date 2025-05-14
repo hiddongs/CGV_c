@@ -4,45 +4,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 상영관 생성</title>
+<title>관리자 공지사항 작성</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    var movieType = ${movieType}
-
-    $(function(){
-        makeOption(movieType)
-
-        $('#backbutton').on('click', function(){
-            window.history.back()
-        })
-    })
-
-    function makeOption(movieType){
-        
-        const selectBox = $('#type')
-        
-        for(let key in movieType){
-            if(movieType.hasOwnProperty(key) && key !== 'movieId'){
-                var optionKey = key.startsWith('_') ? key.slice(1) : key;
-                selectBox.append(
-                    $('<option>', {
-                        value: optionKey,
-                        text: optionKey
-                    })
-                )
-            }
-        }
-    }
+   
 </script>
 </head>
 <body>
     <jsp:include page="../../common/adminHeader.jsp" />
-    <form action="insertAuditorium.do" class="form-container" method="post">
-        <input type="hidden" id="theaterId" name="theaterId" value="${theaterId}">
-        <h3 class="form-title">관리자 상영관 생성 페이지</h3>
+    <form action="insertNotice.do" class="form-container" method="post">
+        <h3 class="form-title">관리자 공지사항 작성 페이지</h3>
         <div class="form-group">    
-            <label for="name" class="form-label">상영관 이름</label>
+            <label for="name" class="form-label">제목</label>
             <input type="text" class="form-input" id="name" name="name" >
         </div>
         <div class="form-group">
