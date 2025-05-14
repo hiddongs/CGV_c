@@ -9,7 +9,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     let detailScheduleList = ${scheduleList}
+    console.log("detail "+detailScheduleList)
     let preSelectedTheaterId = ${theaterId}
+    console.log("pre "+ preSelectedTheaterId)
     $(function(){
         displaySchedule(detailScheduleList)
     })
@@ -19,7 +21,8 @@
         body.empty()
 
         if(!list || list.length  === 0){
-            body.innerHTML = '<tr><td colspan = 7>표시할 스케쥴이 없습니다</td></tr>'
+            body.inner
+            body.append('<tr><td colspan = 8>표시할 스케줄이 없습니다</td></tr>')
             return
         }
         
@@ -31,6 +34,11 @@
                 cell.textContent = value || '-'
                 return cell
             }
+            const createStatus = (value) => {
+                const cell = document.createElement('td')
+                cell.textContent = value === true ? '유효' : '유효하지않음'
+                return cell
+            }
 
             row.appendChild(createCell(schedule.theaterName))
             row.appendChild(createCell(schedule.auditoriumName))
@@ -38,7 +46,7 @@
             row.appendChild(createCell(schedule.movieTitle))
             row.appendChild(createCell(schedule.startTime))
             row.appendChild(createCell(schedule.runtime))
-            row.appendChild(createCell(schedule.isAvailable))
+            row.appendChild(createStatus(schedule.available))
 
             const actionCell = document.createElement('td')
             const updateBtn = document.createElement('button')
@@ -56,12 +64,40 @@
             deleteBtn.dataset.scheduleId = schedule.scheduleId
             deleteBtn.onclick = deleteScheduleForm;
 
+            const statusBtn = document.createElement('button')
+            statusBtn.type = 'button'
+            statusBtn.className = 'btn btn-danger'
+            statusBtn.textContent = '유효성수정'
+            statusBtn.dataset.scheduleId = schedule.scheduleId
+            statusBtn.onclick = changeStatusSchedule
+
             actionCell.appendChild(updateBtn)
             actionCell.appendChild(document.createTextNode(' '))
             actionCell.appendChild(deleteBtn)
+            actionCell.appendChild(document.createTextNode(' '))
+            actionCell.appendChild(statusBtn)
 
             row.appendChild(actionCell)
             body.append(row)
+        })
+    }
+
+    function changeStatusSchedule(event){
+        const scheduleId = event.target.dataset.scheduleId
+
+        $.ajax({
+            type:'POST',
+            url:'${pageContext.request.contextPath}/admin/changeStatusSchedule.do',
+            data:{scheduleId : scheduleId, theaterId : preSelectedTheaterId},
+            dataType: 'JSON',
+            success: function(response){
+                detailScheduleList = response
+                displaySchedule(detailScheduleList)
+            },
+            error: function(xhr, status, error){
+                console.log('에러발생: '+ error)
+                alert('에러발생')
+            }
         })
     }
 
