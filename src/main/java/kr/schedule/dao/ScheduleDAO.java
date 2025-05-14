@@ -381,6 +381,7 @@ public class ScheduleDAO {
 		        return slotList;
 		    }
 
+		 
     // 영화 + 극장으로 전체 스케줄 조회
     public List<ScheduleVO> getSchedules(int movieID, int theaterID) {
         List<ScheduleVO> list = new ArrayList<>();
@@ -562,11 +563,16 @@ public class ScheduleDAO {
         ScheduleVO vo = null;
 
         String sql = """
-            SELECT s.*, sl.start_time, sl.end_time
-            FROM schedule s
-            JOIN slot sl ON s.slot_id = sl.slot_id
-            WHERE s.schedule_id = ?
-        """;
+        	    SELECT s.*, 
+                sl.start_time, sl.end_time,
+                m.title AS movie_title,
+                t.name AS theater_name
+         FROM schedule s
+         JOIN slot sl ON s.slot_id = sl.slot_id
+         JOIN movie m ON s.movie_id = m.movie_id
+         JOIN theater t ON s.theater_id = t.theater_id
+         WHERE s.schedule_id = ?
+     """;
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -583,7 +589,8 @@ public class ScheduleDAO {
                 vo.setScreeningDate(rs.getDate("screening_date"));
                 vo.setSlotId(rs.getLong("slot_id"));
                 vo.setAvailable(rs.getInt("is_available") == 1);
-
+                vo.setMovieTitle(rs.getString("movie_title"));
+                vo.setTheaterName(rs.getString("theater_name"));
                 // ✅ 오류 발생 지점
                 vo.setStartTime(rs.getTimestamp("start_time"));
                 vo.setEndTime(rs.getTimestamp("end_time"));
@@ -617,5 +624,6 @@ public class ScheduleDAO {
 			}
 			return result;
 		}
+		
 
 }

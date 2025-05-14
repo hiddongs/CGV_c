@@ -35,6 +35,8 @@ public class PaymentFormAction implements Action {
 
         int memberID = member.getMember_id();
         int reservationID = Integer.parseInt(req.getParameter("reservationID"));
+        int adultCount = Integer.parseInt(req.getParameter("adultCount"));
+        int childCount = Integer.parseInt(req.getParameter("childCount"));
 
         try {
             ReservationDAO reservationDAO = ReservationDAO.getInstance();
@@ -50,7 +52,7 @@ public class PaymentFormAction implements Action {
                 throw new IllegalArgumentException("[ERROR] 예매 정보를 찾을 수 없습니다.");
             }
 
-            // 스케줄 조회 (reservation에서 scheduleID를 꺼내기 전에 반드시 reservation이 null이 아님을 확인해야 함)
+            // 스케줄 조회
             ScheduleVO schedule = scheduleDAO.getSchedule(reservation.getScheduleID());
             if (schedule == null) {
                 throw new IllegalArgumentException("[ERROR] 스케줄 정보를 찾을 수 없습니다.");
@@ -69,16 +71,27 @@ public class PaymentFormAction implements Action {
             int viewers = reservation.getViewers();
             int calculatedPrice = PaymentUtil.calculateTotalPrice(fullMember, schedule, auditorium, price, viewers);
 
+            // 누락 필드 채우기
+            reservation.setAdultCount(adultCount);
+            reservation.setChildCount(childCount);
+            reservation.setMvTitle(schedule.getMovieTitle());
+            reservation.setName(schedule.getTheaterName());
+            reservation.setMovieType(auditorium.getType());
+            reservation.setPaymentDate(reservation.getPaymentDate());
+            reservation.setPaymentStatus(reservation.getPaymentStatus());
+            // reservation.setSeatName(...)은 DAO에서 set되어 있어야 함
 
-
-            // 보유 쿠폰 목록
+            // 쿠폰 목록
             List<CouponVO> couponList = couponDAO.getListCouponByUser(memberID);
 
-            // JSP 전달
+            // JSP로 전달
+            req.setAttribute("adultCount", adultCount);
+            req.setAttribute("childCount", childCount);
             req.setAttribute("reservation", reservation);
             req.setAttribute("couponList", couponList);
             req.setAttribute("calculatedPrice", calculatedPrice);
             req.setAttribute("member", fullMember);
+            req.setAttribute("paymentMethod", req.getParameter("paymentMethod"));
 
         } catch (Exception e) {
             e.printStackTrace();

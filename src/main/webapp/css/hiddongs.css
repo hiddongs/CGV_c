@@ -600,4 +600,196 @@ input[type="date"]:focus {
     color: #555;
 }
 
+/* ====== 상영 시간 선택 전용 스타일 추가 ====== */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  background-color: #2e2e2e;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
 
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+label {
+  color: #ccc;
+}
+
+.time-box {
+  background-color: #3a3a3a;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  transition: background 0.3s;
+}
+
+.time-box:hover {
+  background-color: #505050;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+input[type="date"] {
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #666;
+  background-color: #444;
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+input[type="date"]:focus {
+  border-color: #e50914;
+  outline: none;
+}
+/* ====== 버튼 & 드롭다운 통일 스타일 ====== */
+.btn,
+button,
+input[type="submit"] {
+  background: linear-gradient(to right, #e50914, #a1080f);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+  width: 100%;
+}
+
+.btn:hover,
+button:hover,
+input[type="submit"]:hover {
+  background-color: #c20710;
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(255, 0, 0, 0.5);
+}
+
+.btn:active,
+button:active,
+input[type="submit"]:active {
+  transform: scale(0.95);
+}
+
+/* === 드롭다운 통일 스타일 === */
+select,
+select.form-select,
+select#title,
+select#theater,
+select[name="region"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #999;
+  background-color: #444;
+  color: white;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus {
+  border-color: #e50914;
+  outline: none;
+  box-shadow: 0 0 4px rgba(229, 9, 20, 0.3);
+}
+
+/* ====== 좌석 선택용 스타일 추가 ====== */
+.screen {
+  background-color: #fff;
+  height: 40px;
+  margin: 20px auto;
+  width: 100%;
+  transform: rotateX(-45deg);
+  box-shadow: 0 4px 10px rgba(255,255,255,0.5);
+  border-radius: 8px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.seat {
+  width: 32px;
+  height: 32px;
+  background-color: #aaa;
+  margin: 5px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 32px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.seat.selected {
+  background-color: #e50914;
+  color: #fff;
+}
+
+.seat.reserved {
+  background-color: #444;
+  color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.countBtn {
+  margin: 3px;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 40px;
+  border: none;
+  border-radius: 6px;
+  background-color: #444;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.countBtn.selected {
+  background-color: #e50914;
+}
+
+.inline-btns {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.countBtn {
+  margin: 3px;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 40px;
+  border: none;
+  border-radius: 6px;
+  background-color: #444 !important; /* 기본 회색 */
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.countBtn:hover {
+  background-color: #666 !important; /* 호버시 약간 밝은 회색 */
+}
+
+.countBtn.selected {
+  background-color: #e50914 !important; /* 선택된 버튼은 빨간색 */
+  color: #fff !important;
+}

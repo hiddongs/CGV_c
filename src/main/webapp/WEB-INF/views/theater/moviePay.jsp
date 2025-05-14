@@ -4,6 +4,94 @@
 <head>
   <meta charset="UTF-8">
   <title>통합 결제 페이지</title>
+  <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/hiddongs.css">
+	<style>
+	<style>
+body {
+  background-color: #1c1c1c;
+  color: #fff;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 40px;
+}
+
+h2 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #2e2e2e;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  color: #ddd;
+  font-weight: bold;
+}
+
+select,
+input[type="number"] {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #777;
+  background-color: #444;
+  color: #fff;
+  font-size: 15px;
+  margin-top: 6px;
+  transition: border-color 0.3s;
+}
+
+select:focus,
+input[type="number"]:focus {
+  border-color: #e50914;
+  outline: none;
+  box-shadow: 0 0 5px rgba(229, 9, 20, 0.4);
+}
+
+input[type="submit"] {
+  background: linear-gradient(to right, #e50914, #a1080f);
+  color: white;
+  border: none;
+  padding: 14px 0;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 30px;
+  width: 100%;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+input[type="submit"]:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(255, 0, 0, 0.5);
+}
+
+input[type="submit"]:active {
+  transform: scale(0.95);
+}
+
+#displayFinalPrice {
+  color: #ffd700;
+  font-size: 18px;
+  font-weight: bold;
+}
+</style>
+	</style>
   <script>
     function updateFinalPrice() {
       const basePrice = parseInt(document.getElementById("basePrice").value);
@@ -36,7 +124,8 @@
 
   <p>기본 금액: <strong>${calculatedPrice}원</strong></p>
   <p>관람 인원: <strong>${reservation.viewers}명</strong></p>
-
+  <p>어른 : <strong>${reservation.adultCount}명</strong></p>
+  <p>어린이 : <strong>${reservation.childCount}명</strong></p>
   <label>쿠폰 선택:
     <select id="couponSelect" name="cpPossessId" onchange="updateFinalPrice()">
       <option value="0" data-discount="0">쿠폰 사용 안 함</option>

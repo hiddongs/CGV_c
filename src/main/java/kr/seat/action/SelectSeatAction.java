@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpSession;
 import kr.controller.Action;
 import kr.member.vo.MemberVO;
 import kr.reservation.dao.ReservationDAO;
+import kr.schedule.dao.ScheduleDAO;
+import kr.schedule.vo.ScheduleVO;
 import kr.seat.dao.SeatDAO;
 import kr.seat.vo.SeatVO;
 
@@ -34,7 +36,12 @@ public class SelectSeatAction implements Action {
             req.setAttribute("theaterID", theaterID);
             req.setAttribute("scheduleID", scheduleID);
             req.setAttribute("seatList", seatList);
-            
+            ScheduleVO schedule = ScheduleDAO.getInstance().getSchedule(scheduleID);
+            req.setAttribute("movieTitle", schedule.getMovieTitle());
+            req.setAttribute("theaterName", schedule.getTheaterName());
+            req.setAttribute("screeningDate", schedule.getScreeningDate());
+            req.setAttribute("userName", member.getName());
+
             req.setAttribute("reservedSeatList", reservedList);
             return "/theater/selectSeat.jsp";
 
