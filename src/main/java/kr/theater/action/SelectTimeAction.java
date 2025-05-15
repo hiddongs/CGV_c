@@ -37,7 +37,8 @@ import kr.schedule.dao.ScheduleDAO;
 	
 	            ScheduleDAO dao = ScheduleDAO.getInstance();
 	            List<ScheduleVO> scheduleList = dao.getScheduleWithAuditorium(movieID, theaterID, screenDate);
-	
+	            req.setAttribute("member", member);
+
 	            req.setAttribute("mem_ID", memberID);
 	            req.setAttribute("movieID", movieID);
 	            req.setAttribute("theaterID", theaterID);

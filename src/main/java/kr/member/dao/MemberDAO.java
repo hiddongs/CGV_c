@@ -401,6 +401,7 @@ public class MemberDAO {
 		return null;
 	}
 	
+	// 포인트 사용
 	public void usePoint(int memberId, int usedPoint) throws Exception {
 	    Connection conn = null;
 	    PreparedStatement pstmt = null;
@@ -415,6 +416,21 @@ public class MemberDAO {
 	        DBUtil.executeClose(null, pstmt, conn);
 	    }
 	}
+	
+	// 포인트 적립
+	
+	public void addPoint(int memberId, int earnedPoint) throws Exception {
+	    Connection conn = DBUtil.getConnection();
+	    String sql = "UPDATE member SET point = point + ? WHERE member_id = ?";
+	    PreparedStatement pstmt = conn.prepareStatement(sql);
+	    pstmt.setInt(1, earnedPoint);
+	    pstmt.setInt(2, memberId);
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    conn.close();
+	}
+	
 
 }
 

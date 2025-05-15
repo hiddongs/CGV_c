@@ -202,6 +202,27 @@ public class CouponDAO {
 	        DBUtil.executeClose(null, pstmt, conn);
 	    }
 	}
+	public String getCouponNameByPossessId(int cpPossessId) throws Exception {
+	    String couponName = null;
+
+	    try (
+	        Connection conn = DBUtil.getConnection();
+	        PreparedStatement pstmt = conn.prepareStatement(
+	            "SELECT c.coupon_name " +
+	            "FROM cp_possess p JOIN coupon c ON p.coupon_id = c.coupon_id " +
+	            "WHERE p.cp_possess_id = ?")
+	    ) {
+	        pstmt.setInt(1, cpPossessId);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                couponName = rs.getString("coupon_name");
+	            }
+	        }
+	    }
+
+	    return couponName;
+	}
+
 
 	public void useCouponByPossessId(int cpPossessId) {
 	    try {

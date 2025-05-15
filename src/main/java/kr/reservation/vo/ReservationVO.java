@@ -1,6 +1,7 @@
 package kr.reservation.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 // 예약 VO 재 설정
 public class ReservationVO {
@@ -21,8 +22,39 @@ public class ReservationVO {
     private String mem_Name;
     private String auditoriumName;
     private int theaterID;
+    private int adultCount;
+    private int childCount;
     
-    private int priceID;
+    private int totalPrice;
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    
+    public int getAdultCount() {
+		return adultCount;
+	}
+	public void setAdultCount(int adultCount) {
+		this.adultCount = adultCount;
+	}
+	public int getChildCount() {
+		return childCount;
+	}
+	public void setChildCount(int childCount) {
+		this.childCount = childCount;
+	}
+
+	private int priceID;
+    
+    private List<String> seatNames;
+    public List<String> getSeatNames() { return seatNames; }
+    public void setSeatNames(List<String> seatNames) { this.seatNames = seatNames; }
+
     public int getPriceID() {
 		return priceID;
 	}

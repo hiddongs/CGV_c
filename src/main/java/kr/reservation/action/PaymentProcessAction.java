@@ -1,70 +1,77 @@
 package kr.reservation.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.auditorium.dao.AuditoriumDAO;
-import kr.auditorium.vo.AuditoriumVO;
 import kr.controller.Action;
 import kr.coupon.dao.CouponDAO;
 import kr.member.dao.MemberDAO;
 import kr.member.vo.MemberVO;
-import kr.price.dao.PriceDAO;
-import kr.price.vo.PriceVO;
+import kr.pointLog.dao.PointLogDAO;
 import kr.reservation.dao.ReservationDAO;
 import kr.reservation.vo.ReservationVO;
-import kr.schedule.dao.ScheduleDAO;
-import kr.schedule.vo.ScheduleVO;
-import kr.util.PaymentUtil;
 
 public class PaymentProcessAction implements Action {
 
-	private ReservationDAO reservationDAO = ReservationDAO.getInstance();
-    private ScheduleDAO scheduleDAO = ScheduleDAO.getInstance();
-    private AuditoriumDAO auditoriumDAO = AuditoriumDAO.getInstance();
-    private PriceDAO priceDAO = PriceDAO.getInstance();
-    private MemberDAO memberDAO = MemberDAO.getInstance();
-    private CouponDAO couponDAO = CouponDAO.getInstance();
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int reservationID = Integer.parseInt(req.getParameter("reservationID"));
-		int basePriceClient = Integer.parseInt(req.getParameter("basePrice"));
-		int cpPossessId = Integer.parseInt(req.getParameter("cpPossessId"));
-		int pointUsed = Integer.parseInt(req.getParameter("pointUsed"));
-		int finalPriceClient = Integer.parseInt(req.getParameter("finalPrice"));
-		int memberId = (int) req.getSession().getAttribute("member_id");
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		try {
-		ReservationVO reservation = reservationDAO.getReservationDetail(reservationID);
-		ScheduleVO schedule = scheduleDAO.getSchedule(reservation.getScheduleID());
-		AuditoriumVO auditorium = auditoriumDAO.getAuditorium(schedule.getAuditoriumId());
-		PriceVO pricePolicy = priceDAO.getPricePolicy();
-		MemberVO member = memberDAO.getMember(memberId);
+        ReservationDAO reservationDAO = ReservationDAO.getInstance();
+        MemberDAO memberDAO = MemberDAO.getInstance();
+        CouponDAO couponDAO = CouponDAO.getInstance();
+        PointLogDAO pointLogDAO = PointLogDAO.getInstance();
 
-		int viewers = reservation.getViewers();
-		int basePriceServer = PaymentUtil.calculateTotalPrice(member, schedule, auditorium, pricePolicy, viewers);
+        int reservationID = Integer.parseInt(req.getParameter("reservationID"));
+        int totalPrice = Integer.parseInt(req.getParameter("finalPrice"));
+        int pointUsed = Integer.parseInt(req.getParameter("pointUsed"));
+        int cpPossessId = Integer.parseInt(req.getParameter("cpPossessId"));
+        int memberId = ((MemberVO) req.getSession().getAttribute("member")).getMember_id();
 
-	
-		int couponDiscount = cpPossessId > 0 ? couponDAO.getDiscountAmountByPossessIdAndMemberId(cpPossessId, memberId) : 0;
-		int finalExpected = basePriceServer - couponDiscount - pointUsed;
-		if (finalExpected < 0) finalExpected = 0;
+        int earnedPoint = (int)(totalPrice * 0.05);
 
-		if (finalExpected != finalPriceClient) {
-		    throw new IllegalArgumentException("[ERROR] 결제 금액 위조 감지됨");
-		}
-
-		reservationDAO.updatePaymentInfo(reservationID, finalExpected, req.getParameter("paymentMethod"));
-		memberDAO.usePoint(memberId, pointUsed);
-		if (cpPossessId > 0) couponDAO.useCouponByPossessId(cpPossessId);
-		req.setAttribute("message", "결제가 완료되었습니다!");
+        // 1. 결제 상태 업데이트
+        try {
+			reservationDAO.updatePaymentInfo(reservationID, totalPrice);
 		
-		}
-		catch(Exception e) {
+
+        // 2. 포인트 사용
+        if (pointUsed > 0) {
+            memberDAO.usePoint(memberId, pointUsed);
+            pointLogDAO.insertLog(memberId, -pointUsed, "영화 결제 시 사용");
+        }
+
+        // 3. 포인트 적립
+        if (earnedPoint > 0) {
+            memberDAO.addPoint(memberId, earnedPoint);
+            pointLogDAO.insertLog(memberId, earnedPoint, "영화 결제 시 적립");
+        }
+
+        // 4. 쿠폰 사용 처리
+        String couponName = null;
+        if (cpPossessId > 0) {
+            couponDAO.useCouponByPossessId(cpPossessId);
+            couponName = couponDAO.getCouponNameByPossessId(cpPossessId);
+        }
+
+        // 5. 결제 후 전달할 정보
+        ReservationVO reservation = reservationDAO.getReservationDetail(reservationID);
+        MemberVO member = memberDAO.getMember(memberId);
+       
+        List<String> seatNames = reservationDAO.getSeatNamesByReservation(reservationID);
+        reservation.setSeatName(String.join(", ", seatNames));
+
+        req.setAttribute("reservation", reservation);
+        req.setAttribute("member", member);
+        req.setAttribute("usedCouponName", couponName);
+        req.setAttribute("pointUsed", pointUsed);
+        req.setAttribute("earnedPoint", earnedPoint);
+        } catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "/WEB-INF/views/reservation/paymentSuccess.jsp";
-	}
-    
+        return "reservation/paymentSuccess.jsp";
+    }
 }

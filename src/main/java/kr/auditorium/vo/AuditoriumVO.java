@@ -1,6 +1,4 @@
 package kr.auditorium.vo;
-
-
 public class AuditoriumVO {
 
 	
