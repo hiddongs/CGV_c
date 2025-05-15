@@ -101,7 +101,7 @@ public class ReservationDAO {
                 reservation.setPaymentStatus(rs.getString("payment_status"));
                 reservation.setPaymentDate(rs.getString("payment_date"));
                 reservation.setScreeningDate(rs.getDate("screening_date"));
-                reservation.setPMovie(rs.getInt("p_movie"));
+                reservation.setpMovie(rs.getInt("p_movie"));
                 reservation.setName(rs.getString("theater_name"));
                 reservation.setMvTitle(rs.getString("mv_title"));
                 reservation.setMovieType(rs.getString("movie_type"));
