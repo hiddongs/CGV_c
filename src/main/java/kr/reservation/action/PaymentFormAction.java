@@ -7,6 +7,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
+import kr.auditorium.dao.AuditoriumDAO;
+
 import kr.auditorium.vo.AuditoriumVO;
 import kr.controller.Action;
 import kr.coupon.dao.CouponDAO;
@@ -20,7 +23,7 @@ import kr.reservation.vo.ReservationVO;
 import kr.schedule.dao.ScheduleDAO;
 import kr.schedule.vo.ScheduleVO;
 import kr.util.PaymentUtil;
-import kr.auditorium.dao.AuditoriumDAO;
+
 
 public class PaymentFormAction implements Action {
 

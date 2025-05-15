@@ -1,5 +1,6 @@
 package kr.auditorium.vo;
 public class AuditoriumVO {
+
 	
 	private Long auditoriumId;
 	private Long theaterId;

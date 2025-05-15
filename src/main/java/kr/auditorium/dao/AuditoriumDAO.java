@@ -55,7 +55,7 @@ private AuditoriumDAO() {}
 		
 		return result;
 	}
-	    public AuditoriumVO getAuditorium(Long auditoriumId) throws Exception {
+	    public AuditoriumVO getAuditorium(Long auditoriumId){
 	        AuditoriumVO vo = null;
 	        Connection conn = null;
 	        PreparedStatement pstmt = null;
@@ -101,6 +101,7 @@ private AuditoriumDAO() {}
 	                AuditoriumVO vo = new AuditoriumVO();
 	                vo.setAuditoriumId(rs.getLong("auditorium_id"));
 	                vo.setTheaterId(rs.getLong("theater_id"));
+
 	                vo.setName(rs.getString("name"));
 	                vo.setType(rs.getString("type"));
 	                list.add(vo);
@@ -112,4 +113,77 @@ private AuditoriumDAO() {}
 
 	        return list;
 	    }
+
+		public int updateAuditorium(AuditoriumVO vo) {
+			
+			Connection conn = null;
+			String sql = null;
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			try {
+				conn = DBUtil.getConnection();
+				sql = "UPDATE AUDITORIUM SET NAME = ?, TYPE = ? WHERE AUDITORIUM_ID = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getType());
+				pstmt.setLong(3, vo.getAuditoriumId());
+				result = pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+			return result;
+			
+		}
+
+		public int insertAuditorium(AuditoriumVO vo) {
+			
+			Connection conn = null;
+			String sql = null;
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			try {
+				conn = DBUtil.getConnection();
+				sql = "INSERT INTO AUDITORIUM (AUDITORIUM_ID , THEATER_ID , NAME, TYPE) VALUES( "
+						+ "AUDITORIUM_SEQ.NEXTVAL, ?, ?, ?)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setLong(1, vo.getTheaterId());
+				pstmt.setString(2, vo.getName());
+				pstmt.setString(3, vo.getType());
+				result = pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+			return result;
+		}
+
+		public int deleteAuditorium(Long auditoriumId) {
+
+			Connection conn = null;
+			String sql = null;
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			try {
+				conn = DBUtil.getConnection();
+				sql = "DELETE AUDITORIUM WHERE AUDITORIUM_ID = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setLong(1, auditoriumId);
+				result = pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.executeClose(null, pstmt, conn);
+			}
+			return result;
+			
+		}
 }

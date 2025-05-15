@@ -85,6 +85,18 @@
 					<h3>전체극장스케쥴갱신</h3>
 				</a>
 			</div>
+			<div class="admin-menu-item">
+				<a href="${pageContext.request.contextPath}/admin/noticeManagement.do">
+					<div class="icon"><i class="fas fa-bell"></i></div>
+					<h3>공지사항관리</h3>
+				</a>
+			</div>
+			<div class="admin-menu-item">
+				<a href="${pageContext.request.contextPath}/admin/memberManagement.do">
+					<div class="icon"><i class="fas fa-user"></i></div>
+					<h3>회원관리</h3>
+				</a>
+			</div>
 		</div>
 	</div>
 </body>
