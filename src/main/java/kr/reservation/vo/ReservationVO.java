@@ -1,6 +1,7 @@
 package kr.reservation.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 // 예약 VO 재 설정
 public class ReservationVO {
@@ -19,153 +20,152 @@ public class ReservationVO {
     private String movieType;         // 상영관 유형 (IMAX, 4DX 등)
     private String seatName;
     private String mem_Name;
-    private String auditoriumName;
-    private int theaterID;
-    
-    private int priceID;
-    public int getPriceID() {
-		return priceID;
+    public int getReservationID() {
+		return reservationID;
 	}
-
-	public void setPriceID(int priceID) {
-		this.priceID = priceID;
+	public void setReservationID(int reservationID) {
+		this.reservationID = reservationID;
 	}
-
-	public int getTheaterID() {
-		return theaterID;
+	public int getMemberID() {
+		return memberID;
 	}
-
-	public void setTheaterID(int theaterID) {
-		this.theaterID = theaterID;
+	public void setMemberID(int memberID) {
+		this.memberID = memberID;
 	}
-
+	public int getScheduleID() {
+		return scheduleID;
+	}
+	public void setScheduleID(int scheduleID) {
+		this.scheduleID = scheduleID;
+	}
+	public int getSeatID() {
+		return seatID;
+	}
+	public void setSeatID(int seatID) {
+		this.seatID = seatID;
+	}
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+	public String getPaymentDate() {
+		return paymentDate;
+	}
+	public void setPaymentDate(String paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+	public int getViewers() {
+		return viewers;
+	}
+	public void setViewers(int viewers) {
+		this.viewers = viewers;
+	}
+	public Date getScreeningDate() {
+		return screeningDate;
+	}
+	public void setScreeningDate(Date screeningDate) {
+		this.screeningDate = screeningDate;
+	}
 	public long getpMovie() {
 		return pMovie;
 	}
-
 	public void setpMovie(long pMovie) {
 		this.pMovie = pMovie;
 	}
-
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getMvTitle() {
+		return mvTitle;
+	}
+	public void setMvTitle(String mvTitle) {
+		this.mvTitle = mvTitle;
+	}
+	public String getMovieType() {
+		return movieType;
+	}
+	public void setMovieType(String movieType) {
+		this.movieType = movieType;
+	}
 	public String getSeatName() {
 		return seatName;
 	}
-
 	public void setSeatName(String seatName) {
 		this.seatName = seatName;
 	}
-
 	public String getMem_Name() {
 		return mem_Name;
 	}
-
 	public void setMem_Name(String mem_Name) {
 		this.mem_Name = mem_Name;
 	}
-
 	public String getAuditoriumName() {
 		return auditoriumName;
 	}
-
 	public void setAuditoriumName(String auditoriumName) {
 		this.auditoriumName = auditoriumName;
 	}
+	public int getTheaterID() {
+		return theaterID;
+	}
+	public void setTheaterID(int theaterID) {
+		this.theaterID = theaterID;
+	}
+	public int getAdultCount() {
+		return adultCount;
+	}
+	public void setAdultCount(int adultCount) {
+		this.adultCount = adultCount;
+	}
+	public int getChildCount() {
+		return childCount;
+	}
+	public void setChildCount(int childCount) {
+		this.childCount = childCount;
+	}
+	public String getTheaterName() {
+		return theaterName;
+	}
+	public void setTheaterName(String theaterName) {
+		this.theaterName = theaterName;
+	}
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public int getPriceID() {
+		return priceID;
+	}
+	public void setPriceID(int priceID) {
+		this.priceID = priceID;
+	}
+	private String auditoriumName;
+    private int theaterID;
+    private int adultCount;
+    private int childCount;
+    private String theaterName;
+  
 
-	// Getter & Setter
-    public int getReservationID() {
-        return reservationID;
-    }
+	private int totalPrice;
 
-    public void setReservationID(int reservationID) {
-        this.reservationID = reservationID;
-    }
+   
+    
+  
 
-    public int getMemberID() {
-        return memberID;
-    }
+	private int priceID;
+    
+    private List<String> seatNames;
+    public List<String> getSeatNames() { return seatNames; }
+    public void setSeatNames(List<String> seatNames) { this.seatNames = seatNames; }
 
-    public void setMemberID(int memberID) {
-        this.memberID = memberID;
-    }
+  
 
-    public int getScheduleID() {
-        return scheduleID;
-    }
-
-    public void setScheduleID(int scheduleID) {
-        this.scheduleID = scheduleID;
-    }
-
-    public int getSeatID() {
-        return seatID;
-    }
-
-    public void setSeatID(int seatID) {
-        this.seatID = seatID;
-    }
-
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public String getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(String paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public int getViewers() {
-        return viewers;
-    }
-
-    public void setViewers(int viewers) {
-        this.viewers = viewers;
-    }
-
-    public Date getScreeningDate() {
-        return screeningDate;
-    }
-
-    public void setScreeningDate(Date screeningDate) {
-        this.screeningDate = screeningDate;
-    }
-
-    public long getPMovie() {
-        return pMovie;
-    }
-
-    public void setPMovie(long pMovie) {
-        this.pMovie = pMovie;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMvTitle() {
-        return mvTitle;
-    }
-
-    public void setMvTitle(String mvTitle) {
-        this.mvTitle = mvTitle;
-    }
-
-    public String getMovieType() {
-        return movieType;
-    }
-
-    public void setMovieType(String movieType) {
-        this.movieType = movieType;
-    }
-
+	
 }

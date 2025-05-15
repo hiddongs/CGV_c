@@ -25,7 +25,7 @@ public class UpdateMovieAction implements Action{
 		String posterUrl = req.getParameter("poster_url");
 		
 		MovieVO vo = new MovieVO();
-		vo.setMovie_id(Integer.parseInt(req.getParameter("movie_id")));
+		vo.setMovie_id(Long.parseLong(req.getParameter("movie_id")));
 		vo.setMv_title(req.getParameter("title"));
 		
 		if(posterUrl.isEmpty()){

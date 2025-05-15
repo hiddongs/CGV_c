@@ -6,10 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>극장 선택</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hiddongs.css">
-<script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+
 </head>
 <body>
     <!--  <div class="center-box">-->

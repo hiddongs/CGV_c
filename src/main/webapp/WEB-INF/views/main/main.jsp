@@ -46,7 +46,7 @@
 			               			<h3 class="movie-title">${movie.mv_title}</h3>
 			               			<div class="movie-meta">
 			               				<span class="rating">예매율 @@%</span>
-			               				<a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
+			               				<a href="${pageContext.request.contextPath}/movie/reservationMVform.do" class="btn btn-primary btn-booking">예매</a>
 			               			</div>
 			               		</div>
 			               	</div>
@@ -78,7 +78,7 @@
 			               			<h3 class="movie-title">${movie.mv_title}</h3>
 			               			<div class="movie-meta">
 			               				<span class="rating">장르 : @@</span>
-			               				<a href="${pageContext.request.contextPath}/booking/bookingForm.do" class="btn btn-primary btn-booking">예매</a>
+			               				<a href="${pageContext.request.contextPath}/movie/reservationMVform.do" class="btn btn-primary btn-booking">예매</a>
 			               			</div>
 			               		</div>
 			               	</div>

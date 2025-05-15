@@ -8,8 +8,7 @@
 <title>예매 완료</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/hiddongs.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css">
+
 </head>
 <body>
 	<div class="center-box">
@@ -31,7 +30,7 @@
 						</p>
 						<p>
 							<strong class="r-strong">🎬 영화 제목:</strong>
-							${reservation.movieType}
+							${reservation.mvTitle}
 						</p>
 						<p>
 							<strong class="r-strong">🏛 상영관:</strong>
@@ -60,9 +59,12 @@
 			<br>
 			<form action="payment.do" method="get">
 				<input type="hidden" name="reservationID"
-					value="${reservation.reservationID}"> <input type="submit"
-					value="결제화면으로 이동">
+					value="${reservation.reservationID}"> <input type="hidden"
+					name="adultCount" value="${adultCount}"> <input
+					type="hidden" name="childCount" value="${childCount}"> <input
+					type="submit" value="결제화면으로 이동">
 			</form>
+
 		</div>
 	</div>
 </body>

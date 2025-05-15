@@ -10,277 +10,292 @@ import kr.reservation.vo.ReservationVO;
 import kr.util.DBUtil;
 
 public class ReservationDAO {
-	private static ReservationDAO instance = new ReservationDAO();
+    private static ReservationDAO instance = new ReservationDAO();
 
-	public static ReservationDAO getInstance() {
-		return instance;
-	}
+    public static ReservationDAO getInstance() {
+        return instance;
+    }
 
-	// 예매 등록
+    // 예약 생성
+    public int insertReservation(int memberID, int scheduleID, int viewers) throws Exception {
+        int reservationID = 0;
+        String sql = """
+            INSERT INTO reservation (
+                reservation_id, member_id, schedule_id, viewers,
+                payment_status, payment_date, screening_date, p_movie,
+                name, mv_title, movie_type, theater_id, price_id
+            ) VALUES (
+                reservation_seq.NEXTVAL, ?, ?, ?, 'N', SYSDATE,
+                (SELECT screening_date FROM schedule WHERE schedule_id = ?),
+                (SELECT movie_id FROM schedule WHERE schedule_id = ?),
+                (SELECT name FROM member WHERE member_id = ?),
+                (SELECT title FROM movie WHERE movie_id = (SELECT movie_id FROM schedule WHERE schedule_id = ?)),
+                (SELECT type FROM auditorium WHERE auditorium_id = (SELECT auditorium_id FROM schedule WHERE schedule_id = ?)),
+                (SELECT theater_id FROM schedule WHERE schedule_id = ?),
+                1
+            )
+        """;
 
-	// public void insertReservation(ReservationVO vo) throws Exception {
-	public int insertReservation(ReservationVO reservation) throws Exception {
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql, new String[]{"reservation_id"})) {
+            int i = 0;
+            pstmt.setInt(++i, memberID);
+            pstmt.setInt(++i, scheduleID);
+            pstmt.setInt(++i, viewers);
+            pstmt.setInt(++i, scheduleID);
+            pstmt.setInt(++i, scheduleID);
+            pstmt.setInt(++i, memberID);
+            pstmt.setInt(++i, scheduleID);
+            pstmt.setInt(++i, scheduleID);
+            pstmt.setInt(++i, scheduleID);
 
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		int result = 0;
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                reservationID = rs.getInt(1);
+            }
+        }
 
-		try {
+        return reservationID;
+    }
 
-			conn = DBUtil.getConnection();
-			sql = """
-					    INSERT INTO reservation (
-					        reservation_id, member_id, schedule_id, seat_id,
-					        payment_status, payment_date, viewers, screening_date,
-					        p_movie, name, mv_title, movie_type, theater_id, price_id
-					    ) VALUES (
-					        reservation_seq.NEXTVAL, ?, ?, ?, 'N', SYSDATE, ?,
-					        (SELECT screening_date FROM schedule WHERE schedule_id = ?),
-					        (SELECT movie_id FROM schedule WHERE schedule_id = ?),
-					        (SELECT name FROM member WHERE member_id = ?),
-					        (SELECT title FROM movie WHERE movie_id = (SELECT movie_id FROM schedule WHERE schedule_id = ?)),
-					        (SELECT type FROM auditorium WHERE auditorium_id = (SELECT auditorium_id FROM schedule WHERE schedule_id = ?)),
-					        (SELECT theater_id FROM schedule WHERE schedule_id = ?),
-					        1 -- PRICE_ID는 현재 시스템에서 고정값
-					    )
-					""";
+    // 예약 상세 조회
+    public ReservationVO getReservationDetail(int reservationID) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ReservationVO reservation = null;
 
-			pstmt = conn.prepareStatement(sql);
-			int idx = 0;
-			pstmt.setInt(++idx, reservation.getMemberID());
-			pstmt.setInt(++idx, reservation.getScheduleID());
-			pstmt.setInt(++idx, reservation.getSeatID());
-			pstmt.setInt(++idx, reservation.getViewers());
-			pstmt.setInt(++idx, reservation.getScheduleID());
-			pstmt.setInt(++idx, reservation.getScheduleID());
-			pstmt.setInt(++idx, reservation.getMemberID());
-			pstmt.setInt(++idx, reservation.getScheduleID());
-			pstmt.setInt(++idx, reservation.getScheduleID());
-			pstmt.setInt(++idx, reservation.getScheduleID());
+        String sql = """
+            SELECT
+                r.reservation_id,
+                r.schedule_id,
+                r.viewers,
+                r.payment_status,
+                r.payment_date,
+                r.screening_date,
+                r.p_movie,
+                r.name AS theater_name,
+                r.mv_title,
+                r.movie_type,
+                m.name AS member_name,
+                s.theater_id,
+                s.auditorium_id
+            FROM reservation r
+            JOIN member m ON r.member_id = m.member_id
+            JOIN schedule s ON r.schedule_id = s.schedule_id
+            WHERE r.reservation_id = ?
+        """;
 
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("[ERROR] 예약 등록 중 오류 발생");
-		} finally {
-			DBUtil.executeClose(null, pstmt, conn);
-		}
+        try {
+            conn = DBUtil.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, reservationID);
+            rs = pstmt.executeQuery();
 
-		return result;
-	}
+            if (rs.next()) {
+                reservation = new ReservationVO();
+                reservation.setReservationID(rs.getInt("reservation_id"));
+                reservation.setScheduleID(rs.getInt("schedule_id"));
+                reservation.setViewers(rs.getInt("viewers"));
+                reservation.setPaymentStatus(rs.getString("payment_status"));
+                reservation.setPaymentDate(rs.getString("payment_date"));
+                reservation.setScreeningDate(rs.getDate("screening_date"));
+                reservation.setPMovie(rs.getInt("p_movie"));
+                reservation.setName(rs.getString("theater_name"));
+                reservation.setMvTitle(rs.getString("mv_title"));
+                reservation.setMovieType(rs.getString("movie_type"));
+                reservation.setMem_Name(rs.getString("member_name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.executeClose(rs, pstmt, conn);
+        }
 
-	/**
-	 * public void reservationMV(ReservationVO reservation) throws Exception{
-	 * Connection conn = null; PreparedStatement pstmt = null; String sql = null;
-	 * int cnt = 0;
-	 * 
-	 * try { conn = DBUtil.getConnection(); sql = "INSERT INTO
-	 * reservation(reservation_id,mem_id,schedule_id," +
-	 * "seat_number,payment_status, payment_date) VALUES (" +
-	 * "reservation.seq.nextval,?,?,?,?,?)";
-	 * 
-	 * pstmt = conn.prepareStatement(sql);
-	 * 
-	 * pstmt.setLong(++cnt, reservation.getReservationID()); pstmt.setInt(++cnt,
-	 * reservation.getMemberID()); pstmt.setInt(++cnt, reservation.getScheduleID());
-	 * pstmt.setInt(++cnt,reservation.getSeatID());
-	 * pstmt.setString(++cnt,reservation.getPaymentDate()); pstmt.setDate(++cnt,
-	 * reservation.getPaymentDate());
-	 * 
-	 * pstmt.executeUpdate();
-	 * 
-	 * 
-	 * } catch (Exception e) { // TODO: handle exception
-	 * 
-	 * throw new Exception(e); } finally { DBUtil.executeClose(null, pstmt, conn); }
-	 * 
-	 * }
-	 **/
+        return reservation;
+    }
 
-	// 나의 예매내역 가져오기
-	// ReservationVO -> member_id
-	public List<ReservationVO> getListReservationByUser(int member_id) throws Exception {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<ReservationVO> list = new ArrayList<>();
-		String sql = null;
+    // 좌석 이름으로 seat_id 구하기
+    public int getSeatIDByName(int scheduleID, String seatName) throws Exception {
+        int seatID = -1;
+        String sql = """
+            SELECT s.seat_id
+            FROM seat s
+            JOIN schedule sch ON s.theater_id = sch.theater_id
+            WHERE sch.schedule_id = ?
+              AND s.seat_name = ?
+        """;
 
-		try {
-			// 커넥션 풀로부터 커넥션 할당
-			conn = DBUtil.getConnection();
-			// sql
-			sql = """
-					select
-					   mv.title AS mvTitle,
-					    a.name AS name,
-					    s.screening_date AS screeningDate,
-					    r.viewers,
-					    p.p_movie AS pMovie
-					FROM reservation r
-					JOIN schedule s ON r.schedule_id = s.schedule_id
-					JOIN movie mv ON s.movie_id = mv.movie_id
-					JOIN auditorium a ON s.auditorium_id = a.auditorium_id
-					JOIN price p ON r.price_id = p.price_id
-					WHERE r.member_id = ?
-					ORDER BY s.screening_date DESC
-				""";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, scheduleID);
+            pstmt.setString(2, seatName);
+            ResultSet rs = pstmt.executeQuery();
 
-			// 데이터 할당
-			pstmt = conn.prepareStatement(sql);
-			// 데이터 바인딩
-			pstmt.setInt(1, member_id);
-			// SQL문 실행
-			rs = pstmt.executeQuery();
-			// 반복
-			while (rs.next()) {
-				ReservationVO vo = new ReservationVO();
-				vo.setMvTitle(rs.getString("mvTitle")); // 영화제목
-				vo.setName(rs.getString("name")); // 극장이름
-				vo.setScreeningDate(rs.getDate("screeningDate")); // 관람일시
-				vo.setViewers(rs.getInt("viewers")); // 관람인원
-				vo.setPMovie(rs.getInt("pMovie")); // 영화가격
+            if (rs.next()) {
+                seatID = rs.getInt("seat_id");
+            }
+        }
 
-				list.add(vo); // 리스트에 추가
-			}
-		} catch (Exception e) {
-			throw new Exception(e);
-		} finally {
-			DBUtil.executeClose(rs, pstmt, conn);
-		}
+        return seatID;
+    }
 
-		return list;
+    // 예약 좌석 저장
+    public void insertReservationSeat(int reservationID, int seatID, int scheduleID) throws Exception {
+        if (isSeatAlreadyReserved(scheduleID, seatID)) {
+            throw new IllegalStateException("이미 예약된 좌석입니다.");
+        }
 
-	}
+        String sql = "INSERT INTO reservation_seat(id, reservation_id, seat_id) VALUES (reservation_seat_seq.NEXTVAL, ?, ?)";
 
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, reservationID);
+            pstmt.setInt(2, seatID);
+            pstmt.executeUpdate();
+        }
+    }
 
-	// 예매 상세 조회
-	public ReservationVO getReservationDetail(int reservationID) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		ReservationVO reservation = null;
+    // 이미 예약된 좌석인지 확인
+    public boolean isSeatAlreadyReserved(int scheduleID, int seatID) throws Exception {
+        String sql = """
+            SELECT COUNT(*) 
+            FROM reservation r
+            JOIN reservation_seat rs ON r.reservation_id = rs.reservation_id
+            WHERE r.schedule_id = ? AND rs.seat_id = ?
+        """;
 
-		String sql =  """
-		        SELECT
-	            r.reservation_id AS reservationID,
-	            r.schedule_id AS scheduleID,
-	            r.viewers,
-	            m.name AS mem_Name,
-	            mv.title AS mvTitle,
-	            a.name AS auditorium_name,
-	            s.screening_date,
-	            st.seat_name
-	        FROM reservation r
-	        JOIN member m ON r.member_id = m.member_id
-	        JOIN schedule s ON r.schedule_id = s.schedule_id
-	        JOIN movie mv ON s.movie_id = mv.movie_id
-	        JOIN price p ON r.price_id = p.price_id
-	        JOIN seat st ON r.seat_id = st.seat_id
-	        JOIN auditorium a ON s.auditorium_id = a.auditorium_id
-	        WHERE r.reservation_id = ?
-	    """;
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, scheduleID);
+            pstmt.setInt(2, seatID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        }
 
-		try {
-			conn = DBUtil.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, reservationID);
+        return false;
+    }
 
-			rs = pstmt.executeQuery();
+    // 해당 스케줄에서 예약된 좌석 이름 목록 조회
+    public List<String> getReservedSeatNames(int scheduleID) throws Exception {
+        List<String> reservedSeats = new ArrayList<>();
+        String sql = """
+            SELECT st.seat_name
+            FROM reservation r
+            JOIN reservation_seat rs ON r.reservation_id = rs.reservation_id
+            JOIN seat st ON rs.seat_id = st.seat_id
+            WHERE r.schedule_id = ?
+        """;
 
-			if (rs.next()) {
-				reservation = new ReservationVO();
-	            reservation.setReservationID(rs.getInt("reservationID"));
-	            reservation.setScheduleID(rs.getInt("scheduleID"));
-	            reservation.setViewers(rs.getInt("viewers"));
-	            reservation.setMem_Name(rs.getString("mem_Name"));
-	            reservation.setMvTitle(rs.getString("mvTitle"));  // ✔️ 함수 이름도 mvTitle에 맞게
-	            reservation.setAuditoriumName(rs.getString("auditorium_name"));
-	            reservation.setScreeningDate(rs.getDate("screening_date"));
-	            reservation.setSeatName(rs.getString("seat_name"));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.executeClose(rs, pstmt, conn);
-		}
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, scheduleID);
+            ResultSet rs = pstmt.executeQuery();
 
-		return reservation;
-	}
-	// 좌석 정보
-	public int getSeatIDByName(int scheduleID, String seatName) throws Exception {
-		int seatID = -1;
-		String sql = """
-				SELECT s.seat_id
-				FROM seat s
-				JOIN schedule sch ON s.theater_id = sch.theater_id
-				WHERE sch.schedule_id = ?
-				  AND s.seat_name = ?
-				""";
+            while (rs.next()) {
+                reservedSeats.add(rs.getString("seat_name"));
+            }
+        }
 
-		try (Connection conn = DBUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        return reservedSeats;
+    }
 
-			pstmt.setInt(1, scheduleID);
-			pstmt.setString(2, seatName);
-			ResultSet rs = pstmt.executeQuery();
+    // 예약ID 기준으로 좌석 이름 목록 가져오기
+    public List<String> getSeatNamesByReservation(int reservationID) throws Exception {
+        List<String> seatNames = new ArrayList<>();
 
-			if (rs.next()) {
-				seatID = rs.getInt("seat_id");
-			}
-		}
+        String sql = """
+            SELECT s.seat_name
+            FROM reservation_seat rs
+            JOIN seat s ON rs.seat_id = s.seat_id
+            WHERE rs.reservation_id = ?
+        """;
 
-		return seatID;
-	}
-	
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, reservationID);
+            ResultSet rs = pstmt.executeQuery();
 
-	// 특정 스케줄에서 이미 예약된 좌석 이름 리스트 반환
-	public List<String> getReservedSeatNames(int scheduleID) throws Exception {
-		List<String> reservedSeats = new ArrayList<>();
-		String sql = """
-				    SELECT st.seat_name
-				    FROM reservation r
-				    JOIN seat st ON r.seat_id = st.seat_id
-				    WHERE r.schedule_id = ?
-				""";
+            while (rs.next()) {
+                seatNames.add(rs.getString("seat_name"));
+            }
+        }
 
-		try (Connection conn = DBUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        return seatNames;
+    }
 
-			pstmt.setInt(1, scheduleID);
-			ResultSet rs = pstmt.executeQuery();
+    // 결제 정보 업데이트
+    
+    public void updatePaymentInfo(int reservationId, int totalPrice) throws Exception {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
 
-			while (rs.next()) {
-				reservedSeats.add(rs.getString("seat_name"));
-			}
+        try {
+            conn = DBUtil.getConnection();
+            String sql = """
+                UPDATE reservation
+                SET payment_status = 'Y',
+                    payment_date = SYSDATE,
+                    p_movie = ?
+                WHERE reservation_id = ?
+            """;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, totalPrice);       // 결제 금액
+            pstmt.setInt(2, reservationId);    // 예매 ID
+            pstmt.executeUpdate();
+        } finally {
+            DBUtil.executeClose(null, pstmt, conn);
+        }
+    }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+ // 특정 회원의 예약 목록 조회
+    public List<ReservationVO> getListReservationByUser(int memberId) throws Exception {
+        List<ReservationVO> list = new ArrayList<>();
 
-		return reservedSeats;
-	}
+        String sql = """
+            SELECT 
+                r.reservation_id,
+                r.schedule_id,
+                r.viewers,
+                r.payment_status,
+                r.payment_date,
+                m.name AS member_name,
+                mv.title AS mv_title,
+                a.name AS auditorium_name,
+                s.screening_date
+            FROM reservation r
+            JOIN member m ON r.member_id = m.member_id
+            JOIN schedule s ON r.schedule_id = s.schedule_id
+            JOIN movie mv ON s.movie_id = mv.movie_id
+            JOIN auditorium a ON s.auditorium_id = a.auditorium_id
+            WHERE r.member_id = ?
+            ORDER BY r.payment_date DESC
+        """;
 
-	public void updatePaymentInfo(int reservationID, int paidAmount, String method) throws Exception {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = DBUtil.getConnection();
-			String sql = """
-					    UPDATE reservation
-					    SET payment_status = 'Y',
-					        payment_date = SYSDATE,
-					        p_movie = ?,         -- 결제 금액 저장
-					        payment_method = ?
-					    WHERE reservation_id = ?
-					""";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, paidAmount);
-			pstmt.setString(2, method);
-			pstmt.setInt(3, reservationID);
-			pstmt.executeUpdate();
-		} finally {
-			DBUtil.executeClose(null, pstmt, conn);
-		}
-	}
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, memberId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ReservationVO vo = new ReservationVO();
+                vo.setReservationID(rs.getInt("reservation_id"));
+                vo.setScheduleID(rs.getInt("schedule_id"));
+                vo.setViewers(rs.getInt("viewers"));
+                vo.setPaymentStatus(rs.getString("payment_status"));
+                vo.setPaymentDate(rs.getString("payment_date"));
+                vo.setMem_Name(rs.getString("member_name"));
+                vo.setMvTitle(rs.getString("mv_title"));
+                vo.setAuditoriumName(rs.getString("auditorium_name"));
+                vo.setScreeningDate(rs.getDate("screening_date"));
+                list.add(vo);
+            }
+        }
+
+        return list;
+    }
+
 }
-

@@ -1,5 +1,10 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//src/main/webapp/WEB-INF/views/movie/myMovielist.jsp=UTF-8
+=======
+encoding//src/main/webapp/WEB-INF/views/member/myMovielist.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/theater/selectSeat.jsp=UTF-8
+>>>>>>> branch 'main' of https://github.com/hiddongs/CGV_c.git
 encoding//src/main/webapp/WEB-INF/views/theater/selectTime.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/theater/theaterPage.jsp=UTF-8
 encoding/<project>=UTF-8

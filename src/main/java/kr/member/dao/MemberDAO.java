@@ -402,7 +402,7 @@ public class MemberDAO {
 		return null;
 	}
 	
-	//포인트 내역
+
 	public void usePoint(int memberId, int usedPoint) throws Exception {
 	    Connection conn = null;
 	    PreparedStatement pstmt = null;
@@ -418,6 +418,45 @@ public class MemberDAO {
 	    }
 	}
 	
+
+	// 포인트 적립
+	
+	public void addPoint(int memberId, int earnedPoint) throws Exception {
+	    Connection conn = DBUtil.getConnection();
+	    String sql = "UPDATE member SET point = point + ? WHERE member_id = ?";
+	    PreparedStatement pstmt = conn.prepareStatement(sql);
+	    pstmt.setInt(1, earnedPoint);
+	    pstmt.setInt(2, memberId);
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    conn.close();
+	}
+	
+
+	public void changeStatus(Long memberId) {
+		
+		 Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    try {
+	        conn = DBUtil.getConnection();
+	        String sql = "UPDATE MEMBER SET GRADE = "
+	        		+ "	CASE"
+	        		+ "	WHEN GRADE = '정지' THEN '안정지'"
+	        		+ " ELSE '정지'"
+	        		+ " END"
+	        		+ " WHERE MEMBER_ID = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setLong(1, memberId);
+	        pstmt.executeUpdate();
+	    } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	        DBUtil.executeClose(null, pstmt, conn);
+	    }
+		
+	}
+
 
 }
 

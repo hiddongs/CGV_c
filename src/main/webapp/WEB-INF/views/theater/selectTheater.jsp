@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>영화관 선택</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/hiddongs.css">
 <style>
 body {
   background-color: #1c1c1c;

@@ -93,13 +93,36 @@ function displayTheaterList(theaterList){
         deleteBtn.dataset.theaterId = theater.theaterId
         deleteBtn.onclick = deleteTheaterForm
 
+        const scheduleBtn = document.createElement('button')
+        scheduleBtn.type = 'button'
+        scheduleBtn.className = 'btn btn-warning'
+        scheduleBtn.textContent = '스케쥴관리'
+        scheduleBtn.dataset.theaterId = theater.theaterId
+        scheduleBtn.onclick = scheduleManagement
+
+        const auditoriumBtn = document.createElement('button')
+        auditoriumBtn.type = 'button'
+        auditoriumBtn.className = 'btn btn-warning'
+        auditoriumBtn.textContent = '상영관관리'
+        auditoriumBtn.dataset.theaterId = theater.theaterId
+        auditoriumBtn.onclick = auditoriumManagement
+
         actionCell.appendChild(updateBtn)
         actionCell.appendChild(document.createTextNode(' '))
         actionCell.appendChild(deleteBtn)
+        actionCell.appendChild(document.createTextNode(' '))
+        actionCell.appendChild(scheduleBtn)
+        actionCell.appendChild(document.createTextNode(' '))
+        actionCell.appendChild(auditoriumBtn)
 
         row.appendChild(actionCell)
         container.appendChild(row)
     })
+}
+
+function auditoriumManagement(event){
+    const theaterId = event.target.dataset.theaterId
+    window.location.href = 'auditoriumManagement.do?theaterId='+theaterId
 }
 
 function updateTheaterForm(event){
@@ -112,6 +135,11 @@ function deleteTheaterForm(event){
     if(confirm('정말로 이 극장을 삭제하시겠습니까?')) {
         window.location.href='deleteTheaterForm.do?theaterId=' + theaterId;
     }
+}
+
+function scheduleManagement(event){
+    const theaterId = event.target.dataset.theaterId
+    window.location.href = 'scheduleManagement.do?theaterId=' + theaterId;
 }
 
 function registerTheaterForm() {
