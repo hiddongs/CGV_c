@@ -1,5 +1,7 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=branch 'main' of https\://github.com/hiddongs/CGV_c.git
 eclipse.preferences.version=1
-encoding//src/main/webapp/WEB-INF/views/member/myMovielist.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/theater/selectSeat.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/theater/selectTime.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/theater/theaterPage.jsp=UTF-8
