@@ -24,7 +24,7 @@
     <main>
         <div class="container">
         		 <!-- 상영중인 영화 리스트 시작 -->
-            <h2 class="section_title">현재 상영작 test</h2>
+            <h2 class="section_title">현재 상영작</h2>
             <div class="movie-grid">
                <c:choose>
              		<c:when test="${empty list}">
