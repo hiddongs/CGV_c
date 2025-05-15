@@ -41,21 +41,25 @@
     </thead>
     <tbody>
         <c:forEach var="member" items="${memberList}">
-            <tr>
-                <td>${member.user_id}</td> <!-- user_id에 직접 접근 -->
-                <td>${member.name}</td>
-                <td>${member.email}</td>
-                <td>${member.phone}</td>
-                <td><fmt:formatDate value="${member.reg_date}" pattern="yyyy-MM-dd" /></td>
-                <td>${member.grade eq '정지' ? '비활성' : '활성'}</td>
-                <td>
-                    <button class="btn btn-sm btn-info" onclick="location.href='${pageContext.request.contextPath}/admin/memberDetail.do?member_id=${member.member_id}'">상세</button>
-                    <button class="btn btn-sm ${member.grade eq '정지' ? 'btn-warning' : 'btn-success'}" 
-                            onclick="updateMemberStatus(${member.member_id}, '${member.grade eq '정지' ? '비활성' : '활성'}')">
-                        ${member.grade eq '정지' ? '활성화' : '비활성화'}
-                    </button>
-                </td>
-            </tr>
+        	<c:choose>
+	        	<c:when test="${member.member_id ne 1}">
+	            <tr>
+	                <td>${member.user_id}</td> <!-- user_id에 직접 접근 -->
+	                <td>${member.name}</td>
+	                <td>${member.email}</td>
+	                <td>${member.phone}</td>
+	                <td><fmt:formatDate value="${member.reg_date}" pattern="yyyy-MM-dd" /></td>
+	                <td>${member.grade eq '정지' ? '비활성' : '활성'}</td>
+	                <td>
+	                    <button class="btn btn-sm btn-info" onclick="location.href='${pageContext.request.contextPath}/admin/memberDetail.do?member_id=${member.member_id}'">상세</button>
+	                    <button class="btn btn-sm ${member.grade eq '정지' ? 'btn-warning' : 'btn-success'}" 
+	                            onclick="updateMemberStatus(${member.member_id}, '${member.grade eq '정지' ? '비활성' : '활성'}')">
+	                        ${member.grade eq '정지' ? '활성화' : '비활성화'}
+	                    </button>
+	                </td>
+	            </tr>
+	            </c:when>
+            </c:choose>
         </c:forEach>
     </tbody>
 </table>
@@ -68,7 +72,7 @@
         
         <c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}">
             <a href="${pageContext.request.contextPath}/admin/memberManagement.do?page=${i}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}" 
-               class="${pageVO.page == i ? 'active' : ''}">${i}</a>
+               class="${pageVO.page == i ? 'active' : ''}">${i+1}</a>
         </c:forEach>
         
         <c:if test="${pageVO.next}">
