@@ -104,7 +104,7 @@ body {
 }
 
 .menu-list li.section-reservation a {
-	background-color: #ef4b64;
+	background-color: #d32f2f;
 	color: #fff;
 	padding: 10px;
 	border-radius: 3px;
@@ -260,7 +260,7 @@ body {
 }
 
 .tab.active {
-	background-color: #fb4357;
+	background-color: #d32f2f;
 	color: white;
 	font-weight: bold;
 }
@@ -329,7 +329,7 @@ body {
 }
 
 .red-button {
-	background-color: #fb4357;
+	background-color: #d32f2f;
 	color: white;
 	border: none;
 	padding: 6px 12px;
@@ -598,7 +598,7 @@ body {
 }
 
 .highlight {
-	color: #e63232;
+	color: #d32f2f;
 	font-weight: bold;
 }
 
@@ -647,3 +647,163 @@ body {
 		height: 110px;
 	}
 }
+
+
+/* 예매내역 리스트
+--------------------------------
+*/
+form#search_form {
+  border: none;
+  width: 100%;
+}
+.search-container {
+  display: flex;
+  margin: 0 auto;
+  max-width: 500px;
+}
+.search-select {
+  padding: 5px;
+  border-radius: 4px 0 0 4px;
+  border: 1px solid #ccc;
+}
+.search-input {
+  flex-grow: 1;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-right: none;
+}
+.search-button {
+  padding: 5px 15px;
+  border-radius: 0 4px 4px 0;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin-left: 7px;
+}
+.search-button:hover {
+  background-color: #e0e0e0;
+}
+.list-space {
+  margin-bottom: 10px;
+}
+.align-right {
+  text-align: right;
+}
+table {
+  width: 100%;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  margin-top: 5px;
+}
+table th, table td {
+  border: 1px solid #000;
+  padding: 5px;
+}
+.MyList-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+/* 헤더 부분 */
+.MyList-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+}
+.header-title {
+  flex: 1;
+}
+.MyList-header strong {
+  font-size: 24px;
+  color: #d32f2f; /* CGV 레드 */
+}
+.MyList-header p {
+  margin: 5px 0 0;
+  color: #666;
+}
+/* '내가 본 영화' 버튼 */
+.view-button {
+  background-color: #d32f2f;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  display: inline-block;
+}
+.view-button:hover {
+  background-color: #b71c1c;
+}
+/* 버튼 스타일 */
+input[type="button"], input[type="submit"] {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: background-color 0.3s;
+}
+input[type="button"]:hover, input[type="submit"]:hover {
+  background-color: #e0e0e0;
+}
+/* 검색 영역 */
+.search-area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+/* 테이블 스타일 */
+.reservation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+.reservation-table thead {
+  background-color: #f44336;
+  color: white;
+}
+.reservation-table th,
+.reservation-table td {
+  padding: 12px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+.reservation-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.reservation-table a {
+  text-decoration: none;
+  color: #d32f2f;
+}
+.reservation-table a:hover {
+  text-decoration: underline;
+}
+@media screen and (max-width: 768px) {
+  .MyList-container {
+    padding: 10px;
+  }
+  .reservation-table th, .reservation-table td {
+    padding: 8px;
+    font-size: 12px;
+  }
+  .view-button, input[type="button"], input[type="submit"] {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+
+

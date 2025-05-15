@@ -6,7 +6,7 @@
 		<div id="main_aside">
 			<h2><a href="${pageContext.request.contextPath}/member/myPage.do">My CGV HOME</a></h2>
 			<ul class="menu-list">
-				<li class="section-title"><strong><a href="${pageContext.request.contextPath}/member/mypageDetailReservation.do">
+				<li class="section-title"><strong><a href="${pageContext.request.contextPath}/reservation/reservationList.do">
 				나의 예매내역</a></strong></li>
 				<li class="section-title"><strong><a href="${pageContext.request.contextPath}/member/mypageCoupon.do">할인쿠폰 관리</a></strong></li>
 				<li><a href="#">-CGV쿠폰</a></li>

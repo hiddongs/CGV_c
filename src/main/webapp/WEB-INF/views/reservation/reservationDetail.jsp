@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>예약 내역</title>
+<title>영화 예매 상세페이지</title>
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
 	rel="stylesheet">
@@ -99,7 +99,6 @@
 	cursor: pointer;
 }
 
-
 </style>
 
 </head>
@@ -116,46 +115,55 @@
                 <img src="${pageContext.request.contextPath}/upload/${movie.poster_url}" alt="${movie.description}">
             </div>
             
+            
+            	<!-- 
+				<tr>
+					<th>영화제목</th>
+					<th>관람극장</th>
+					<th>관람일시</th>
+					<th>상영관</th>
+					<th>관람인원</th>
+					<th>관람좌석</th>
+					<th>가격</th>
+				</tr>
+				 -->
+            
+            
             <div class="ticket-info">
                 <div class="movie-title">
-                    <span>${reservationList.title}</span>
+                    <span>${reservation.mvTitle}</span>
                 </div>
                 
                 <div class="info-grid">
                     <div class="info-item">
                         <div class="info-label">관람극장</div>
-                        <div class="info-value">${reservationList.name} 
+                        <div class="info-value">${reservation.name} 
                         <a href="#"class="info-button">[극장정보]</a></div>
                     </div>
                     
                     <div class="info-item">
                         <div class="info-label">관람인원</div>
-                        <div class="info-value">${reservationList.viewers}</div>
+                        <div class="info-value">${reservation.viewers}</div>
                     </div>
 
                     <div class="info-item">
                         <div class="info-label">관람일시</div>
-                        <div class="info-value"><span class="highlight">${reservationList.screeningDate}</span></div>
+                        <div class="info-value"><span class="highlight">${reservation.screeningDate}</span></div>
                     </div>
                     
                     <div class="info-item">
                         <div class="info-label">관람좌석</div>
-                        <div class="info-value">${reservationList.seatID }</div>
+                        <div class="info-value">${reservation.seatName }</div>
                     </div>
                     
                     <div class="info-item">
                         <div class="info-label">상영관</div>
-                        <div class="info-value">${reservationList.movieType}관</div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">매수</div>
-                        <div class="info-value"></div>
+                        <div class="info-value">${reservation.movieType}관</div>
                     </div>
                     
                     <div class="info-item">
                         <div class="info-label">가격</div>
-                        <div class="info-value">${reservationList.pMovie}원</div>
+                        <div class="info-value">${reservation.pMovie}원</div>
                     </div>
                 </div>
             </div>

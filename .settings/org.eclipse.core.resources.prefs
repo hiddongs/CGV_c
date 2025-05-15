@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/main/webapp/WEB-INF/views/member/myMovielist.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/movie/myMovielist.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/theater/selectTime.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/theater/theaterPage.jsp=UTF-8
 encoding/<project>=UTF-8

@@ -39,6 +39,10 @@ public class MyPageAction implements Action {
             CouponDAO couponDAO = CouponDAO.getInstance(); 
             List<CouponVO> couponList = couponDAO.getListCouponByUser(user.getMember_id());
             
+            // 문의 내역
+            
+            
+            
             request.setAttribute("member", member);
             request.setAttribute("reservationList", reservationList);
             request.setAttribute("couponList", couponList);
@@ -50,8 +54,7 @@ public class MyPageAction implements Action {
             throw new ServletException(e);
         }
         
-        // 문의내역
-        // 나의 포인트
+     
         
     }
 }

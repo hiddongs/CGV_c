@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.ask.vo.AskVO;
 import kr.member.vo.MemberVO;
 import kr.reservation.vo.ReservationVO;
 import kr.util.DBUtil;
@@ -401,6 +402,7 @@ public class MemberDAO {
 		return null;
 	}
 	
+	//포인트 내역
 	public void usePoint(int memberId, int usedPoint) throws Exception {
 	    Connection conn = null;
 	    PreparedStatement pstmt = null;
@@ -415,6 +417,7 @@ public class MemberDAO {
 	        DBUtil.executeClose(null, pstmt, conn);
 	    }
 	}
+	
 
 }
 
