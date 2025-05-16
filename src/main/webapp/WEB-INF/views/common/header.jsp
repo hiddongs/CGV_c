@@ -21,7 +21,7 @@
     <nav class="nav_menu">
         <div class="container">
             <ul>
-                <li><a href="${pageContext.request.contextPath}/movie/movieInformation.do">영화</a>
+                <li><a href="${pageContext.request.contextPath}/movie/moviePage.do">영화</a>
 
                 </li>
                 <li><a href="${pageContext.request.contextPath}/movie/theaterPage.do">극장</a>
