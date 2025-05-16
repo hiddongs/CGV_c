@@ -195,12 +195,12 @@
                         <c:forEach var="coupon" items="${couponList}">
                             <li class="coupon-item">
                                 <div class="coupon-info">
-                                    <div class="coupon-name">${coupon.coupon_name}</div>
-                                    <div class="coupon-description">할인금액: ${coupon.discount_amount}원</div>
+                                    <div class="coupon-name">${coupon.couponName}</div>
+                                    <div class="coupon-description">할인금액: ${coupon.discountAmount}원</div>
                                 </div>
                                 <div class="action-buttons">
                                     <button class="btn btn-secondary" onclick="openModal('${coupon.couponID}')">상세보기</button>
-                                    <button class="btn btn-primary" onclick="confirmDelete('${coupon.couponID}', '${coupon.coupon_name}')">삭제</button>
+                                    <button class="btn btn-primary" onclick="confirmDelete('${coupon.couponID}', '${coupon.couponName}')">삭제</button>
                                 </div>
                             </li>
                             
@@ -208,7 +208,7 @@
                             <div id="memberModal-${coupon.couponID}" class="modal-overlay">
                                 <div class="modal-container">
                                     <div class="modal-header">
-                                        <h3 class="modal-title">${coupon.coupon_name} 보유 회원</h3>
+                                        <h3 class="modal-title">${coupon.couponName} 보유 회원</h3>
                                         <button class="modal-close" onclick="closeModal('${coupon.couponID}')">&times;</button>
                                     </div>
                                     <div class="modal-body">
