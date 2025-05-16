@@ -51,7 +51,6 @@
 	                <td><fmt:formatDate value="${member.reg_date}" pattern="yyyy-MM-dd" /></td>
 	                <td>${member.grade eq '정지' ? '비활성' : '활성'}</td>
 	                <td>
-	                    <button class="btn btn-sm btn-info" onclick="location.href='${pageContext.request.contextPath}/admin/memberDetail.do?member_id=${member.member_id}'">상세</button>
 	                    <button class="btn btn-sm ${member.grade eq '정지' ? 'btn-warning' : 'btn-success'}" 
 	                            onclick="updateMemberStatus(${member.member_id}, '${member.grade eq '정지' ? '비활성' : '활성'}')">
 	                        ${member.grade eq '정지' ? '활성화' : '비활성화'}
