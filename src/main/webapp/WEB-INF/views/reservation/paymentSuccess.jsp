@@ -61,7 +61,7 @@ p {
     <p><span class="label">회원 이름:</span> ${member.name}</p>
     <p><span class="label">영화 제목:</span> ${reservation.mvTitle}</p>
     <p><span class="label">상영관:</span> ${reservation.movieType}</p>
-    <p><span class="label">극장:</span> ${reservation.name}</p>
+    <p><span class="label">극장:</span> ${reservation.theaterName}</p>
     <p><span class="label">관람 날짜:</span> ${reservation.screeningDate}</p>
     <p><span class="label">관람 인원:</span> ${reservation.viewers}명</p>
     <p><span class="label">좌석 번호:</span> ${reservation.seatName}</p>

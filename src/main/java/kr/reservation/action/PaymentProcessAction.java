@@ -58,11 +58,13 @@ public class PaymentProcessAction implements Action {
 
         // 5. 결제 후 전달할 정보
         ReservationVO reservation = reservationDAO.getReservationDetail(reservationID);
+        reservation.setTotalPrice(totalPrice); // ✅ 이 줄을 추가
         MemberVO member = memberDAO.getMember(memberId);
        
         List<String> seatNames = reservationDAO.getSeatNamesByReservation(reservationID);
         reservation.setSeatName(String.join(", ", seatNames));
 
+        req.setAttribute("totalPrice", totalPrice);
         req.setAttribute("reservation", reservation);
         req.setAttribute("member", member);
         req.setAttribute("usedCouponName", couponName);
