@@ -155,6 +155,8 @@
             <h3 class="movie-title">${movie.mv_title}</h3>
             <div class="movie-meta">
                 <span class="rating">예매율 @@%</span>
+               <a href="${pageContext.request.contextPath}/movie/movieReviewPage.do?movie_id=${movie.movie_id}"
+   class="btn btn-primary btn-booking">리뷰 보기</a>
             </div>
         </div>
     </div>
