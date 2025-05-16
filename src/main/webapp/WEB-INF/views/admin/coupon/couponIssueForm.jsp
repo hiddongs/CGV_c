@@ -209,7 +209,7 @@ $(document).ready(function(){
 				<input type="text" id="couponSearch" class="search-input" onkeyup="filterList('coupon')" placeholder="쿠폰 검색...">
 				<ul class="item-list">
 					<c:forEach var="coupon" items="${couponList}">
-						<li class="item" onclick="selectItem('coupon','${coupon.couponID}','${coupon.coupon_name}')">${coupon.coupon_name}</li>
+						<li class="item" onclick="selectItem('coupon','${coupon.couponID}','${coupon.couponName}')">${coupon.couponName}</li>
 					</c:forEach>
 				</ul>
 			</div>
