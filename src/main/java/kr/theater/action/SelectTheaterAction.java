@@ -2,7 +2,9 @@ package kr.theater.action;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,14 +14,14 @@ import kr.auditorium.dao.AuditoriumDAO;
 import kr.auditorium.vo.AuditoriumVO;
 import kr.controller.Action;
 import kr.member.vo.MemberVO;
-import kr.movie.dao.MovieTypeDAO;
-import kr.movie.vo.MovieTypeVO;
+import kr.movietype.dao.MovieTypeDAO;
+import kr.movietype.vo.MovieTypeVO;
 
 public class SelectTheaterAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            int movieID = Integer.parseInt(req.getParameter("movieID"));
+            Long movieID = Long.parseLong(req.getParameter("movieID"));
             int theaterID = Integer.parseInt(req.getParameter("theaterID"));
             String screenDate = req.getParameter("screenDate");
             HttpSession session = req.getSession();
@@ -31,7 +33,7 @@ public class SelectTheaterAction implements Action {
 
             // 영화가 지원하는 타입 가져오기
             MovieTypeDAO typeDAO = MovieTypeDAO.getInstance();
-            MovieTypeVO typeVO = typeDAO.getMovieType(movieID);
+            MovieTypeVO typeVO = typeDAO.getMovietype(movieID);
 
             // 극장의 상영관 전체 조회
             AuditoriumDAO audDAO = AuditoriumDAO.getInstance();
@@ -44,9 +46,9 @@ public class SelectTheaterAction implements Action {
                 if (
                     (type.equals("IMAX") && "Y".equals(typeVO.getImax())) ||
                     (type.equals("SCREENX") && "Y".equals(typeVO.getScreenx())) ||
-                    (type.equals("4DX") && "Y".equals(typeVO.getFourDx())) ||
-                    (type.equals("3D") && "Y".equals(typeVO.getThreeD())) ||
-                    (type.equals("2D") && "Y".equals(typeVO.getTwoD()))
+                    (type.equals("4DX") && "Y".equals(typeVO.get_4dx())) ||
+                    (type.equals("3D") && "Y".equals(typeVO.get_3d())) ||
+                    (type.equals("2D") && "Y".equals(typeVO.get_2d()))
                 ) {
                     filtered.add(aud);
                 }

@@ -416,7 +416,7 @@ public class MemberDAO {
 	        DBUtil.executeClose(null, pstmt, conn);
 	    }
 	}
-	
+
 	// 포인트 적립
 	
 	public void addPoint(int memberId, int earnedPoint) throws Exception {
@@ -431,6 +431,30 @@ public class MemberDAO {
 	    conn.close();
 	}
 	
+
+	public void changeStatus(Long memberId) {
+		
+		 Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    try {
+	        conn = DBUtil.getConnection();
+	        String sql = "UPDATE MEMBER SET GRADE = "
+	        		+ "	CASE"
+	        		+ "	WHEN GRADE = '정지' THEN '안정지'"
+	        		+ " ELSE '정지'"
+	        		+ " END"
+	        		+ " WHERE MEMBER_ID = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setLong(1, memberId);
+	        pstmt.executeUpdate();
+	    } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+	        DBUtil.executeClose(null, pstmt, conn);
+	    }
+		
+	}
+
 
 }
 

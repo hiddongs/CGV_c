@@ -24,8 +24,17 @@ public class ReservationVO {
     private int theaterID;
     private int adultCount;
     private int childCount;
+    private String theaterName;
     
-    private int totalPrice;
+    public String getTheaterName() {
+		return theaterName;
+	}
+
+	public void setTheaterName(String theaterName) {
+		this.theaterName = theaterName;
+	}
+
+	private int totalPrice;
 
     public int getTotalPrice() {
         return totalPrice;
