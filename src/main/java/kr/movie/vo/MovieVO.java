@@ -17,7 +17,14 @@ public class MovieVO {
 	private Date movie_create;	// 생성일
 	private String movieType; // 영화타입
 	private String age_limit; // 연령제한
+	private double booking_rate;
 	
+	public double getBooking_rate() {
+		return booking_rate;
+	}
+	public void setBooking_rate(double booking_rate) {
+		this.booking_rate = booking_rate;
+	}
 	public Long getMovie_id() {
 		return movie_id;
 	}

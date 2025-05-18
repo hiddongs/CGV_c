@@ -1,0 +1,283 @@
+[
+  {
+    "THEATER_ID": 1,
+    "REGION": "경기도",
+    "NAME": "행신",
+    "DESCRIPTION": "행신 영화관",
+    "ADDRESS": "경기도 고양시 덕양구 행신동 123-45"
+  },
+  {
+    "THEATER_ID": 2,
+    "REGION": "서울",
+    "NAME": "홍대",
+    "DESCRIPTION": "홍대 영화관",
+    "ADDRESS": "서울특별시 마포구 양화로 123"
+  },
+  {
+    "THEATER_ID": 20,
+    "REGION": "서울",
+    "NAME": "CGV 용산아이파크몰",
+    "DESCRIPTION": "용산역 아이파크몰 대형 영화관",
+    "ADDRESS": "서울특별시 용산구 한강대로23길 55"
+  },
+  {
+    "THEATER_ID": 21,
+    "REGION": "서울",
+    "NAME": "롯데시네마 건대입구",
+    "DESCRIPTION": "건대입구 번화가 중심 영화관",
+    "ADDRESS": "서울특별시 광진구 아차산로 243"
+  },
+  {
+    "THEATER_ID": 22,
+    "REGION": "부산",
+    "NAME": "CGV 센텀시티",
+    "DESCRIPTION": "부산 최대 규모의 센텀시티점",
+    "ADDRESS": "부산 해운대구 센텀남대로 35"
+  },
+  {
+    "THEATER_ID": 23,
+    "REGION": "부산",
+    "NAME": "롯데시네마 부산본점",
+    "DESCRIPTION": "롯데백화점 부산본점 내 영화관",
+    "ADDRESS": "부산 부산진구 가야대로 772"
+  },
+  {
+    "THEATER_ID": 24,
+    "REGION": "대구",
+    "NAME": "CGV 대구스타디움",
+    "DESCRIPTION": "스타디움 근처 접근성 좋은 극장",
+    "ADDRESS": "대구 수성구 유니버시아드로 140"
+  },
+  {
+    "THEATER_ID": 25,
+    "REGION": "대전",
+    "NAME": "CGV 대전",
+    "DESCRIPTION": "대전역 근처 종합 상영관",
+    "ADDRESS": "대전 동구 중앙로 164"
+  },
+  {
+    "THEATER_ID": 26,
+    "REGION": "대전",
+    "NAME": "메가박스 대전중앙로",
+    "DESCRIPTION": "대전 중앙로에 위치한 상영관",
+    "ADDRESS": "대전 중구 중앙로 119"
+  },
+  {
+    "THEATER_ID": 27,
+    "REGION": "광주",
+    "NAME": "CGV 광주상무",
+    "DESCRIPTION": "상무지구 핵심 영화관",
+    "ADDRESS": "광주 서구 상무중앙로 66"
+  },
+
+  {
+    "THEATER_ID": 28,
+    "REGION": "광주",
+    "NAME": "메가박스 광주충장로",
+    "DESCRIPTION": "광주 중심 충장로 영화관",
+    "ADDRESS": "광주 동구 충장로 43"
+  },
+  {
+    "THEATER_ID": 29,
+    "REGION": "인천",
+    "NAME": "CGV 인천연수",
+    "DESCRIPTION": "연수구 대표 영화관",
+    "ADDRESS": "인천 연수구 청능대로 23"
+  },
+  {
+    "THEATER_ID": 30,
+    "REGION": "인천",
+    "NAME": "메가박스 송도",
+    "DESCRIPTION": "송도 신도시 중심지 영화관",
+    "ADDRESS": "인천 연수구 송도과학로 123"
+  },
+  {
+    "THEATER_ID": 31,
+    "REGION": "울산",
+    "NAME": "CGV 울산삼산",
+    "DESCRIPTION": "삼산동 번화가에 위치한 영화관",
+    "ADDRESS": "울산 남구 삼산로 261"
+  },
+  {
+    "THEATER_ID": 32,
+    "REGION": "수원",
+    "NAME": "롯데시네마 수원",
+    "DESCRIPTION": "수원역 앞 중심가 영화관",
+    "ADDRESS": "경기 수원시 팔달구 덕영대로 924"
+  },
+  {
+    "THEATER_ID": 33,
+    "REGION": "경기도",
+    "NAME": "CGV 성남모란",
+    "DESCRIPTION": "모란시장 인근 접근성 좋은 극장",
+    "ADDRESS": "경기 성남시 중원구 성남대로 1130"
+  },
+  {
+    "THEATER_ID": 34,
+    "REGION": "창원",
+    "NAME": "메가박스 창원",
+    "DESCRIPTION": "창원시내 대형 멀티플렉스",
+    "ADDRESS": "경남 창원시 성산구 중앙대로 104"
+  },
+  {
+    "THEATER_ID": 35,
+    "REGION": "고양",
+    "NAME": "CGV 고양스타필드",
+    "DESCRIPTION": "스타필드 고양 대형 멀티플렉스",
+    "ADDRESS": "경기 고양시 덕양구 고양대로 1955"
+  },
+  {
+    "THEATER_ID": 36,
+    "REGION": "청주",
+    "NAME": "CGV 청주지웰시티",
+    "DESCRIPTION": "지웰시티몰 내 영화관",
+    "ADDRESS": "충북 청주시 흥덕구 대농로 48"
+  },
+  {
+    "THEATER_ID": 37,
+    "REGION": "전주",
+    "NAME": "메가박스 전주",
+    "DESCRIPTION": "전주 시내 중심 영화관",
+    "ADDRESS": "전북 전주시 완산구 전주객사3길 26"
+  },
+  {
+    "THEATER_ID": 38,
+    "REGION": "제주",
+    "NAME": "CGV 제주노형",
+    "DESCRIPTION": "제주도 노형동 대형 영화관",
+    "ADDRESS": "제주 제주시 노형로 407"
+  },
+  {
+    "THEATER_ID": 39,
+    "REGION": "서울",
+    "NAME": "CGV 용산아이파크몰",
+    "DESCRIPTION": "용산역 아이파크몰 대형 영화관",
+    "ADDRESS": "서울특별시 용산구 한강대로23길 55"
+  },
+  {
+    "THEATER_ID": 40,
+    "REGION": "서울",
+    "NAME": "롯데시네마 건대입구",
+    "DESCRIPTION": "건대입구 번화가 중심 영화관",
+    "ADDRESS": "서울특별시 광진구 아차산로 243"
+  },
+  {
+    "THEATER_ID": 41,
+    "REGION": "부산",
+    "NAME": "CGV 센텀시티",
+    "DESCRIPTION": "부산 최대 규모의 센텀시티점",
+    "ADDRESS": "부산 해운대구 센텀남대로 35"
+  },
+  {
+    "THEATER_ID": 42,
+    "REGION": "부산",
+    "NAME": "롯데시네마 부산본점",
+    "DESCRIPTION": "롯데백화점 부산본점 내 영화관",
+    "ADDRESS": "부산 부산진구 가야대로 772"
+  },
+  {
+    "THEATER_ID": 43,
+    "REGION": "대구",
+    "NAME": "CGV 대구스타디움",
+    "DESCRIPTION": "스타디움 근처 접근성 좋은 극장",
+    "ADDRESS": "대구 수성구 유니버시아드로 140"
+  },
+  {
+    "THEATER_ID": 44,
+    "REGION": "대전",
+    "NAME": "CGV 대전",
+    "DESCRIPTION": "대전역 근처 종합 상영관",
+    "ADDRESS": "대전 동구 중앙로 164"
+  },
+  {
+    "THEATER_ID": 45,
+    "REGION": "대전",
+    "NAME": "메가박스 대전중앙로",
+    "DESCRIPTION": "대전 중앙로에 위치한 상영관",
+    "ADDRESS": "대전 중구 중앙로 119"
+  },
+  {
+    "THEATER_ID": 46,
+    "REGION": "광주",
+    "NAME": "CGV 광주상무",
+    "DESCRIPTION": "상무지구 핵심 영화관",
+    "ADDRESS": "광주 서구 상무중앙로 66"
+  },
+  {
+    "THEATER_ID": 47,
+    "REGION": "광주",
+    "NAME": "메가박스 광주충장로",
+    "DESCRIPTION": "광주 중심 충장로 영화관",
+    "ADDRESS": "광주 동구 충장로 43"
+  },
+  {
+    "THEATER_ID": 48,
+    "REGION": "인천",
+    "NAME": "CGV 인천연수",
+    "DESCRIPTION": "연수구 대표 영화관",
+    "ADDRESS": "인천 연수구 청능대로 23"
+  },
+  {
+    "THEATER_ID": 49,
+    "REGION": "인천",
+    "NAME": "메가박스 송도",
+    "DESCRIPTION": "송도 신도시 중심지 영화관",
+    "ADDRESS": "인천 연수구 송도과학로 123"
+  },
+  {
+    "THEATER_ID": 50,
+    "REGION": "울산",
+    "NAME": "CGV 울산삼산",
+    "DESCRIPTION": "삼산동 번화가에 위치한 영화관",
+    "ADDRESS": "울산 남구 삼산로 261"
+  },
+  {
+    "THEATER_ID": 51,
+    "REGION": "수원",
+    "NAME": "롯데시네마 수원",
+    "DESCRIPTION": "수원역 앞 중심가 영화관",
+    "ADDRESS": "경기 수원시 팔달구 덕영대로 924"
+  },
+  {
+    "THEATER_ID": 52,
+    "REGION": "경기도",
+    "NAME": "CGV 성남모란",
+    "DESCRIPTION": "모란시장 인근 접근성 좋은 극장",
+    "ADDRESS": "경기 성남시 중원구 성남대로 1130"
+  },
+  {
+    "THEATER_ID": 53,
+    "REGION": "창원",
+    "NAME": "메가박스 창원",
+    "DESCRIPTION": "창원시내 대형 멀티플렉스",
+    "ADDRESS": "경남 창원시 성산구 중앙대로 104"
+  },
+  {
+    "THEATER_ID": 54,
+    "REGION": "고양",
+    "NAME": "CGV 고양스타필드",
+    "DESCRIPTION": "스타필드 고양 대형 멀티플렉스",
+    "ADDRESS": "경기 고양시 덕양구 고양대로 1955"
+  },
+  {
+    "THEATER_ID": 55,
+    "REGION": "청주",
+    "NAME": "CGV 청주지웰시티",
+    "DESCRIPTION": "지웰시티몰 내 영화관",
+    "ADDRESS": "충북 청주시 흥덕구 대농로 48"
+  },
+  {
+    "THEATER_ID": 56,
+    "REGION": "전주",
+    "NAME": "메가박스 전주",
+    "DESCRIPTION": "전주 시내 중심 영화관",
+    "ADDRESS": "전북 전주시 완산구 전주객사3길 26"
+  },
+  {
+    "THEATER_ID": 57,
+    "REGION": "제주",
+    "NAME": "CGV 제주노형",
+    "DESCRIPTION": "제주도 노형동 대형 영화관",
+    "ADDRESS": "제주 제주시 노형로 407"
+  }
+]

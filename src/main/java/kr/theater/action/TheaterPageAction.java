@@ -19,10 +19,10 @@ public class TheaterPageAction implements Action {
         TheaterDAO dao = TheaterDAO.getInstance();
 
         try {
-            // ✅ 전체 극장 리스트 가져오기
+  
             List<TheaterVO> theaterList = dao.getTheaterList();
 
-            // ✅ request에 담기
+     
             req.setAttribute("theaterList", theaterList);
 
         } catch (Exception e) {

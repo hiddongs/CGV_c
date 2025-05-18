@@ -22,8 +22,8 @@ public class ReservationDAO {
         String sql = """
             INSERT INTO reservation (
                 reservation_id, member_id, schedule_id, viewers,
-                payment_status, payment_date, screening_date, p_movie,
-                name, mv_title, movie_type, theater_id, price_id
+                payment_status, payment_date, screening_date,
+                movie_id, name, mv_title, movie_type, theater_id, price_id
             ) VALUES (
                 reservation_seq.NEXTVAL, ?, ?, ?, 'N', SYSDATE,
                 (SELECT screening_date FROM schedule WHERE schedule_id = ?),
@@ -74,7 +74,7 @@ public class ReservationDAO {
                 r.payment_status,
                 r.payment_date,
                 r.screening_date,
-                r.p_movie,
+                r.total_price,
                 r.name AS theater_name,
                 r.mv_title,
                 r.movie_type,
@@ -101,7 +101,7 @@ public class ReservationDAO {
                 reservation.setPaymentStatus(rs.getString("payment_status"));
                 reservation.setPaymentDate(rs.getString("payment_date"));
                 reservation.setScreeningDate(rs.getDate("screening_date"));
-                reservation.setPMovie(rs.getInt("p_movie"));
+                reservation.setTotalPrice(rs.getInt("total_price")); // 변경됨
                 reservation.setName(rs.getString("theater_name"));
                 reservation.setMvTitle(rs.getString("mv_title"));
                 reservation.setMovieType(rs.getString("movie_type"));
@@ -228,7 +228,6 @@ public class ReservationDAO {
     }
 
     // 결제 정보 업데이트
-    
     public void updatePaymentInfo(int reservationId, int totalPrice) throws Exception {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -239,7 +238,7 @@ public class ReservationDAO {
                 UPDATE reservation
                 SET payment_status = 'Y',
                     payment_date = SYSDATE,
-                    p_movie = ?
+                    total_price = ?
                 WHERE reservation_id = ?
             """;
             pstmt = conn.prepareStatement(sql);
@@ -251,7 +250,7 @@ public class ReservationDAO {
         }
     }
 
- // 특정 회원의 예약 목록 조회
+    // 특정 회원의 예약 목록 조회
     public List<ReservationVO> getListReservationByUser(int memberId) throws Exception {
         List<ReservationVO> list = new ArrayList<>();
 
@@ -297,5 +296,4 @@ public class ReservationDAO {
 
         return list;
     }
-
 }
