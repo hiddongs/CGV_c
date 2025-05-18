@@ -9,14 +9,14 @@
             <p>© CJ CGV. All Rights Reserved</p>
         </div>
         <div class="footer_links">
-            <a href="${pageContext.request.contextPath}/company">회사소개</a>
-            <a href="${pageContext.request.contextPath}/ir">IR</a>
-            <a href="${pageContext.request.contextPath}/recruit">채용정보</a>
-            <a href="${pageContext.request.contextPath}/ad">광고/제휴/출점문의</a>
-            <a href="${pageContext.request.contextPath}/terms">이용약관</a>
-            <a href="${pageContext.request.contextPath}/schedule">편성기준</a>
-            <a href="${pageContext.request.contextPath}/privacy">개인정보처리방침</a>
-            <a href="${pageContext.request.contextPath}/legal">법적고지</a>
+            <a href="${pageContext.request.contextPath}/company.do">회사소개</a>
+            <a href="${pageContext.request.contextPath}/ir.do">IR</a>
+            <a href="${pageContext.request.contextPath}/recruit.do">채용정보</a>
+            <a href="${pageContext.request.contextPath}/ad.do">광고/제휴/출점문의</a>
+            <a href="${pageContext.request.contextPath}/terms.do">이용약관</a>
+            <a href="${pageContext.request.contextPath}/schedule.do">편성기준</a>
+            <a href="${pageContext.request.contextPath}/privacy.do">개인정보처리방침</a>
+            <a href="${pageContext.request.contextPath}/legal.do">법적고지</a>
         </div>
     </div>
 </footer>
