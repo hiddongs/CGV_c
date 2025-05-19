@@ -25,8 +25,32 @@ public class ReservationVO {
     private int adultCount;
     private int childCount;
     private String theaterName;
-    
-    public String getTheaterName() {
+    private long moive_id;
+	
+    private Date startTime;
+    private Date endTime;
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	private String poster_url;
+    public String getPoster_url() {
+		return poster_url;
+	}
+
+	public long getMoive_id() {
+		return moive_id;
+	}
+
+	public void setMoive_id(long moive_id) {
+		this.moive_id = moive_id;
+	}
+
+	public String getTheaterName() {
 		return theaterName;
 	}
 
@@ -208,5 +232,26 @@ public class ReservationVO {
     public void setMovieType(String movieType) {
         this.movieType = movieType;
     }
+
+	public int getMovie_id() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setStartTime(Date date) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setEndTime(Date date) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setPoster_url(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

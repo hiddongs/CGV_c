@@ -1,0 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내가 본 영화</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.close-btn').click(function (){
+			const $btn = $(this);
+			const resvID = $btn.data('resv-id'); //예약 ID추출
+			
+			if(!confirm("이 영화를 리스트에서 삭제하시겠습니까?")) return;
+			
+			$.ajax({
+				url: '${pageContext.request.contextPath}/deleteReservation.do', //컨트롤러 매핑 주소
+				type: 'POST',
+				data: {reservationID: resvID},
+				success: function (response){
+					console.log("🔵 서버 응답:", response);
+					if(response.trim() === 'success'){
+						$btn.closest('.movie-card').remove(); // 영화카드 DOM에서 제거
+					}else{
+						alert("삭제 실패:"+ response);
+					}	
+				  },
+				  error: function(){
+					  alert("서버 오류로 삭제하지 못했습니다.");
+				  }
+			});
+		});
+	});
+</script>
+
+</head>
+
+<body>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<!-- AJAX -->
+<script>
+	
+</script>
+
+<div class="Mylist-wrapper">
+  <div class="Mylist-container">
+    <!-- Sidebar -->
+    <div class="Mylist-sidebar">
+      <div class="Mylist-profile">
+        <div class="Mylist-avatar"></div>
+        <div class="Mylist-username">
+          ${reservation.name}님 <span class="edit-icon">✏️</span>
+        </div>
+      </div>
+      <button class="my-movies-btn">내가 본 영화</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="Mylist-main">
+      <h2>내가 본 영화</h2>
+
+      <c:forEach var="reservation" items="${movieList}">
+        <div class="movie-card">
+          <img src="${pageContext.request.contextPath}/upload/${reservation.poster_url}"
+               alt="${reservation.mvTitle}"
+               style="width:150px;height:auto;border-radius:10px; margin-top:10px;">
+          <div class="movie-info">
+            <h3>${reservation.mvTitle}</h3>
+            <p>
+              ${reservation.screeningDate}
+              ${reservation.startTime} ~ ${reservation.endTime}
+            </p>
+            <p>${reservation.theaterName} / ${reservation.viewers}명</p>
+          </div>
+          <button class="close-btn" data-resv-id="${reservation.reservationID}">✕</button>
+        </div>
+        <hr/>
+      </c:forEach>
+
+    </div> <!-- Mylist-main -->
+  </div>   <!-- Mylist-container -->
+</div>     <!-- Mylist-wrapper -->
+
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+</body>
+</html>

@@ -49,6 +49,13 @@ p {
   margin: 5px 0;
 }
 </style>
+
+<script>
+// ✅ 아이프레임 밖의 부모 창을 메인으로 리다이렉트
+setTimeout(function() {
+  parent.location.href = '${pageContext.request.contextPath}/main/main.do';
+}, 3000);
+</script>
 </head>
 <body>
 <div class="container">
@@ -90,13 +97,7 @@ p {
   </div>
 
   <hr>
- 
-</div>
-<div style="text-align:center; margin-top: 20px;">
-  <a href="${pageContext.request.contextPath}/main.p" style="display:inline-block; background-color:#e50914; color:white; 
-     padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:bold;">
-    메인으로 돌아가기
-  </a>
+  <p style="text-align:center; color:#aaa;">3초 후 메인 페이지로 이동합니다...</p>
 </div>
 </body>
 </html>

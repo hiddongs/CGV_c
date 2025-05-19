@@ -407,5 +407,41 @@ public class TheaterDAO {
 		}
 		return result;
 	}
+	
+	
+	   // 극장 정보만 가져오기
+	   public List<TheaterVO> getAllTheaters() throws Exception {
+	       List<TheaterVO> list = new ArrayList<>();
+
+	       Connection conn = null;
+	       PreparedStatement pstmt = null;
+	       ResultSet rs = null;
+
+	       try {
+	           conn = DBUtil.getConnection(); // 
+	           String sql = "SELECT theater_id, name FROM theater ORDER BY name ASC";
+	           pstmt = conn.prepareStatement(sql);
+	           rs = pstmt.executeQuery();
+
+	           while (rs.next()) {
+	               TheaterVO theater = new TheaterVO();
+	               theater.setTheaterId(rs.getInt("theater_id"));
+	               theater.setName(rs.getString("name"));
+	               
+	               System.out.println("극장 ID: " + theater.getTheaterId() + ", 이름: " + theater.getName());
+
+	               list.add(theater);
+	           }
+	       } finally {
+	           // 리소스 정리
+	           if (rs != null) try { rs.close(); } catch (Exception e) {}
+	           if (pstmt != null) try { pstmt.close(); } catch (Exception e) {}
+	           if (conn != null) try { conn.close(); } catch (Exception e) {}
+	       }
+
+	       return list;
+	   }
+
+	
 
 }

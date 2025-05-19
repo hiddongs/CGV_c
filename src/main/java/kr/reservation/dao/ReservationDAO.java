@@ -322,5 +322,83 @@ public class ReservationDAO {
         }
         return theaterName;
     }
+ // 리스트 삭제
+    public boolean deleteReservation(int reservationID) {
+       String sql = "DELETE FROM reservation WHERE reservation_id = ? ";
+       try(Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+          pstmt.setInt(1, reservationID);
+          int result = pstmt.executeUpdate();
+          System.out.println("🟢 DB에서 삭제된 행 수: " + result);
+          return result > 0;
+             
+       }catch(Exception e) {
+          e.printStackTrace();
+          return false;
+       }
+       
+    }
+    public List<ReservationVO> getReservationByMemberID(int memberID) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String sql = null;
+        List<ReservationVO> reservations = new ArrayList<>();
+        
+        // 핵심은 start_time, end_time이 어디에 존재하는지,
+        // reservation 테이블이 직접 slot_id를 갖고 있는지 중요
+        
+        try {
+           conn= DBUtil.getConnection();
+           // sql선언
+           sql = """
+                 SELECT
+                   r.screening_date,
+                   r.mv_title,
+                   r.viewers,
+                   r.movie_type,
+                   sl.start_time,
+                   sl.end_time,
+                   t.name AS theater_name,
+                   m.name AS member_name,
+                   mov.poster_url
+                 FROM reservation r
+                 JOIN schedule s ON r.schedule_id = s.schedule_id
+                 JOIN slot sl ON s.slot_id = sl.slot_id
+                 JOIN theater t ON r.theater_id = t.theater_id
+                 JOIN movie mov ON r.movie_id = mov.movie_id
+                 JOIN member m ON r.member_id = m.member_id
+                 WHERE r.member_id = ?
+                 ORDER BY r.screening_date DESC
+                 """;
+           // JOIN member m ON r.member_id = m.member_id
+              
+           pstmt=conn.prepareStatement(sql);
+           // 데이터 바인딩
+           pstmt.setInt(1, memberID);
+           //sql 적용
+           rs = pstmt.executeQuery();
+           while(rs.next()) {
+               ReservationVO reservation = new ReservationVO();
+               reservation.setScreeningDate(rs.getDate("screening_date"));
+               reservation.setMvTitle(rs.getString("mv_title"));
+               reservation.setViewers(rs.getInt("viewers"));
+               reservation.setMovieType(rs.getString("movie_type"));
+               reservation.setStartTime(rs.getDate("start_time"));
+               reservation.setEndTime(rs.getDate("end_time"));
+               reservation.setTheaterName(rs.getString("theater_name"));
+               reservation.setPoster_url(rs.getString("poster_url"));
+               reservation.setName(rs.getString("member_name"));
+               
+               reservations.add(reservation);
+           }
+        }catch(Exception e) {
+           e.printStackTrace();
+        }finally {
+           DBUtil.executeClose(rs, pstmt, conn);
+        }
+     return reservations;
+     }
+     
 
 }

@@ -16,7 +16,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 	
-	 <h1>나의 문의내역</h1>
+	<h1>나의 문의내역</h1>
     <div class="count-info">1:1 문의</div>
     
     <div class="search-box">
@@ -26,7 +26,7 @@
     
     <div class="util-box">
         <div class="total-count">총 0건</div>
-        <button class="view-select-button">신청상세</button>
+        <a href="${pageContext.request.contextPath}/notice/writeForm.do" class="write-button">작성하기</a>
     </div>
     
     <table>
@@ -42,14 +42,26 @@
             </tr>
         </thead>
         <tbody>
+         <c:forEach var="ask" items="${askList}">
+      <tr>
+        <td>${ask.cgv_name}</td>
+        <td>${ask.category}</td>
+        <td>${ask.title}</td>
+        <td>${ask.reg_date}</td>
+        <td>${ask.status}</td>
+        <td>${ask.satisfaction}</td>
+      </tr>
+    </c:forEach>
+  </tbody>
+</table>
             <tr>
-                <td colspan="7" class="empty-message">고객님의 상담 내역이 존재하지 않습니다.</td>
+                <td colspan="7" class="empty-message"></td>
             </tr>
         </tbody>
     </table>
     <div class="divider"></div>
-	
-	
+
+
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
