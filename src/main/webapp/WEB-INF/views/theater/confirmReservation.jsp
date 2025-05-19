@@ -13,7 +13,7 @@
 <body>
 	<div class="center-box">
 		<div class="inner-box fade-in">
-			<h2 class="r-title">🎉 예매가 완료되었습니다!</h2>
+			<h2 class="r-title">예매가 완료되었습니다!</h2>
 			<p class="r-subText">고객님의 예매 내역은 다음과 같습니다.</p>
 			<hr style="margin: 20px 0; border-top: 1px solid #444;">
 
@@ -34,7 +34,7 @@
 						</p>
 						<p>
 							<strong class="r-strong">🏛 상영관:</strong>
-							${reservation.auditoriumName}
+							${reservation.theaterName}
 						</p>
 						<p>
 							<strong class="r-strong">🕒 상영 일시:</strong>

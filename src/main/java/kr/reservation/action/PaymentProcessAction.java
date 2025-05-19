@@ -63,7 +63,8 @@ public class PaymentProcessAction implements Action {
        
         List<String> seatNames = reservationDAO.getSeatNamesByReservation(reservationID);
         reservation.setSeatName(String.join(", ", seatNames));
-
+        String theaterName = reservationDAO.getTheaterNameBySchedule(reservation.getScheduleID());
+        reservation.setTheaterName(theaterName);
         req.setAttribute("totalPrice", totalPrice);
         req.setAttribute("reservation", reservation);
         req.setAttribute("member", member);

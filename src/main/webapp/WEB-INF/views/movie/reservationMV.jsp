@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const descriptionText = document.getElementById('description');
   const movieInfoDiv = document.getElementById('movieInfo');
 
+  // 영화 선택 시 포스터 및 설명 표시
   select.addEventListener('change', function() {
     const selectedOption = select.options[select.selectedIndex];
 
@@ -36,6 +37,15 @@ document.addEventListener('DOMContentLoaded', function() {
       descriptionText.textContent = '';
     }
   });
+
+  // 영화 선택 유효성 검사
+  const movieForm = document.getElementById('movieForm');
+  movieForm.addEventListener('submit', function(e) {
+    if (select.value === "") {
+      alert("영화를 선택해 주세요.");
+      e.preventDefault(); // 폼 제출 막기
+    }
+  });
 });
 </script>
 
@@ -44,8 +54,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div class="inner-box fade-in">
   <h3>영화</h3>
-<input type="hidden" name="memberID" value="${mem_ID}" />
-  <!-- 🎯 정렬 셀렉트 박스 form -->
+  <input type="hidden" name="memberID" value="${mem_ID}" />
+
+  <!-- 정렬 셀렉트 박스 form -->
   <form action="reservationMV.do" method="get" style="margin-bottom: 20px;">
     <label for="title">정렬</label>
     <select name="align" id="title" class="form-select" onchange="this.form.submit()">
@@ -54,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
     </select>
   </form>
 
-  <!-- 🎟️ 영화 선택 form -->
-  <form action="movieSubmit.do" method="post" class="container mt-4">
+  <!-- 영화 선택 form -->
+  <form id="movieForm" action="movieSubmit.do" method="post" class="container mt-4">
     <div class="mb-3">
       <label for="movie" class="form-label">영화 선택</label>
       <select name="movieID" id="movie" class="form-select">

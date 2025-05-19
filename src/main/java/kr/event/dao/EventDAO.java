@@ -214,4 +214,39 @@ public class EventDAO {
 		}
 		return result;
 	}
+	
+	public List<EventVO> getEventByType(String type) {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    String sql = null;
+	    List<EventVO> result = new ArrayList<>();
+
+	    try {
+	        conn = DBUtil.getConnection();
+	        sql = "SELECT * FROM EVENT WHERE TYPE = ? AND END_DATE >= SYSDATE ORDER BY START_DATE DESC";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, type);
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            EventVO event = new EventVO();
+	            event.setEvent_id(rs.getLong("EVENT_ID"));
+	            event.setTitle(rs.getString("TITLE"));
+	            event.setContent(rs.getString("CONTENT"));
+	            event.setStart_date(rs.getDate("START_DATE"));
+	            event.setEnd_date(rs.getDate("END_DATE"));
+	            event.setType(rs.getString("TYPE"));
+	            event.setPoster_url(rs.getString("POSTER_URL"));
+	            result.add(event);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.executeClose(rs, pstmt, conn);
+	    }
+
+	    return result;
+	}
+
 }

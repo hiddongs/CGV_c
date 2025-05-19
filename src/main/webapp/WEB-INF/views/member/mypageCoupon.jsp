@@ -13,16 +13,16 @@
 <body>
     <div class="container">
         <div class="coupon-header">
-            <h1>CGV 할인쿠폰 내역</h1>
+            <h1>FILMO 할인쿠폰 내역</h1>
         </div>
         
         <div class="coupon-info">
-            CGV 할인쿠폰 수령(등록) 내역
+            FILMO 할인쿠폰 수령(등록) 내역
         </div>
         
         <div class="tabs">
             <div class="tab active">영화 할인쿠폰</div>
-            <div class="tab">CJ ONE 쿠폰</div>
+            <div class="tab">JYP ONE 쿠폰</div>
         </div>
         
         <div class="search-bar">

@@ -60,6 +60,12 @@ public class ReserveAction implements Action {
             List<String> seatNames = dao.getSeatNamesByReservation(reservationID);
             detail.setSeatName(String.join(", ", seatNames));
 
+            
+            // = 상영관(극장) 이름을 가져와서 reservation에 설정
+            String theaterName = dao.getTheaterNameBySchedule(scheduleID);
+            detail.setTheaterName(theaterName);
+
+            
             req.setAttribute("reservation", detail);
             req.setAttribute("adultCount", adultCount);
             req.setAttribute("childCount", childCount);

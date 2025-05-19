@@ -52,7 +52,7 @@ p {
 </head>
 <body>
 <div class="container">
-  <h2>🎉 결제가 완료되었습니다!</h2>
+  <h2>결제가 완료되었습니다!</h2>
   <p style="text-align:center;">감사합니다. 아래는 예매 및 결제 내역입니다.</p>
   <hr>
 
@@ -91,6 +91,12 @@ p {
 
   <hr>
  
+</div>
+<div style="text-align:center; margin-top: 20px;">
+  <a href="${pageContext.request.contextPath}/main.p" style="display:inline-block; background-color:#e50914; color:white; 
+     padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:bold;">
+    메인으로 돌아가기
+  </a>
 </div>
 </body>
 </html>

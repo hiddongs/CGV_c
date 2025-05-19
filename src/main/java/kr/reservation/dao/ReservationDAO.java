@@ -296,4 +296,31 @@ public class ReservationDAO {
 
         return list;
     }
+    
+    public String getTheaterNameBySchedule(int scheduleID) throws Exception {
+        String sql = "SELECT t.name " +
+                     "FROM schedule s " +
+                     "JOIN auditorium a ON s.auditorium_id = a.auditorium_id " +
+                     "JOIN theater t ON a.theater_id = t.theater_id " +
+                     "WHERE s.schedule_id = ?";
+        String theaterName = null;
+
+        try (
+        		Connection conn = DBUtil.getConnection();
+             
+        		PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, scheduleID);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    theaterName = rs.getString("name");
+                }
+            }
+        }
+        catch(Exception e) {
+        	e.printStackTrace();
+        }
+        return theaterName;
+    }
+
 }

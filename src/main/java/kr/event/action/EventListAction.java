@@ -1,18 +1,14 @@
 package kr.event.action;
 
-import java.io.IOException;
-
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.controller.Action;
 
-public class EventListAction implements Action{
-
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// Event 페이지로 이동
-		return "event/eventList.jsp";
-	}
-
+public class EventListAction implements Action {
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        // 여기에 로직 작성
+        req.setAttribute("msg", "이벤트 예약 액션입니다.");
+        return "/event/eventList.jsp";
+    }
 }

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -31,7 +29,7 @@
                <c:choose>
              		<c:when test="${empty list}">
                			<div class="movie-item">
-               				<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
+               				<img src="${pageContext.request.contextPath}/resources/images/logo.png">
                				<div class="movie-info">
                					<h3 class="movie-title">상영중인 영화가 없습니다.</h3>
                					<div class="movie-meta">
@@ -42,31 +40,17 @@
             		</c:when>
             		<c:otherwise>
                			<c:forEach var="movie" items="${list}">
-
-							<div class="movie-item"
-								data-title="${fn:escapeXml(movie.mv_title)}"
-								data-poster="${pageContext.request.contextPath}/upload/${fn:escapeXml(movie.poster_url)}"
-								data-desc="${empty movie.description ? '줄거리 정보 없음' : fn:escapeXml(movie.description)}"
-								data-director="${empty movie.director ? '정보 없음' : fn:escapeXml(movie.director)}"
-								data-actor="${empty movie.actor ? '정보 없음' : fn:escapeXml(movie.actor)}"
-								data-genre="${empty movie.genre ? '정보 없음' : fn:escapeXml(movie.genre)}"
-								data-runtime="${empty movie.runtime ? '정보 없음' : movie.runtime}"
-								data-release="<fmt:formatDate value='${movie.release_date}' pattern='yyyy-MM-dd'/>"
-								data-age="${empty movie.age_limit ? '정보 없음' : fn:escapeXml(movie.age_limit)}">
-								<img
-									src="${pageContext.request.contextPath}/upload/${movie.poster_url}"
-									alt="영화 포스터" class="movie-poster">
-								<div class="movie-info">
-									<h3 class="movie-title">${movie.mv_title}</h3>
-									<div class="movie-meta">
-										<span class="rating">예매율 @@%</span> <a
-											href="${pageContext.request.contextPath}/movie/reservationMVform.do"
-											class="btn btn-primary btn-booking">예매</a>
-									</div>
-								</div>
-							</div>
-
-						</c:forEach>
+			               	<div class="movie-item">
+			               		<img src="${pageContext.request.contextPath}/upload/${movie.poster_url}" alt="영화 포스터" class="movie-poster">
+			               		<div class="movie-info">
+			               			<h3 class="movie-title">${movie.mv_title}</h3>
+			               			<div class="movie-meta">
+			               				<span class="rating">예매율 ${movie.bookingRate}%</span>
+			               				<a href="${pageContext.request.contextPath}/movie/reservationMVform.do" class="btn btn-primary btn-booking">예매</a>
+			               			</div>
+			               		</div>
+			               	</div>
+               			</c:forEach>
                		</c:otherwise>
              </c:choose>	
               	 <!-- 상영중인 영화 리스트 끝 -->
@@ -77,7 +61,7 @@
               	 	<c:choose>
               	 		<c:when test="${empty releaseList}">
 	              	 		<div class="movie-item">
-	               				<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
+	               				<img src="${pageContext.request.contextPath}/resources/images/logo.png">
 	               				<div class="movie-info">
 	               					<h3 class="movie-title">개봉예정인 영화가 없습니다.</h3>
 	               					<div class="movie-meta">
@@ -93,7 +77,7 @@
 			               		<div class="movie-info">
 			               			<h3 class="movie-title">${movie.mv_title}</h3>
 			               			<div class="movie-meta">
-			               				<span class="rating">장르 : @@</span>
+			               				<span class="rating">개봉예정</span>
 			               				<a href="${pageContext.request.contextPath}/movie/reservationMVform.do" class="btn btn-primary btn-booking">예매</a>
 			               			</div>
 			               		</div>
@@ -111,7 +95,7 @@
 				<c:choose>
 					<c:when test="${empty ongoingEventList}">
 						<div class="event-item">
-							<img src="${pageContext.request.contextPath}/resources/images/cgvLogo.png">
+							<img src="${pageContext.request.contextPath}/resources/images/logo.png">
 	               			<div class="event-info">
 	               				<h3 class="event-title"> 진행중인 이벤트가 없습니다.</h3>
 	               			</div>
@@ -133,27 +117,6 @@
            <!-- 이벤트 리스트 끝  -->
         </div>
     </main>
-    
-<div id="movieModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div id="modal-body"></div>
-        <h2 id="modal-title"></h2>
-    <img id="modal-poster" src="" alt="영화 이미지">
-    <p><strong>감독:</strong> <span id="modal-director"></span></p>
-    <p><strong>배우:</strong> <span id="modal-actor"></span></p>
-    <p><strong>장르:</strong> <span id="modal-genre"></span></p>
-    <p><strong>상영시간:</strong> <span id="modal-runtime"></span>분</p>
-    <p><strong>개봉일:</strong> <span id="modal-release"></span></p>
-    <p><strong>연령제한:</strong> <span id="modal-age"></span></p>
-    
-    <div class="desc-box">
-        <p id="modal-desc-short" style="display: block;"></p>
-        <p id="modal-desc-full" style="display: none;"></p>
-        <button id="toggle-desc">더보기</button>
-    </div>
-    </div>
-</div>
 
     <%@ include file="../common/footer.jsp" %>
     <a href="#" class="btn_gotoTop show">↑</a>
@@ -192,59 +155,7 @@
                     scrollTop: '0'
                 }, 400);
             });
-            $(document).on('click', '.movie-item', function () {
-                const title = $(this).data('title');
-                const poster = $(this).data('poster');
-                const desc = $(this).data('desc') || '줄거리 정보가 없습니다.';
-                const director = $(this).data('director') || '정보 없음';
-                const actor = $(this).data('actor') || '정보 없음';
-                const genre = $(this).data('genre') || '정보 없음';
-                const runtime = $(this).data('runtime') || '정보 없음';
-                const release = $(this).data('release') || '정보 없음';
-                const age = $(this).data('age') || '정보 없음';
-
-                $('#modal-title').text(title);
-                $('#modal-poster').attr('src', poster);
-                $('#modal-director').text(director);
-                $('#modal-actor').text(actor);
-                $('#modal-genre').text(genre);
-                $('#modal-runtime').text(runtime);
-                $('#modal-release').text(release);
-                $('#modal-age').text(age);
-
-                if (desc.length > 100) {
-                    $('#modal-desc-short').text(desc.substring(0, 100) + '...');
-                    $('#modal-desc-full').text(desc).hide();
-                    $('#toggle-desc').show().text('더보기');
-                } else {
-                    $('#modal-desc-short').hide();
-                    $('#modal-desc-full').text(desc).show();
-                    $('#toggle-desc').hide();
-                }
-
-                $('#movieModal').fadeIn();
-            });
-
-            $('#toggle-desc').on('click', function () {
-                const full = $('#modal-desc-full');
-                const short = $('#modal-desc-short');
-                if (full.is(':visible')) {
-                    full.hide();
-                    short.show();
-                    $(this).text('더보기');
-                } else {
-                    short.hide();
-                    full.show();
-                    $(this).text('접기');
-                }
-            });
-
-            $('.close, #movieModal').on('click', function (e) {
-                if (e.target === this) $('#movieModal').fadeOut();
-            });
         });
-       
-
     </script>
 </body>
 </html>

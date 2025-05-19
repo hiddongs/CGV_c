@@ -82,6 +82,14 @@ public class PaymentFormAction implements Action {
             reservation.setMovieType(auditorium.getType());
             reservation.setPaymentDate(reservation.getPaymentDate());
             reservation.setPaymentStatus(reservation.getPaymentStatus());
+            reservation.setTheaterName(schedule.getTheaterName()); 
+            
+            // = 상영관(극장) 이름을 가져와서 reservation에 설정
+            String theaterName = reservationDAO.getTheaterNameBySchedule(schedule.getScheduleId().intValue());
+
+            reservation.setTheaterName(theaterName);
+
+            
             // reservation.setSeatName(...)은 DAO에서 set되어 있어야 함
 
             // 쿠폰 목록

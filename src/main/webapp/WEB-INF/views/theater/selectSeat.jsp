@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -7,13 +6,13 @@
 <meta charset="UTF-8">
 <title>좌석 선택</title>
 <style>
+/* 스타일 생략 없이 전체 포함 */
 body {
   background-color: #1c1c1c;
   color: #fff;
   font-family: 'Noto Sans KR', sans-serif;
   padding: 40px;
 }
-
 .container {
   max-width: 720px;
   margin: 0 auto;
@@ -22,14 +21,11 @@ body {
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
-
 h2 {
   text-align: center;
   margin-bottom: 30px;
   color: #ffffff;
 }
-
-/* 스크린 박스 */
 .screen {
   background-color: #ffffff;
   height: 40px;
@@ -39,15 +35,11 @@ h2 {
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.5);
   border-radius: 8px;
 }
-
-/* 좌석 행 */
 .row {
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
 }
-
-/* 좌석 */
 .seat {
   width: 32px;
   height: 32px;
@@ -60,20 +52,16 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-
 .seat.selected {
   background-color: #e50914;
   color: #fff;
 }
-
 .seat.reserved {
   background-color: #444;
   color: #ccc;
   cursor: not-allowed;
   pointer-events: none;
 }
-
-/* 예약 버튼 및 기타 버튼 공통 */
 button,
 input[type="submit"] {
   background: linear-gradient(to right, #e50914, #a1080f);
@@ -87,19 +75,15 @@ input[type="submit"] {
   width: 100%;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
 button:hover,
 input[type="submit"]:hover {
   background-color: #c20710;
   transform: scale(1.03);
 }
-
 button:active,
 input[type="submit"]:active {
   transform: scale(0.95);
 }
-
-/* 인원 수 선택 버튼 스타일 */
 .countBtn {
   margin: 3px;
   width: 40px;
@@ -117,14 +101,10 @@ input[type="submit"]:active {
   transition: all 0.25s ease-in-out;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
-
-/* 호버 시 */
 .countBtn:hover {
   background-color: #666;
   border-color: #888;
 }
-
-/* 어른 버튼 선택 시 파란 배경 + 진한 글씨 + 내부 강조 효과 */
 [id^="adultBtn"].selected {
   background: linear-gradient(to bottom, #007bff, #0056b3) !important;
   color: #fff !important;
@@ -132,8 +112,6 @@ input[type="submit"]:active {
   box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2), 0 0 12px rgba(0, 123, 255, 0.6);
   transform: scale(1.05);
 }
-
-/* 어린이 버튼 선택 시 분홍 배경 + 진한 글씨 + 내부 강조 효과 */
 [id^="childBtn"].selected {
   background: linear-gradient(to bottom, #e83e8c, #b02564) !important;
   color: #fff !important;
@@ -141,16 +119,11 @@ input[type="submit"]:active {
   box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2), 0 0 12px rgba(232, 62, 140, 0.6);
   transform: scale(1.05);
 }
-
-
-/* 버튼 정렬 */
 .inline-btns {
   display: flex;
   justify-content: center;
   gap: 10px;
 }
-
-
 </style>
 </head>
 <body>
@@ -161,7 +134,7 @@ input[type="submit"]:active {
   <p>극장 : ${theaterName}</p>
   <p>관람 날짜 : ${screeningDate}</p>
 
-  <!-- 인원 수 선택 영역 -->
+  <!-- 인원 수 선택 -->
   <div style="text-align:center; margin-bottom: 20px;">
     <h3>👨‍👩‍👧‍👦 인원 수 선택 (최대 4명)</h3>
     <div>
@@ -184,8 +157,7 @@ input[type="submit"]:active {
 
   <form name="movie" action="reserve.do" method="post">
     <input type="hidden" id="adultCount" name="adultCount">
-<input type="hidden" id="childCount" name="childCount">
-    
+    <input type="hidden" id="childCount" name="childCount">
     <input type="hidden" id="viewers" name="viewers" />
     <input type="hidden" id="selectedSeats" name="selectedSeats"/>
     <input type="hidden" name="memberID" value="${mem_ID}" />
@@ -223,9 +195,6 @@ input[type="submit"]:active {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  let adultCount = 0;
-  let childCount = 0;
-
   document.querySelectorAll('.seat').forEach(seat => {
     seat.addEventListener('click', () => {
       if (!seat.classList.contains('reserved')) {
@@ -259,27 +228,47 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   window.reservation = function () {
-    const f = document.movie;
-    const selectedSeatsValue = document.getElementById('selectedSeats').value;
-    const seats = selectedSeatsValue ? selectedSeatsValue.split(',') : [];
-    const adultCount = parseInt(document.getElementById('adultCount').value || '0');
-    const childCount = parseInt(document.getElementById('childCount').value || '0');
-    const totalPeople = adultCount + childCount;
+	  const f = document.movie;
 
-    if (totalPeople === 0) {
-      alert("어른 또는 어린이를 1명 이상 선택해야 합니다.");
-      return;
-    }
-    if (seats.length === 0) {
-      alert("좌석을 1개 이상 선택해야 합니다.");
-      return;
-    }
-    if (seats.length !== totalPeople) {
-      alert(`선택한 인원 수와 좌석 수가 일치해야 합니다.`);
-      return;
-    }
-    f.submit();
-  }
+	  let adultVal = document.getElementById('adultCount').value;
+	  let childVal = document.getElementById('childCount').value;
+
+	  // 입력이 없을 경우 0으로 처리
+	  if (adultVal === "") {
+	    adultVal = "0";
+	    document.getElementById('adultCount').value = "0";
+	  }
+	  if (childVal === "") {
+	    childVal = "0";
+	    document.getElementById('childCount').value = "0";
+	  }
+
+	  const adultCount = parseInt(adultVal);
+	  const childCount = parseInt(childVal);
+	  const totalPeople = adultCount + childCount;
+
+	  const selectedSeatsValue = document.getElementById('selectedSeats').value;
+	  const seats = selectedSeatsValue ? selectedSeatsValue.split(',') : [];
+
+	  // 인원수 전체가 0명인 경우
+	  if (totalPeople === 0) {
+	    alert("어른 또는 어린이를 1명 이상 선택해야 합니다.");
+	    return;
+	  }
+
+	  if (seats.length === 0) {
+	    alert("좌석을 1개 이상 선택해야 합니다.");
+	    return;
+	  }
+
+	  if (seats.length !== totalPeople) {
+	    alert(`선택한 인원 수와 좌석 수가 일치해야 합니다.`);
+	    return;
+	  }
+
+	  f.submit();
+	}
+
 });
 </script>
 </body>
