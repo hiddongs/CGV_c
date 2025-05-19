@@ -28,7 +28,7 @@ public class UpdateMovieAction implements Action{
 		vo.setMovie_id(Long.parseLong(req.getParameter("movie_id")));
 		vo.setMv_title(req.getParameter("title"));
 		
-		if(posterUrl.isEmpty()){
+		if(posterUrl == null){
 			vo.setPoster_url(oldPosterUrl);
 		}else {
 			FileUtil.removeFile(req, oldPosterUrl);

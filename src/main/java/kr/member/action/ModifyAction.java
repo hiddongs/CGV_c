@@ -42,7 +42,7 @@ public class ModifyAction implements Action {
             
             request.setAttribute("result_title", "회원정보 수정 완료");
             request.setAttribute("result_msg", "회원정보가 수정되었습니다.");
-            request.setAttribute("result_url", "member/myPage.do");
+            request.setAttribute("result_url", "myPage.do");
             
             return "common/result_view.jsp";
             
