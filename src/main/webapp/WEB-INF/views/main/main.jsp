@@ -45,7 +45,7 @@
 			               		<div class="movie-info">
 			               			<h3 class="movie-title">${movie.mv_title}</h3>
 			               			<div class="movie-meta">
-			               				<span class="rating">예매율 @@%</span>
+			               				<span class="rating">예매율 ${movie.bookingRate}%</span>
 			               				<a href="${pageContext.request.contextPath}/movie/reservationMVform.do" class="btn btn-primary btn-booking">예매</a>
 			               			</div>
 			               		</div>
@@ -77,7 +77,7 @@
 			               		<div class="movie-info">
 			               			<h3 class="movie-title">${movie.mv_title}</h3>
 			               			<div class="movie-meta">
-			               				<span class="rating">장르 : @@</span>
+			               				<span class="rating">개봉예정</span>
 			               				<a href="${pageContext.request.contextPath}/movie/reservationMVform.do" class="btn btn-primary btn-booking">예매</a>
 			               			</div>
 			               		</div>
